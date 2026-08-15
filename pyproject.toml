@@ -1,0 +1,77 @@
+[build-system]
+requires = ["hatchling", "versioningit"]
+build-backend = "hatchling.build"
+
+[project]
+name = "danki"
+dynamic = ["version"]
+description = 'Anki addons to learn for school with dedicated exercises before vocabulary exams.'
+readme = "README.md"
+requires-python = ">=3.12"
+license = "GPL-3.0-or-later"
+keywords = []
+authors = [
+  { name = "Simon Siemens", email = "simon.siemens@arcor.de" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "cyclopts",
+  "rich",
+]
+
+[project.scripts]
+danki = "danki.cli:app"
+
+[tool.hatch.build]
+exclude = [
+  "/src/danki/__about__.py",
+]
+
+[tool.hatch.build.hooks.versioningit-onbuild]
+source-file = "src/danki/__about__.py"
+build-file = "danki/__about__.py"
+
+[tool.hatch.version]
+source = "versioningit"
+
+[tool.hatch.envs.dev]
+extra-dependencies = [
+  "mypy>=1.0.0",
+  "pytest",
+]
+
+[tool.hatch.envs.dev.scripts]
+check-src = "mypy --install-types --non-interactive --cache-dir src/.mypy_cache --strict {args:src}"
+check-tests = "mypy --install-types --non-interactive --cache-dir tests/.mypy_cache {args:tests}"
+check = [
+  "check-src",
+  "check-tests",
+]
+
+[tool.coverage.run]
+source_pkgs = ["danki", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/danki/__about__.py",
+]
+
+[tool.coverage.paths]
+danki = ["src/danki", "*/danki/src/danki"]
+tests = ["tests", "*/danki/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.ruff]
+line-length = 110
