@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "danki"
 dynamic = ["version"]
 description = 'Anki addons to learn for school with dedicated exercises before vocabulary exams.'
-readme = "README.md"
+readme = "README.rst"
 requires-python = ">=3.12"
 license = "GPL-3.0-or-later"
 keywords = []
