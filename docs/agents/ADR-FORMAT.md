@@ -8,19 +8,31 @@ Create an **ADR directory** lazily — only when the first ADR is needed.
 
 ## Template
 
+An ADR file contains all architectural decisions in form of a simple sequence of subsections.
+
+### Mandatory elements
+
 ```md
-# {Short title of the decision}
+******************************
+Architectural Decision Records
+******************************
+
+{Short title of the decision}
+=============================
+
+{1-3 sentences: what's the context, what did we decide, and why.}
+
+{Short title of another decision}
+=================================
 
 {1-3 sentences: what's the context, what did we decide, and why.}
 ```
 
 That's it. An ADR can be a single paragraph. The value is in recording *that* a decision was made and *why* — not in filling out sections.
 
-An ADR can be in a different file format than Markdown. Convert the above template to the defined format for an ADR, which is already provided to you.
+### Optional elements
 
-## Optional sections
-
-Only include these when they add genuine value. Most ADRs won't need them.
+Only include these in an ADR when they add genuine value. Most ADRs won't need them.
 
 - **Status** frontmatter (`proposed | accepted | deprecated | superseded by ADR-NNNN`) — useful when decisions are revisited
 - **Considered Options** — only when the rejected alternatives are worth remembering

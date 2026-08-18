@@ -4,7 +4,7 @@ How the engineering skills should consume this repo's domain documentation when 
 
 ## File format and file names
 
-The domain documentation files are written in reStructuredText. Their file names are:
+The domain documentation files are written in reStructuredText with the file name extension `.rst`. Their file names are:
 
 - **CONTEXT file**: `CONTEXT.rst`
 - **CONTEXT-MAP file**: `CONTEXT-MAP.rst`
@@ -50,8 +50,6 @@ Multi-context repo (presence of a CONTEXT-MAP file at the root):
         ├── CONTEXT.rst
         └── docs/adr/
 ```
-
-Note: Documents may use reStructuredText with `.rst` extensions, and the repo follows that convention for both CONTEXT and ADR files.
 
 ## Use the glossary's vocabulary
 

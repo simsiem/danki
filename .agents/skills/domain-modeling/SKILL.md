@@ -9,35 +9,11 @@ Actively build and sharpen the project's domain model as you design. This is the
 
 ## File structure
 
-Most repos have a single context:
+You already received the file structure above. Please look it up.
 
-```
-/
-├── CONTEXT.md
-├── docs/
-│   └── adr/
-│       ├── 0001-event-sourced-orders.md
-│       └── 0002-postgres-for-write-model.md
-└── src/
-```
+Most repos have a single context. If a CONTEXT-MAP file exists at the root, the repo has multiple contexts. The map points to where each one lives.
 
-If a CONTEXT-MAP file exists at the root, the repo has multiple contexts. The map points to where each one lives:
-
-```
-/
-├── CONTEXT-MAP.md
-├── docs/
-│   └── adr/                          ← system-wide decisions
-├── src/
-│   ├── ordering/
-│   │   ├── CONTEXT.md
-│   │   └── docs/adr/                 ← context-specific decisions
-│   └── billing/
-│       ├── CONTEXT.md
-│       └── docs/adr/
-```
-
-Create files lazily — only when you have something to write. If no CONTEXT file exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
+Create files lazily — only when you have something to write. If no CONTEXT file exists, create one when the first term is resolved. If no ADR directory exists, create it when the first ADR is needed.
 
 ## During the session
 
@@ -59,7 +35,7 @@ When the user states how something works, check whether the code agrees. If you 
 
 ### Update the CONTEXT file inline
 
-When a term is resolved, update the CONTEXT file right there. Don't batch these up — capture them as they happen. Use the format in [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md).
+When a term is resolved, update the CONTEXT file right there. Don't batch these up — capture them as they happen. Use the format in [CONTEXT-FORMAT.md](docs/agents/CONTEXT-FORMAT.md).
 
 The CONTEXT file should be totally devoid of implementation details. Do not treat the CONTEXT file as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else.
 
@@ -71,4 +47,4 @@ Only offer to create an ADR when all three are true:
 2. **Surprising without context** — a future reader will wonder "why did they do it this way?"
 3. **The result of a real trade-off** — there were genuine alternatives and you picked one for specific reasons
 
-If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](./ADR-FORMAT.md).
+If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](docs/agents/ADR-FORMAT.md).
