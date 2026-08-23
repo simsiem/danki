@@ -71,18 +71,23 @@ FullFormNormalized:
     Normalization uses Unicode NFKD decomposition and strips combining marks (diacritics). Examples: "videre,
     vidi, visum", "cum m. Abl.".
 
-Meanings:
-    Required. An ordered list of native-language senses or glosses for the entry. Short, student-facing
-    translations suitable for display on the card back. Several meanings are separated with "," or ";"."
-
 PartOfSpeech:
     A short, controlled part-of-speech tag for filtering and analytics (for example: Adverb, Präposition,
-    Nomen, Verb, Adjektiv).
+    Nomen, Verb, Adjektiv, Subjunktion).
 
 NotesForeign:
     A free-text, human-readable notes field shown along with the *FullFormDisplay*. It can contain student
     comments, usage hints, or any information that does not fit structured fields. Kept intentionally
     unstructured to simplify card authoring.
+
+Meanings:
+    Required. An ordered list of native-language senses or glosses for the entry. Short, student-facing
+    translations suitable for display on the card back. Several meanings are separated with "," or ";"."
+
+NumberOfMeanings:
+    A test in Anki for a vocabulary entry might want to indicate the number of meanings in *Meanings* so the
+    user knows how many are expected in the answer. This field could be auto-generated from *Meanings*, but
+    card generation in Anki is rather static.
 
 NotesNative:
     A free-text, human-readable notes field shown along with *Meanings*. It can contain student comments,

@@ -28,7 +28,7 @@ Acceptance criteria
 Functional criteria
 -------------------
 
-1. Given an HTML input file with correct vocabulary entries in paragraphs and other text paragraphs mixed in one file, when Danki CLI converts this file,it shall detect paragraphs that do not contain vocabulary entries and log info for them with the paragraph index and the first 20 characters
+1. Given an HTML input file with correct vocabulary entries in paragraphs and other text paragraphs mixed in one file, when Danki CLI converts this file,it shall detect paragraphs that do not contain vocabulary entries and log info for them.
 2. Given an HTML input file called example.html, when the user converts the HTML file, all CSV entries have the value of the CLI option *--book* as `ReferenceBook`. The default value of this CLI option is the stem of the HTML file name.
 3. Given an HTML input file with several entries for the same headword, when the Danki CLI converts this file, it shall detect duplicate entries (same headword) and handle them in the following two steps:
 
@@ -37,6 +37,7 @@ Functional criteria
 
 4. Given an HTML input file, when the Danki CLI converts this file, the resulting CSV schema shall use the field names of the CONTEXT file in the specified order.
 5. Given an HTML input file with malformed XML, when the Danki CLI converts this file, Danki reports an error.
+6. Given an HTML input file, when a paragraph starts with "#", ignore it silently.
 
 Non-functional criteria
 -----------------------
@@ -56,7 +57,7 @@ File parsing rules
 ------------------
 
 - Take each HTML paragraph (``<p>``), one-by one.
-- Paragraph selection regex: ``r'^[^\W\d_].*\s{3,}.*\d+\s*$'`` (Unicode-aware). Non-matches logged with paragraph index + first 20 chars.
+- Paragraph selection regex: ``r'^[\S].*\s{3,}.*\d+\s*$'`` (Unicode-aware). Non-matches logged with paragraph index + first 20 chars.
 - Extract the fields from a matching paragraph with the *field extraction rules* of the next section.
 - Duplicate policy: canonical key = normalized `Headword`. Keep first-seen entry; on later occurrences perform exact trimmed equality for all exported fields; on any difference, log mismatch warning with differing fields and both values; do not abort.
 
@@ -64,7 +65,10 @@ Field extraction rules
 ----------------------
 
 `FullFormDisplay`: 
-    text from paragraph start up to the first plain space that is not part of " / " or ", ".
+    Two options
+    
+    - Text from paragraph start up to the first 2+ spaces.
+    - Content of first HTML *span* element.
 
 `FullFormNormalized`:
     NFKD → strip combining marks → collapse whitespace.
@@ -84,7 +88,7 @@ Field extraction rules
     * "^[mfn]$", "[mfn] ", "m/f" -> Nomen
 
 `Meanings`:
-    substring between first run of 3+ spaces and next numeric token; store as-is.
+    substring between the last run of 3+ spaces and next numeric token; store as-is.
 
 `ReferenceSection`:
     trailing numeric tokens stored as `;`-separated list.

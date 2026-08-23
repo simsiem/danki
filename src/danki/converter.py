@@ -8,9 +8,10 @@ _FIELDNAMES = [
     "Headword",
     "FullFormDisplay",
     "FullFormNormalized",
-    "Meanings",
     "PartOfSpeech",
     "NotesForeign",
+    "Meanings",
+    "NumberOfMeanings",
     "NotesNative",
     "MnemonicHint",
     "PronunciationText",
@@ -88,15 +89,32 @@ class _StyleInspector:
         return False
 
 
+def _first_span_text(elem: Element) -> str:
+    for e in elem.iter():
+        if _local_name(e.tag).lower() == "span":
+            return "".join(e.itertext()).strip()
+    msg = 'Element {elem} does not contain a "<span>" element.'
+    raise ValueError(msg)
+
+
+def _extract_full_form_display(xml_element: Element, _plain_text: str) -> str:
+    return _first_span_text(xml_element)
+
+
+def _snippet(text: str) -> str:
+    if len(text) == 0:
+        return ""
+    snippet_length = min(len(text), 60)
+    return text[:snippet_length].replace("\n", " ")
+
+
 def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None:
     """Convert vocabulary from the provided ElementTree and write CSV to out_file.
     All arguments are required. Raises an exception on error."""
 
     extractor = _ElementTreeParagraphExtractor()
     styler = _StyleInspector(tree)
-
-    pattern = re.compile(r"^[^\W\d_].*\s{3,}.*\d+\s*$", re.UNICODE)
-
+    vocabulary_paragraph_pattern = re.compile(r"^[\S].*\s{3,}.*\d+\s*$", re.UNICODE)
     writer = csv.DictWriter(
         out_file, fieldnames=_FIELDNAMES, quoting=csv.QUOTE_MINIMAL, extrasaction="ignore"
     )
@@ -106,39 +124,34 @@ def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None
     created = 0
 
     for idx, text, elem in extractor.paragraphs(tree):
-        snippet_length = min(len(text), 20)
-        snippet = text[: snippet_length - 1].replace("\n", " ")
-        if not pattern.match(text):
-            console_obj.print(f"Info: paragraph {idx} not matched: {snippet}")
+        if len(text) == 0 or text[0] == "#":
+            continue
+        if not vocabulary_paragraph_pattern.match(text):
+            console_obj.print(f"Info: paragraph {idx} not matched: {_snippet(text)}")
             continue
 
-        # split by first run of 3+ spaces
-        parts = re.split(r"\s{3,}", text, maxsplit=1)
-        if len(parts) < 2:  # noqa: PLR2004
-            console_obj.print(f"Warning: paragraph {idx} unexpected format, skipping: {snippet}")
+        # split by last run of 3+ spaces
+        m = re.search(r"\s{3,}(?!.*\s{3,})", text)
+        if not m:
+            console_obj.print(f"Warning: paragraph {idx} unexpected format, skipping: {_snippet(text)}")
             continue
-        left = parts[0].strip()
-        right = parts[1].strip()
+        left = text[: m.start()].strip()
+        right = text[m.end() :].strip()
 
-        placeholder_slash = "__SLASH__"
-        placeholder_comma = "__COMMA__"
-        left_parts = left.replace(" / ", placeholder_slash).replace(", ", placeholder_comma).split(maxsplit=1)
-        fullform_display = left_parts[0].replace(placeholder_slash, " / ").replace(placeholder_comma, ", ")
-        notes_foreign = (
-            left_parts[1].replace(placeholder_slash, " / ").replace(placeholder_comma, ", ")
-            if len(left_parts) > 1
-            else ""
-        )
-
-        fullform_normalized = _normalize_nfkd_strip(fullform_display)
-        headword = fullform_normalized.split(",")[0]
+        full_form_display = _extract_full_form_display(elem, text)
+        notes_foreign = left[len(full_form_display) :].strip()
+        full_form_normalized = _normalize_nfkd_strip(full_form_display)
+        headword = full_form_normalized.split(",")[0]
 
         m = re.match(r"(?s)^(?P<mean>.*?)(?P<numbers>\d+(?:[.,]\s*\d+)*)\s*$", right)
         if not m:
-            console_obj.print(f"Warning: paragraph {idx} missing trailing numbers, dropping entry: {snippet}")
+            console_obj.print(
+                f"Warning: paragraph {idx} missing trailing numbers, dropping entry: {_snippet(text)}"
+            )
             continue
 
         meanings = m.group("mean").strip()
+        number_of_meanings = meanings.count(",") + meanings.count(";") + 1
 
         numbers_raw = m.group("numbers")
         refs = re.split(r"[.,]\s*", numbers_raw)
@@ -154,10 +167,10 @@ def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None
         }
         for regex, pos_name in pos_regex_to_name.items():
             if regex.search(notes_foreign):
-                pos = pos_name
+                part_of_speech = pos_name
                 break
         else:
-            pos = ""
+            part_of_speech = ""
 
         # detect Top500 tag via style inspector
         tags = []
@@ -168,11 +181,12 @@ def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None
         key = headword
         row = {
             "Headword": headword,
-            "FullFormDisplay": fullform_display,
-            "FullFormNormalized": fullform_normalized,
-            "Meanings": meanings,
-            "PartOfSpeech": pos,
+            "FullFormDisplay": full_form_display,
+            "FullFormNormalized": full_form_normalized,
+            "PartOfSpeech": part_of_speech,
             "NotesForeign": notes_foreign,
+            "Meanings": meanings,
+            "NumberOfMeanings": number_of_meanings,
             "NotesNative": "",
             "MnemonicHint": "",
             "PronunciationText": "",
@@ -195,10 +209,10 @@ def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None
             for f in (
                 "FullFormDisplay",
                 "FullFormNormalized",
-                "Meanings",
                 "PartOfSpeech",
-                "ReferenceSection",
                 "NotesForeign",
+                "Meanings",
+                "NumberOfMeaningsReferenceSection",
                 "Tags",
             ):
                 a = (prev.get(f) or "").strip()

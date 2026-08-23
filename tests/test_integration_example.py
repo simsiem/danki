@@ -29,7 +29,7 @@ def test_integration_convert_example():
     rows = list(reader)
 
     # Expect the converter to produce the extracted entries from the example file
-    assert len(rows) == 152
+    assert len(rows) == 153
     assert reader.fieldnames is not None
     assert "Headword" in reader.fieldnames
     # At least one Top500 tag should be present
