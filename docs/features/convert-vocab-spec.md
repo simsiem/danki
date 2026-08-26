@@ -1,7 +1,7 @@
 Problem Statement
 =================
 
-Users need a reliable, testable converter that extracts school-book vocabulary from XHTML input into a CSV matching the project's *vocabulary entry* fields. Ambiguity about parsing rules, duplicate handling, tagging, normalization, and test seams slows implementation and causes inconsistent outputs.
+Users need a reliable, testable converter that extracts school-book vocabulary from XHTML or FODT input into a CSV matching the project's *vocabulary entry* fields. Ambiguity about parsing rules, duplicate handling, tagging, normalization, and test seams slows implementation and causes inconsistent outputs.
 
 
 Solution
@@ -17,7 +17,7 @@ This function implements the agreed parsing rules, normalization, duplicate dete
 User Stories
 ============
 
-1. As a user, I want to have Danki CLI to convert a school-book XHTML into a CSV, so that I can import vocabulary into Anki. The input format is given by docs/example_school_book_input.html.
+1. As a user, I want to have Danki CLI to convert a school-book in XHTML or flat OpenDocument Text (FODT) format into a CSV file, so that I can import a vocabulary set into Anki. The input format is given by tests/test_book_C1.html for the XHTML format and tests/test_book_C2.fodt for the flat ODT format.
 2. As a user, I want the Danki CLI to report any potential conversion issue, so that I can be sure whether the conversion result is reliable.
 3. As an integrator, I want the output CSV to use the canonical field names from the CONTEXT file and be RFC4180-compatible, so downstream importers can consume the file.
 
@@ -28,16 +28,16 @@ Acceptance criteria
 Functional criteria
 -------------------
 
-1. Given an HTML input file with correct vocabulary entries in paragraphs and other text paragraphs mixed in one file, when Danki CLI converts this file,it shall detect paragraphs that do not contain vocabulary entries and log info for them.
-2. Given an HTML input file called example.html, when the user converts the HTML file, all CSV entries have the value of the CLI option *--book* as `ReferenceBook`. The default value of this CLI option is the stem of the HTML file name.
+1. Given an input file with correct vocabulary entries in paragraphs and other text paragraphs mixed in one file, when Danki CLI converts this file,it shall detect paragraphs that do not contain vocabulary entries and log info for them.
+2. Given an input file, when the user converts the HTML file, all CSV entries have the value of the CLI option *--book* as `ReferenceBook`. The default value of this CLI option is the stem of the input file name.
 3. Given an HTML input file with several entries for the same headword, when the Danki CLI converts this file, it shall detect duplicate entries (same headword) and handle them in the following two steps:
 
     - Compare duplicates with the first entry in all fields and report mismatching fields on the command line output.
     - Keep just the first occurrence and drop all later ones,
 
-4. Given an HTML input file, when the Danki CLI converts this file, the resulting CSV schema shall use the field names of the CONTEXT file in the specified order.
-5. Given an HTML input file with malformed XML, when the Danki CLI converts this file, Danki reports an error.
-6. Given an HTML input file, when a paragraph starts with "#", ignore it silently.
+4. Given an input file, when the Danki CLI converts this file, the resulting CSV schema shall use the field names of the CONTEXT file in the specified order.
+5. Given an input file with malformed XML, when the Danki CLI converts this file, Danki reports an error.
+6. Given an input file, when a paragraph starts with "#", ignore it silently.
 
 Non-functional criteria
 -----------------------
@@ -56,7 +56,7 @@ Component design decisions
 File parsing rules
 ------------------
 
-- Take each HTML paragraph (``<p>``), one-by one.
+- Take each HTML of FODT paragraph (``<{namepace}p>``), one-by one.
 - Paragraph selection regex: ``r'^[\S].*\s{3,}.*\d+\s*$'`` (Unicode-aware). Non-matches logged with paragraph index + first 20 chars.
 - Extract the fields from a matching paragraph with the *field extraction rules* of the next section.
 - Duplicate policy: canonical key = normalized `Headword`. Keep first-seen entry; on later occurrences perform exact trimmed equality for all exported fields; on any difference, log mismatch warning with differing fields and both values; do not abort.
@@ -65,10 +65,10 @@ Field extraction rules
 ----------------------
 
 `FullFormDisplay`: 
-    Two options
-    
-    - Text from paragraph start up to the first 2+ spaces.
-    - Content of first HTML *span* element.
+    This field starts at the beginning of the paragraph. It ends when the following two conditions are fulfilled at the same time:
+
+    1. A *span* element ends and
+    2. The last letter of the *span* element or next letter after the *span* is a whitespace separator, but it is not preceded with a "/" or ",". In other words, a pure white space separator terminates `FullFormDisplay`, but ", " and "/ " do not.
 
 `FullFormNormalized`:
     NFKD → strip combining marks → collapse whitespace.

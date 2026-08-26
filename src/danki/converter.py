@@ -40,6 +40,30 @@ def _normalize_nfkd_strip(s: str) -> str:
     return re.sub(r"\s+", " ", stripped).strip()
 
 
+def _text_pieces_from_node(node: Element) -> list[str]:
+    tag_s_full_name = "{urn:oasis:names:tc:opendocument:xmlns:text:1.0}s"
+    attrib_c_full_name = "{urn:oasis:names:tc:opendocument:xmlns:text:1.0}c"
+    if node.tag == tag_s_full_name:
+        count = int(node.get(attrib_c_full_name) or "1")
+        # include tail text of the <s> element (e.g. following text in the same span)
+        tail = node.tail or ""
+        return " " * count + tail
+
+    pieces = []
+    if node.text:
+        pieces.append(node.text)
+    for child in node:
+        pieces.extend(_text_pieces_from_node(child))
+    if node.tail:
+        pieces.append(node.tail)
+
+    return pieces
+
+
+def _text_from_node(node: Element) -> str:
+    return "".join(_text_pieces_from_node(node))
+
+
 class _ElementTreeParagraphExtractor:
     def paragraphs(self, tree: ElementTree):
         root = tree.getroot()
@@ -47,27 +71,77 @@ class _ElementTreeParagraphExtractor:
         for elem in root.iter():
             if _local_name(elem.tag).lower() == "p":
                 idx += 1
-                text = "".join(elem.itertext()).strip()
+                text = _text_from_node(elem).strip()
                 yield idx, text, elem
 
 
 class _StyleInspector:
     def __init__(self, tree: ElementTree):
         self.blue_classes = set()
+        root_tag = tree.getroot().tag
+        if root_tag == "{http://www.w3.org/1999/xhtml}html":
+            self._scan_styles_element = self._scan_styles_element_html
+            self._is_top500 = self._is_top500_html
+        elif root_tag == "{urn:oasis:names:tc:opendocument:xmlns:office:1.0}document":
+            self._scan_styles_element = self._scan_styles_element_odt
+            self._is_top500 = self._is_top500_odt
+        else:
+            msg = f"Unknown XML format. Root tag is {root_tag}."
+            raise RuntimeError(msg)
         self._scan_styles(tree)
 
     def _scan_styles(self, tree: ElementTree) -> None:
-        style_text = ""
         for elem in tree.getroot().iter():
-            if _local_name(elem.tag).lower() == "style" and elem.text:
-                style_text += elem.text + "\n"
-        # find class names that set color:#0070c0
-        for m in re.finditer(
-            r"\.([A-Za-z0-9_-]+)\s*\{[^}]*color\s*:\s*#0070c0\b", style_text, flags=re.IGNORECASE
-        ):
-            self.blue_classes.add(m.group(1))
+            self._scan_styles_element(elem)
+
+    def _scan_styles_element_html(self, elem: Element) -> None:
+        # collect inline CSS from HTML <style> elements
+        if _local_name(elem.tag).lower() == "style" and elem.text:
+            for m in re.finditer(
+                r"\.([A-Za-z0-9_-]+)\s*\{[^}]*color\s*:\s*#0070c0\b", elem.text, flags=re.IGNORECASE
+            ):
+                self.blue_classes.add(m.group(1))
+
+    def _scan_styles_element_odt(self, elem: Element) -> None:
+        # For OpenDocument style:style elements, inspect nested text-properties
+        if _local_name(elem.tag).lower() == "style":
+            # try to find a style name attribute (style:name)
+            style_name = None
+            for k, v in elem.attrib.items():
+                if _local_name(k).lower() == "name":
+                    style_name = v
+                    break
+            if style_name:
+                # look for any attribute value in this style subtree that contains the target color
+                found = False
+                for child in elem.iter():
+                    for av in child.attrib.values():
+                        if isinstance(av, str) and "#0070c0" in av.lower():
+                            self.blue_classes.add(style_name)
+                            found = True
+                            break
+                    if found:
+                        break
 
     def is_top500(self, para_elem: Element) -> bool:
+        return self._is_top500(para_elem)
+
+    def _is_top500_odt(self, para_elem: Element) -> bool:
+        # check any attribute values (e.g., class names, style-name) against known blue style names
+        for e in para_elem.iter():
+            # check direct attribute values for a matching style-name or color
+            for av in e.attrib.values():
+                if not av:
+                    continue
+                # direct style-name reference (e.g. text:style-name -> 'T11')
+                if av in self.blue_classes:
+                    return True
+                # inline color attributes (e.g. fo:color) or inline CSS fragments
+                if isinstance(av, str) and "#0070c0" in av.lower():
+                    return True
+        return False
+
+    def _is_top500_html(self, para_elem: Element) -> bool:
         # check class attribute on paragraph
         cls = para_elem.get("class") or ""
         for c in cls.split():
@@ -97,8 +171,20 @@ def _first_span_text(elem: Element) -> str:
     raise ValueError(msg)
 
 
-def _extract_full_form_display(xml_element: Element, _plain_text: str) -> str:
-    return _first_span_text(xml_element)
+def _extract_full_form_display(paragraph_element: Element, _plain_text: str) -> str:
+    pieces = _text_pieces_from_node(paragraph_element)
+    result = ""
+
+    for p in pieces:
+        if len(result) >= 2:  # noqa: PLR2004
+            if result[-1] == " " and result[-2] not in ("/", ","):
+                return result.strip()
+            if p[0] == " " and result[-1] not in ("/", ","):
+                return result.strip()
+        result += p
+
+    msg = f"Could not find full_form_display in {pieces}."
+    raise ValueError(msg)
 
 
 def _snippet(text: str) -> str:

@@ -15,7 +15,30 @@ class _FakeConsole:
         self.messages.append(" ".join(str(a) for a in args))
 
 
-def _make_tree(body: str) -> ET.ElementTree:
+def _make_fodt(body: str) -> ET.ElementTree:
+    xml = (
+        """\
+<?xml version="1.0" encoding="UTF-8"?>
+<office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0">
+ <office:automatic-styles>
+  <style:style style:name="T11" style:family="text">
+   <style:text-properties fo:color="#0070c0" loext:opacity="100%" fo:font-family="Calibri" style:font-family-generic="swiss" style:font-pitch="variable" fo:font-size="10.5pt" fo:font-weight="bold" style:font-family-asian="MercuryTextG1-Roman" style:font-family-generic-asian="system" style:font-pitch-asian="variable" style:font-size-asian="10.5pt" style:font-weight-asian="bold" style:font-family-complex="MercuryTextG1-Roman" style:font-family-generic-complex="system" style:font-pitch-complex="variable" style:font-size-complex="10.5pt"/>
+  </style:style>
+ </office:automatic-styles>
+ <office:body>
+  <office:text text:use-soft-page-breaks="true">
+"""
+        + body
+        + """
+  </office:text>
+ </office:body>
+</office:document>
+"""
+    )
+    return ET.ElementTree(ET.fromstring(xml))
+
+
+def _make_html(body: str) -> ET.ElementTree:
     xml = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         """
@@ -34,11 +57,19 @@ def _make_tree(body: str) -> ET.ElementTree:
     return ET.ElementTree(ET.fromstring(xml))
 
 
-def _run_conversion(body, expected_csv, book):
+def _run_conversion(body: str, expected_csv: str, book: str) -> _FakeConsole:
     expected_head_line = "Headword,FullFormDisplay,FullFormNormalized,PartOfSpeech,NotesForeign,Meanings,NumberOfMeanings,NotesNative,MnemonicHint,PronunciationText,AudioUrl,ReferenceBook,ReferenceSection,Exercise1Front,Exercise1Back,Exercise2Front,Exercise2Back,Exercise3Front,Exercise3Back,Tags"
-    tree = _make_tree(body)
     out = io.StringIO()
     console = _FakeConsole()
+
+    if body.startswith("<p"):
+        tree = _make_html(body)
+    elif body.startswith("<text:p"):
+        tree = _make_fodt(body)
+    else:
+        body_snippet = body[: min(len(body), 10)]
+        msg = f"Unknown type of body for test case. Body starts with {body_snippet}"
+        raise ValueError(msg)
 
     converter.convert(tree, out, book, console)
 
@@ -124,6 +155,14 @@ def _run_conversion(body, expected_csv, book):
         (
             '<p class="paragraph-P6"><span class="text-T13">et ... et</span><span class="text-T6">    sowohl ... als auch</span><span class="text-T8">35</span></p>',  # noqa: RUF001
             "et ... et,et ... et,et ... et,,,sowohl ... als auch,1,,,,,book1,35,,,,,,,Top500",
+        ),
+        (
+            '<text:p text:style-name="P25" loext:marker-style-name="T16"><text:span text:style-name="T17">Alexander, Alexandrī</text:span><text:span text:style-name="T19"> <text:s text:c="2"/></text:span><text:span text:style-name="T20"><text:s/>Alexander der Große </text:span><text:span text:style-name="T21">(König von Makedonien)</text:span><text:span text:style-name="T22">38</text:span></text:p>',
+            'Alexander,"Alexander, Alexandrī","Alexander, Alexandri",,,Alexander der Große (König von Makedonien),1,,,,,book1,38,,,,,,,',
+        ),
+        (
+            '<text:p text:style-name="P25" loext:marker-style-name="T24"><text:span text:style-name="T11">bene</text:span><text:span text:style-name="T20"> </text:span><text:span text:style-name="T21">Adv. <text:s text:c="3"/></text:span><text:span text:style-name="T20">gut</text:span><text:span text:style-name="T22">4</text:span></text:p>',
+            "bene,bene,bene,Adverb,Adv.,gut,1,,,,,book1,4,,,,,,,Top500",
         ),
     ],
 )
