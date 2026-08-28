@@ -176,11 +176,11 @@ def _extract_full_form_display(paragraph_element: Element, _plain_text: str) -> 
     result = ""
 
     for p in pieces:
-        if len(result) >= 2:  # noqa: PLR2004
-            if result[-1] == " " and result[-2] not in ("/", ","):
-                return result.strip()
-            if p[0] == " " and result[-1] not in ("/", ","):
-                return result.strip()
+        if len(result) >= 2 and (
+            (result[-1] == " " and result[-2] not in ("/", ","))
+            or (p[0] == " " and result[-1] not in ("/", ","))
+        ):  # noqa: PLR2004
+            return result.strip()
         result += p
 
     msg = f"Could not find full_form_display in {pieces}."
@@ -192,6 +192,25 @@ def _snippet(text: str) -> str:
         return ""
     snippet_length = min(len(text), 60)
     return text[:snippet_length].replace("\n", " ")
+
+
+def _compress_full_form_display(s: str) -> str:
+    """If `s` contains three comma-separated forms that share a common
+    prefix and the suffixes are exactly 'us', 'a', 'um', compress them to
+    the form: <fullfirst>, <second-suffix>, <third-suffix>.
+    Example: "beātus, beāta, beātum" -> "beātus, a, um".
+    """
+    parts = [p.strip() for p in s.split(",")]
+    if len(parts) != 3:  # noqa: PLR2004
+        return s.strip()
+
+    a, b, c = parts
+
+    sa = "us"
+    if len(a) > len(sa) and a[-2:] == sa and b == a[:-2] + "a" and c == a[:-2] + "um":
+        return f"{a}, a, um"
+
+    return s.strip()
 
 
 def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None:
@@ -224,8 +243,9 @@ def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None
         left = text[: m.start()].strip()
         right = text[m.end() :].strip()
 
-        full_form_display = _extract_full_form_display(elem, text)
-        notes_foreign = left[len(full_form_display) :].strip()
+        pre_full_form_display = _extract_full_form_display(elem, text)
+        notes_foreign = left[len(pre_full_form_display) :].strip()
+        full_form_display = _compress_full_form_display(pre_full_form_display)
         full_form_normalized = _normalize_nfkd_strip(full_form_display)
         headword = full_form_normalized.split(",")[0]
 

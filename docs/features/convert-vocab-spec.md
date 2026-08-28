@@ -70,6 +70,10 @@ Field extraction rules
     1. A *span* element ends and
     2. The last letter of the *span* element or next letter after the *span* is a whitespace separator, but it is not preceded with a "/" or ",". In other words, a pure white space separator terminates `FullFormDisplay`, but ", " and "/ " do not.
 
+    If this field contains three comma-separated elements that are the same except for the prefix "us", "a", "um", then compress it like in the following example:
+
+        beātus, beāta, beātum  ->  beātus, a, um
+
 `FullFormNormalized`:
     NFKD → strip combining marks → collapse whitespace.
 
