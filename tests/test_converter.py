@@ -113,6 +113,10 @@ def _run_conversion(body: str, expected_csv: str, book: str) -> _FakeConsole:
             'ostendere,"ostendere, ostendō, ostendī","ostendere, ostendo, ostendi",,,"zeigen, erklären",2,,,,,book1,16;28,,,,,,,',
         ),
         (
+            "<p><span>beātus, beāta,beātum</span>    glücklich, reich36</p>",
+            'beatus,"beātus, a, um","beatus, a, um",,,"glücklich, reich",2,,,,,book1,36,,,,,,,',
+        ),
+        (
             '<p class="paragraph-P5"><span class="text-T13">auxilium</span><span class="text-T14">    die Hilfe</span><span class="text-T15">15</span></p>',  # noqa: RUF001
             "auxilium,auxilium,auxilium,,,die Hilfe,1,,,,,book1,15,,,,,,,Top500",
         ),
