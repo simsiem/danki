@@ -171,21 +171,102 @@ def _run_conversion(body: str, expected_csv: str, book: str) -> _FakeConsole:
     ],
 )
 def test_single_paragraph_variants(body, expected_csv_row):
-    _run_conversion(body, expected_csv_row, "book1")
+    console = _run_conversion(body, expected_csv_row, "book1")
+
+    is_mismatch = any("Mismatch for" in m for m in console.messages)
+    assert not is_mismatch, f"Conversion free of warnings, got: {console.messages}"
 
 
-def test_duplicate_mismatch_logs_and_keep_first():
-    body = """\
+@pytest.mark.parametrize(
+    ("body", "expected_csv"),
+    [
+        (
+            # Mismatch in Meanings
+            """\
 <p><span>ācer</span>   energisch 32</p>
+<p><span>et</span>    und 5</p>
 <p><span>ācer</span>   anders 32</p>
-"""
-    expected_csv = "acer,ācer,acer,,,energisch,1,,,,,book1,32,,,,,,,"
-
+""",
+            """\
+acer,ācer,acer,,,energisch,1,,,,,book1,32,,,,,,,
+et,et,et,,,und,1,,,,,book1,5,,,,,,,
+""",
+        ),
+        (
+            # Mismatch in Meanings
+            """\
+<p><span>ācer</span>   energisch 32</p>
+<p><span>et</span>    und 5</p>
+<p><span>ācer</span>   energisch 3</p>
+""",
+            """\
+acer,ācer,acer,,,energisch,1,,,,,book1,32,,,,,,,
+et,et,et,,,und,1,,,,,book1,5,,,,,,,
+""",
+        ),
+        (
+            # Mismatch in joint grammatical subform
+            """\
+<p><span>audīre, audiō</span>    hören, lernen32</p>
+<p><span>audīre, audio, audīvī, audītum</span>    hören, lernen32</p>
+""",
+            'audire,"audīre, audiō","audire, audio",,,"hören, lernen",2,,,,,book1,32,,,,,,,',
+        ),
+        (
+            # Correct mismatch behaviour if new entry offers better FullFormDisplay.
+            # Expanded FullFormDisplay taken from new entry, but other values taken from old entry.
+            # Report a mismatch in Meanings.
+            """\
+<p><span>audīre, audiō</span>    hören, lernen32</p>
+<p><span>audīre, audiō, audīvī, audītum</span>    hören32</p>
+""",
+            'audire,"audīre, audiō, audīvī, audītum","audire, audio, audivi, auditum",,,"hören, lernen",2,,,,,book1,32,,,,,,,',
+        ),
+    ],
+)
+def test_duplicate_mismatch_logs_and_keep_first(body, expected_csv):
     console = _run_conversion(body, expected_csv, "book1")
 
-    # mismatch warning present
-    found = any("Mismatch for" in m for m in console.messages)
-    assert found, f"Expected mismatch log, got: {console.messages}"
+    is_mismatch = any("Mismatch for" in m for m in console.messages)
+    assert is_mismatch, f"Expected mismatch log, got: {console.messages}"
+
+
+@pytest.mark.parametrize(
+    ("body", "expected_csv"),
+    [
+        (
+            # Correct grammatical forms in second paragraph. Keep second paragraph.
+            """\
+<p><span>audīre, audiō</span>    hören, lernen32</p>
+<p><span>audīre, audiō, audīvī, audītum</span>    hören, lernen32</p>
+""",
+            'audire,"audīre, audiō, audīvī, audītum","audire, audio, audivi, auditum",,,"hören, lernen",2,,,,,book1,32,,,,,,,',
+        ),
+        (
+            # Correct grammatical forms in first paragraph. Keep first paragraph.
+            """\
+<p><span>Rōma, Rōmae</span>    die Stadt Rom32</p>
+<p><span>Rōma</span>    die Stadt Rom32</p>
+""",
+            'Roma,"Rōma, Rōmae","Roma, Romae",,,die Stadt Rom,1,,,,,book1,32,,,,,,,',
+        ),
+        (
+            # Correct grammatical forms in first paragraph. Keep first paragraph.
+            """\
+<p><span>Rōma, Rōmae</span>    die Stadt Rom32</p>
+<p><span>Rōma, Rōmae</span>    die Stadt Rom32.21</p>
+""",
+            'Roma,"Rōma, Rōmae","Roma, Romae",,,die Stadt Rom,1,,,,,book1,21;32,,,,,,,',
+        ),
+    ],
+)
+def test_duplicate_merge(body, expected_csv):
+    console = _run_conversion(body, expected_csv, "book1")
+
+    is_mismatch = any("Mismatch for" in m for m in console.messages)
+    assert not is_mismatch, f"Conversion free of warnings, got: {console.messages}"
+    is_merge = any("Merge" in m for m in console.messages)
+    assert is_merge, f"Expected info about a merge, got: {console.messages}"
 
 
 def test_non_matching_paragraph_logged():
@@ -194,5 +275,5 @@ def test_non_matching_paragraph_logged():
 
     console = _run_conversion(body, "", "")
 
-    found = any(m.startswith("Info: paragraph") for m in console.messages)
-    assert found, f"Expected info about non-matching paragraph, got: {console.messages}"
+    found = any(m.startswith("WARNING: Paragraph") for m in console.messages)
+    assert found, f"Expected warning about non-matching paragraph, got: {console.messages}"

@@ -172,14 +172,14 @@ def _first_span_text(elem: Element) -> str:
 
 
 def _extract_full_form_display(paragraph_element: Element, _plain_text: str) -> str:
-    pieces = _text_pieces_from_node(paragraph_element)
     result = ""
+    pieces = _text_pieces_from_node(paragraph_element)
 
     for p in pieces:
-        if len(result) >= 2 and (
+        if len(result) >= 2 and (  # noqa: PLR2004
             (result[-1] == " " and result[-2] not in ("/", ","))
             or (p[0] == " " and result[-1] not in ("/", ","))
-        ):  # noqa: PLR2004
+        ):
             return result.strip()
         result += p
 
@@ -213,6 +213,86 @@ def _compress_full_form_display(s: str) -> str:
     return s.strip()
 
 
+def _part_of_speech_from_notes_foreign(notes_foreign) -> str:
+    pos_regex_to_name = {
+        re.compile(r"Präp\."): "Präposition",
+        re.compile(r"Adv\."): "Adverb",
+        re.compile(r"Subj\."): "Subjunktion",
+        re.compile(r"^[mfn]$"): "Nomen",
+        re.compile(r"[mfn]\s"): "Nomen",
+        re.compile(r"m/f"): "Nomen",
+    }
+    for regex, pos_name in pos_regex_to_name.items():
+        if regex.search(notes_foreign):
+            return pos_name
+    return ""
+
+
+def _format_mismatch(field: str, info: str) -> str:
+    return f"WARNING: Mismatch for {field} - {info}."
+
+
+def _format_merge(field: str, info: str) -> str:
+    return f"INFO: Merge {field} - {info}."
+
+
+def _split_to_int_set(text: str, sep: str) -> set[int]:
+    return {int(part) for part in text.split(sep)}
+
+
+def _merge_non_empty(field, previous, later) -> tuple[str | None, str]:
+    if previous == later:
+        return None, previous
+    if previous == "":
+        msg = _format_merge(field, f'previous = "", chosen = "{later}"')
+        return msg, later
+    if later == "":
+        msg = _format_merge(field, f'later = "", chosen = "{previous}"')
+        return msg, previous
+    msg = _format_mismatch(field, f'previous = "{previous}", later = "{later}"')
+    return msg, previous
+
+
+def _merge_exact_match(field, previous: str, later: str) -> tuple[str | None, str]:
+    if previous == later:
+        return None, previous
+    msg = _format_mismatch(field, f'previous = "{previous}", later = "{later}"')
+    return msg, previous
+
+
+def _merge_sets(field, previous: set[int], later: set[int]) -> tuple[str | None, set[int]]:
+    if previous == later:
+        return None, previous
+
+    if previous.issubset(later):
+        msg = _format_merge(field, f'previous = "{previous}", chosen = "{later}"')
+        return msg, later
+    if later.issubset(previous):
+        msg = _format_merge(field, f'later = "{later}", chosen = "{previous}"')
+        return msg, previous
+
+    msg = _format_mismatch(field, f'previous = "{previous}", later = "{later}"')
+    return msg, previous
+
+
+def _merge_full_form_display(previous, later) -> tuple[str | None, str]:
+    if previous == later:
+        return None, previous
+
+    previous_parts = [part.strip() for part in previous.split(",")]
+    later_parts = [part.strip() for part in later.split(",")]
+
+    common_range = min(len(previous_parts), len(later_parts))
+    if all(previous_parts[i] == later_parts[i] for i in range(common_range)):
+        if len(later_parts) > len(previous_parts):
+            msg = _format_merge("FullFormDisplay", f'previous = "{previous}", chosen = "{later}"')
+            return msg, later
+        msg = _format_merge("FullFormDisplay", f'later = "{later}", chosen = "{previous}"')
+        return msg, previous
+    msg = _format_mismatch("FullFormDisplay", f'previous = "{previous}", later = "{later}"')
+    return msg, previous
+
+
 def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None:
     """Convert vocabulary from the provided ElementTree and write CSV to out_file.
     All arguments are required. Raises an exception on error."""
@@ -225,15 +305,21 @@ def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None
     )
     writer.writeheader()
 
-    seen = {}
-    created = 0
+    vocabulary_list = {}
 
     for idx, text, elem in extractor.paragraphs(tree):
+        #
+        # Identify paragraph with a vocabulary entry
+        #
         if len(text) == 0 or text[0] == "#":
             continue
         if not vocabulary_paragraph_pattern.match(text):
-            console_obj.print(f"Info: paragraph {idx} not matched: {_snippet(text)}")
+            console_obj.print(f"WARNING: Paragraph {idx} not matched: {_snippet(text)}")
             continue
+
+        #
+        # Extract fields from paragraph
+        #
 
         # split by last run of 3+ spaces
         m = re.search(r"\s{3,}(?!.*\s{3,})", text)
@@ -244,10 +330,9 @@ def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None
         right = text[m.end() :].strip()
 
         pre_full_form_display = _extract_full_form_display(elem, text)
-        notes_foreign = left[len(pre_full_form_display) :].strip()
-        full_form_display = _compress_full_form_display(pre_full_form_display)
-        full_form_normalized = _normalize_nfkd_strip(full_form_display)
-        headword = full_form_normalized.split(",")[0]
+        extracted_full_form_display = _compress_full_form_display(pre_full_form_display)
+        headword = _normalize_nfkd_strip(extracted_full_form_display.split(",")[0])
+        extracted_notes_foreign = left[len(pre_full_form_display) :].strip()
 
         m = re.match(r"(?s)^(?P<mean>.*?)(?P<numbers>\d+(?:[.,]\s*\d+)*)\s*$", right)
         if not m:
@@ -256,85 +341,96 @@ def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None
             )
             continue
 
-        meanings = m.group("mean").strip()
-        number_of_meanings = meanings.count(",") + meanings.count(";") + 1
+        extracted_meanings = m.group("mean").strip()
 
         numbers_raw = m.group("numbers")
         refs = re.split(r"[.,]\s*", numbers_raw)
-        reference_section = ";".join(r.strip() for r in refs if r.strip())
-
-        pos_regex_to_name = {
-            re.compile(r"Präp\."): "Präposition",
-            re.compile(r"Adv\."): "Adverb",
-            re.compile(r"Subj\."): "Subjunktion",
-            re.compile(r"^[mfn]$"): "Nomen",
-            re.compile(r"[mfn]\s"): "Nomen",
-            re.compile(r"m/f"): "Nomen",
-        }
-        for regex, pos_name in pos_regex_to_name.items():
-            if regex.search(notes_foreign):
-                part_of_speech = pos_name
-                break
-        else:
-            part_of_speech = ""
+        extracted_reference_sections = {int(r.strip()) for r in refs if r.strip()}
 
         # detect Top500 tag via style inspector
-        tags = []
+        extracted_tags = []
         if styler.is_top500(elem):
-            tags.append("Top500")
+            extracted_tags.append("Top500")
 
-        # dedup by headword (exact string)
-        key = headword
-        row = {
+        #
+        # Merge extracted fields with previous entry if available
+        #
+
+        if headword in vocabulary_list:
+            messages = []
+            prev = vocabulary_list[headword]
+
+            msg, new_full_form_display = _merge_full_form_display(
+                prev["FullFormDisplay"], extracted_full_form_display
+            )
+            if msg:
+                messages.append(msg)
+
+            msg, new_notes_foreign = _merge_non_empty(
+                "NotesForeign", prev["NotesForeign"], extracted_notes_foreign
+            )
+            if msg:
+                messages.append(msg)
+
+            msg, new_meanings = _merge_exact_match("Meanings", prev["Meanings"], extracted_meanings)
+            if msg:
+                messages.append(msg)
+
+            msg, new_reference_section = _merge_sets(
+                "ReferenceSection",
+                _split_to_int_set(prev["ReferenceSection"], ";"),
+                extracted_reference_sections,
+            )
+            if msg:
+                messages.append(msg)
+
+            extracted_tags_string = ";".join(extracted_tags)
+            msg, new_tags = _merge_non_empty("Tags", prev["Tags"], extracted_tags_string)
+            if msg:
+                messages.append(msg)
+
+            with_info_messages = True
+            print_logs = len(messages) > 0 if with_info_messages else any("WARNING" in m for m in messages)
+            if print_logs:
+                console_obj.print(f'Changes for "{headword}" in paragraph {idx}:')
+                for msg in messages:
+                    console_obj.print("- " + msg)
+
+        else:
+            new_full_form_display = extracted_full_form_display
+            new_notes_foreign = extracted_notes_foreign
+            new_meanings = extracted_meanings
+            new_reference_section = extracted_reference_sections
+            new_tags = ";".join(extracted_tags)
+
+        #
+        # Update vocabulary list
+        #
+        vocabulary_list[headword] = {
             "Headword": headword,
-            "FullFormDisplay": full_form_display,
-            "FullFormNormalized": full_form_normalized,
-            "PartOfSpeech": part_of_speech,
-            "NotesForeign": notes_foreign,
-            "Meanings": meanings,
-            "NumberOfMeanings": number_of_meanings,
+            "FullFormDisplay": new_full_form_display,
+            "FullFormNormalized": _normalize_nfkd_strip(new_full_form_display),
+            "PartOfSpeech": _part_of_speech_from_notes_foreign(new_notes_foreign),
+            "NotesForeign": new_notes_foreign,
+            "Meanings": new_meanings,
+            "NumberOfMeanings": new_meanings.count(",") + new_meanings.count(";") + 1,
             "NotesNative": "",
             "MnemonicHint": "",
             "PronunciationText": "",
             "AudioUrl": "",
             "ReferenceBook": book,
-            "ReferenceSection": reference_section,
+            "ReferenceSection": ";".join(map(str, sorted(new_reference_section))),
             "Exercise1Front": "",
             "Exercise1Back": "",
             "Exercise2Front": "",
             "Exercise2Back": "",
             "Exercise3Front": "",
             "Exercise3Back": "",
-            "Tags": ";".join(tags),
+            "Tags": new_tags,
         }
 
-        if key in seen:
-            prev = seen[key]
-            # compare all fields for exact equality (trimmed)
-            diffs = []
-            for f in (
-                "FullFormDisplay",
-                "FullFormNormalized",
-                "PartOfSpeech",
-                "NotesForeign",
-                "Meanings",
-                "NumberOfMeaningsReferenceSection",
-                "Tags",
-            ):
-                a = (prev.get(f) or "").strip()
-                b = (row.get(f) or "").strip()
-                if a != b:
-                    diffs.append((f, a, b))
-            if diffs:
-                msg_lines = [f"Mismatch for '{key}' in paragraph {idx}:"]
-                for f, a, b in diffs:
-                    msg_lines.append(f" - {f}: first='{a}' later='{b}'")
-                console_obj.print("\n".join(msg_lines))
-            # keep first entry
-            continue
-
+    for row in vocabulary_list.values():
         writer.writerow(row)
-        seen[key] = row
-        created += 1
 
-    console_obj.print(f"Converted {created} entries (from {len(seen)} unique headwords)")
+    created = len(vocabulary_list)
+    console_obj.print(f"Converted {created} entries.")
