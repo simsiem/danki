@@ -301,7 +301,7 @@ def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None
     styler = _StyleInspector(tree)
     vocabulary_paragraph_pattern = re.compile(r"^[\S].*\s{3,}.*\d+\s*$", re.UNICODE)
     writer = csv.DictWriter(
-        out_file, fieldnames=_FIELDNAMES, quoting=csv.QUOTE_MINIMAL, extrasaction="ignore"
+        out_file, fieldnames=_FIELDNAMES, lineterminator="\n", quoting=csv.QUOTE_MINIMAL, extrasaction="ignore"
     )
     writer.writeheader()
 
@@ -429,8 +429,8 @@ def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None
             "Tags": new_tags,
         }
 
-    for row in vocabulary_list.values():
+    sorted_vocabulary_list = sorted(vocabulary_list.values(), key=lambda row: row["Headword"].lower())
+    for row in sorted_vocabulary_list:
         writer.writerow(row)
 
-    created = len(vocabulary_list)
-    console_obj.print(f"Converted {created} entries.")
+    console_obj.print(f"Converted {len(vocabulary_list)} entries.")

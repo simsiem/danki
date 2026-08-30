@@ -35,7 +35,7 @@ Functional criteria
     - Compare duplicates with the first entry in all fields and report mismatching fields on the command line output.
     - Keep just the first occurrence and drop all later ones,
 
-4. Given an input file, when the Danki CLI converts this file, the resulting CSV schema shall use the field names of the CONTEXT file in the specified order.
+4. Given an input file, when the Danki CLI converts this file, the resulting CSV schema shall use the field names of the CONTEXT file in the specified order and sorted alphabetically according to `Headword`.
 5. Given an input file with malformed XML, when the Danki CLI converts this file, Danki reports an error.
 6. Given an input file, when a paragraph starts with "#", ignore it silently.
 
