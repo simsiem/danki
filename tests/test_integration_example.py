@@ -6,14 +6,7 @@ from xml.etree import ElementTree as ET
 import pytest
 
 from danki import converter
-
-
-class SimpleConsole:
-    def __init__(self):
-        self.messages = []
-
-    def print(self, *args, **_):
-        self.messages.append(" ".join(str(a) for a in args))
+from tests.convert_helpers import FakeConsole
 
 
 @pytest.mark.parametrize(
@@ -26,7 +19,7 @@ def test_integration_convert_example(file, row_count):
 
     tree = ET.parse(str(input_path))
     out = io.StringIO()
-    console = SimpleConsole()
+    console = FakeConsole()
 
     converter.convert(tree, out, "example_school_book_input", console)
 

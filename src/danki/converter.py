@@ -4,6 +4,9 @@ import unicodedata
 from typing import TextIO
 from xml.etree.ElementTree import Element, ElementTree
 
+type Reader = ElementTree | csv.DictReader
+
+
 _FIELDNAMES = [
     "Headword",
     "FullFormDisplay",
@@ -293,38 +296,112 @@ def _merge_full_form_display(previous, later) -> tuple[str | None, str]:
     return msg, previous
 
 
-def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None:
-    """Convert vocabulary from the provided ElementTree and write CSV to out_file.
-    All arguments are required. Raises an exception on error."""
+def _merge(headword, prev, extracted) -> tuple[list[str], dict[str, any]]:
+    new = {"Headword": headword}
+    messages = []
 
+    msg, new["FullFormDisplay"] = _merge_full_form_display(
+        prev["FullFormDisplay"], extracted["FullFormDisplay"]
+    )
+    if msg:
+        messages.append(msg)
+
+    msg, new["NotesForeign"] = _merge_non_empty(
+        "NotesForeign", prev["NotesForeign"], extracted["NotesForeign"]
+    )
+    if msg:
+        messages.append(msg)
+
+    msg, new["Meanings"] = _merge_exact_match("Meanings", prev["Meanings"], extracted["Meanings"])
+    if msg:
+        messages.append(msg)
+
+    msg, new["NotesNative"] = _merge_non_empty("NotesNative", prev["NotesNative"], extracted["NotesNative"])
+    if msg:
+        messages.append(msg)
+
+    msg, new["MnemonicHint"] = _merge_non_empty(
+        "MnemonicHint", prev["MnemonicHint"], extracted["MnemonicHint"]
+    )
+    if msg:
+        messages.append(msg)
+
+    msg, new["PronunciationText"] = _merge_non_empty(
+        "PronunciationText", prev["PronunciationText"], extracted["PronunciationText"]
+    )
+    if msg:
+        messages.append(msg)
+
+    msg, new["AudioUrl"] = _merge_non_empty("AudioUrl", prev["AudioUrl"], extracted["AudioUrl"])
+    if msg:
+        messages.append(msg)
+
+    msg, new["ReferenceSection"] = _merge_sets(
+        "ReferenceSection",
+        _split_to_int_set(prev["ReferenceSection"], ";"),
+        extracted["ReferenceSection"],
+    )
+    if msg:
+        messages.append(msg)
+
+    msg, new["Exercise1Front"] = _merge_non_empty(
+        "Exercise1Front", prev["Exercise1Front"], extracted["Exercise1Front"]
+    )
+    if msg:
+        messages.append(msg)
+
+    msg, new["Exercise1Back"] = _merge_non_empty(
+        "Exercise1Back", prev["Exercise1Back"], extracted["Exercise1Back"]
+    )
+    if msg:
+        messages.append(msg)
+
+    msg, new["Exercise2Front"] = _merge_non_empty(
+        "Exercise2Front", prev["Exercise2Front"], extracted["Exercise2Front"]
+    )
+    if msg:
+        messages.append(msg)
+
+    msg, new["Exercise2Back"] = _merge_non_empty(
+        "Exercise2Back", prev["Exercise2Back"], extracted["Exercise2Back"]
+    )
+    if msg:
+        messages.append(msg)
+
+    msg, new["Exercise3Front"] = _merge_non_empty(
+        "Exercise3Front", prev["Exercise3Front"], extracted["Exercise3Front"]
+    )
+    if msg:
+        messages.append(msg)
+
+    msg, new["Exercise3Back"] = _merge_non_empty(
+        "Exercise3Back", prev["Exercise3Back"], extracted["Exercise3Back"]
+    )
+    if msg:
+        messages.append(msg)
+
+    msg, new["Tags"] = _merge_non_empty("Tags", prev["Tags"], extracted["Tags"])
+    if msg:
+        messages.append(msg)
+
+    return messages, new
+
+
+def _iter_entries_from_tree(tree: ElementTree):
     extractor = _ElementTreeParagraphExtractor()
     styler = _StyleInspector(tree)
     vocabulary_paragraph_pattern = re.compile(r"^[\S].*\s{3,}.*\d+\s*$", re.UNICODE)
-    writer = csv.DictWriter(
-        out_file, fieldnames=_FIELDNAMES, lineterminator="\n", quoting=csv.QUOTE_MINIMAL, extrasaction="ignore"
-    )
-    writer.writeheader()
-
-    vocabulary_list = {}
 
     for idx, text, elem in extractor.paragraphs(tree):
-        #
-        # Identify paragraph with a vocabulary entry
-        #
         if len(text) == 0 or text[0] == "#":
             continue
         if not vocabulary_paragraph_pattern.match(text):
-            console_obj.print(f"WARNING: Paragraph {idx} not matched: {_snippet(text)}")
+            yield {"__warning__": f"Paragraph {idx} not matched: {_snippet(text)}"}
             continue
 
-        #
-        # Extract fields from paragraph
-        #
-
-        # split by last run of 3+ spaces
         m = re.search(r"\s{3,}(?!.*\s{3,})", text)
         if not m:
-            console_obj.print(f"Warning: paragraph {idx} unexpected format, skipping: {_snippet(text)}")
+            yield {"__warning__": f"paragraph {idx} unexpected format, skipping: {_snippet(text)}"}
             continue
         left = text[: m.start()].strip()
         right = text[m.end() :].strip()
@@ -336,98 +413,129 @@ def convert(tree: ElementTree, out_file: TextIO, book: str, console_obj) -> None
 
         m = re.match(r"(?s)^(?P<mean>.*?)(?P<numbers>\d+(?:[.,]\s*\d+)*)\s*$", right)
         if not m:
-            console_obj.print(
-                f"Warning: paragraph {idx} missing trailing numbers, dropping entry: {_snippet(text)}"
-            )
+            yield {
+                "__warning__": f"paragraph {idx} missing trailing numbers, dropping entry: {_snippet(text)}"
+            }
             continue
 
         extracted_meanings = m.group("mean").strip()
-
         numbers_raw = m.group("numbers")
         refs = re.split(r"[.,]\s*", numbers_raw)
         extracted_reference_sections = {int(r.strip()) for r in refs if r.strip()}
 
-        # detect Top500 tag via style inspector
         extracted_tags = []
         if styler.is_top500(elem):
             extracted_tags.append("Top500")
 
-        #
-        # Merge extracted fields with previous entry if available
-        #
-
-        if headword in vocabulary_list:
-            messages = []
-            prev = vocabulary_list[headword]
-
-            msg, new_full_form_display = _merge_full_form_display(
-                prev["FullFormDisplay"], extracted_full_form_display
-            )
-            if msg:
-                messages.append(msg)
-
-            msg, new_notes_foreign = _merge_non_empty(
-                "NotesForeign", prev["NotesForeign"], extracted_notes_foreign
-            )
-            if msg:
-                messages.append(msg)
-
-            msg, new_meanings = _merge_exact_match("Meanings", prev["Meanings"], extracted_meanings)
-            if msg:
-                messages.append(msg)
-
-            msg, new_reference_section = _merge_sets(
-                "ReferenceSection",
-                _split_to_int_set(prev["ReferenceSection"], ";"),
-                extracted_reference_sections,
-            )
-            if msg:
-                messages.append(msg)
-
-            extracted_tags_string = ";".join(extracted_tags)
-            msg, new_tags = _merge_non_empty("Tags", prev["Tags"], extracted_tags_string)
-            if msg:
-                messages.append(msg)
-
-            with_info_messages = True
-            print_logs = len(messages) > 0 if with_info_messages else any("WARNING" in m for m in messages)
-            if print_logs:
-                console_obj.print(f'Changes for "{headword}" in paragraph {idx}:')
-                for msg in messages:
-                    console_obj.print("- " + msg)
-
-        else:
-            new_full_form_display = extracted_full_form_display
-            new_notes_foreign = extracted_notes_foreign
-            new_meanings = extracted_meanings
-            new_reference_section = extracted_reference_sections
-            new_tags = ";".join(extracted_tags)
-
-        #
-        # Update vocabulary list
-        #
-        vocabulary_list[headword] = {
+        yield {
             "Headword": headword,
-            "FullFormDisplay": new_full_form_display,
-            "FullFormNormalized": _normalize_nfkd_strip(new_full_form_display),
-            "PartOfSpeech": _part_of_speech_from_notes_foreign(new_notes_foreign),
-            "NotesForeign": new_notes_foreign,
-            "Meanings": new_meanings,
-            "NumberOfMeanings": new_meanings.count(",") + new_meanings.count(";") + 1,
+            "FullFormDisplay": extracted_full_form_display,
+            "NotesForeign": extracted_notes_foreign,
+            "Meanings": extracted_meanings,
             "NotesNative": "",
             "MnemonicHint": "",
             "PronunciationText": "",
             "AudioUrl": "",
-            "ReferenceBook": book,
-            "ReferenceSection": ";".join(map(str, sorted(new_reference_section))),
+            "ReferenceSection": extracted_reference_sections,
             "Exercise1Front": "",
             "Exercise1Back": "",
             "Exercise2Front": "",
             "Exercise2Back": "",
             "Exercise3Front": "",
             "Exercise3Back": "",
-            "Tags": new_tags,
+            "Tags": ";".join(extracted_tags),
         }
+
+
+def _iter_entries_from_csv(csv_reader: csv.DictReader):
+    for i, row in enumerate(csv_reader, start=1):
+        # Expect keys matching _FIELDNAMES; missing keys handled by get
+        headword = row.get("Headword", "").strip()
+        if not headword:
+            yield {"__warning__": f"CSV row {i} missing Headword, skipping"}
+            continue
+        # ReferenceSection stored as ';' joined string in CSV
+        ref_raw = row.get("ReferenceSection", "")
+        refs = {int(r.strip()) for r in ref_raw.split(";") if r.strip()}
+        yield {
+            "Headword": headword,
+            "FullFormDisplay": row.get("FullFormDisplay", "").strip(),
+            "NotesForeign": row.get("NotesForeign", "").strip(),
+            "Meanings": row.get("Meanings", "").strip(),
+            "NotesNative": row.get("NotesNative", "").strip(),
+            "MnemonicHint": row.get("MnemonicHint", "").strip(),
+            "PronunciationText": row.get("PronunciationText", "").strip(),
+            "AudioUrl": row.get("AudioUrl", "").strip(),
+            "ReferenceSection": refs,
+            "Exercise1Front": row.get("Exercise1Front", "").strip(),
+            "Exercise1Back": row.get("Exercise1Back", "").strip(),
+            "Exercise2Front": row.get("Exercise2Front", "").strip(),
+            "Exercise2Back": row.get("Exercise2Back", "").strip(),
+            "Exercise3Front": row.get("Exercise3Front", "").strip(),
+            "Exercise3Back": row.get("Exercise3Back", "").strip(),
+            "Tags": row.get("Tags", "").strip(),
+        }
+
+
+def convert(readers, out_file: TextIO, book: str, console_obj) -> None:
+    """Convert vocabulary from a single ElementTree or an iterable of readers and write CSV to out_file.
+    Backwards compatible: if `readers` is an ElementTree the previous behaviour is preserved.
+    """
+
+    writer = csv.DictWriter(
+        out_file,
+        fieldnames=_FIELDNAMES,
+        lineterminator="\n",
+        quoting=csv.QUOTE_MINIMAL,
+        extrasaction="ignore",
+    )
+    writer.writeheader()
+
+    vocabulary_list = {}
+
+    # Normalize readers input: if single ElementTree passed, wrap into iterable
+    reader_iterable = [readers] if isinstance(readers, ElementTree) else list(readers)
+
+    for src_idx, reader in enumerate(reader_iterable, start=1):
+        if isinstance(reader, ElementTree):
+            entry_iter = _iter_entries_from_tree(reader)
+        elif isinstance(reader, csv.DictReader):
+            entry_iter = _iter_entries_from_csv(reader)
+        else:
+            msg = f"Unsupported reader type: {type(reader)}"
+            raise TypeError(msg)
+
+        for extracted in entry_iter:
+            # handle adapter warnings
+            if "__warning__" in extracted:
+                console_obj.print(f"WARNING: {extracted['__warning__']}")
+                continue
+
+            headword = extracted["Headword"]
+            if headword in vocabulary_list:
+                prev = vocabulary_list[headword]
+
+                messages, new = _merge(headword, prev, extracted)
+
+                with_info_messages = True
+                print_logs = (
+                    len(messages) > 0 if with_info_messages else any("WARNING" in m for m in messages)
+                )
+                if print_logs:
+                    console_obj.print(f'Changes for "{headword}" in input {src_idx}:')
+                    for msg in messages:
+                        console_obj.print("- " + msg)
+
+            else:
+                new = extracted
+
+            new["FullFormNormalized"] = _normalize_nfkd_strip(new["FullFormDisplay"])
+            new["PartOfSpeech"] = _part_of_speech_from_notes_foreign(new["NotesForeign"])
+            new["NumberOfMeanings"] = new["Meanings"].count(",") + new["Meanings"].count(";") + 1
+            new["ReferenceBook"] = book
+            new["ReferenceSection"] = ";".join(map(str, sorted(new["ReferenceSection"])))
+
+            vocabulary_list[headword] = new
 
     sorted_vocabulary_list = sorted(vocabulary_list.values(), key=lambda row: row["Headword"].lower())
     for row in sorted_vocabulary_list:
