@@ -1,2 +1,7 @@
 __pycache__
-tests/test_book_vocabulary.odt
+.scratch
+.~lock.*#
+decks/Campus C/*.csv
+decks/Campus C/*.log
+decks/Campus C1/*.csv
+decks/Campus C1/*.log
