@@ -1,25 +1,25 @@
 Headword,FullFormDisplay,FullFormNormalized,PartOfSpeech,NotesForeign,Meanings,NumberOfMeanings,NotesNative,MnemonicHint,PronunciationText,AudioUrl,ReferenceBook,ReferenceSection,Exercise1Front,Exercise1Back,Exercise2Front,Exercise2Back,Exercise3Front,Exercise3Back,Tags
--ne,-ne,-ne,,,Partikel im dir. Fragesatz (unübersetzt),1,,,,,Campus C1,13,,,,,,,Top500
--que,-que,-que,,angehängt,und,1,,,,,Campus C1,14,,,,,,,Top500
-a / ab,ā / ab (m. Abl.),a / ab (m. Abl.),Präposition,Präp. m. Abl.,"von, von ... her",2,,,,,Campus C1,16,,Präp. m. Abl.,,,,,Top500
-abire,"abīre, abeō, abiī","abire, abeo, abii",,,weggehen,1,,,,,Campus C1,37,,,,,,,Top500
+-ne,-ne,-ne,,,(unübersetzt),1,Partikel im direkten Fragesatz,,,,Campus C1,13,,,,,,,Top500
+-que,-que,-que,Subjunktion,angehängt,und,1,,,,,Campus C1,14,,,,,,,Top500
+a / ab,ā / ab (m. Abl.),a / ab (m. Abl.),Präposition,,"von, von ... her",2,,,,,Campus C1,16,,,,,,,Top500
+abire,"abīre, abeō, abiī","abire, abeo, abii",Verb,,weggehen,1,,,,,Campus C1,37,,,,,,,Top500
 accipere,"accipere, accipiō, accēpī","accipere, accipio, accepi",Verb,,"erhalten, erfahren, annehmen",3,,,,,Campus C1,34,,,,,,,Top500
 accusare,"accūsāre, accūsō","accusare, accuso",Verb,,"anklagen, beschuldigen",2,,,,,Campus C1,33,,,,,,,
-acer,"ācer, ācris, ācre","acer, acris, acre",,,"energisch, heftig, scharf",3,,,,,Campus C1,32,,"ācris, ācre",,,,,
-ad,ad (m. Akk.),ad (m. Akk.),Präposition,Präp. m. Akk.,"zu, bei, nach, an",4,,,,,Campus C1,12,,Präp. m. Akk.,,,,,Top500
-adducere,"addūcere, addūcō","adducere, adduco",Verb,,"heranführen, veranlassen",2,,,,,Campus C1,23,,,,,,,Top500
-adesse,"adesse, adsum, adfuī","adesse, adsum, adfui",,,"da sein, helfen",2,,,,,Campus C1,18,,"adsum, affuī",,,,,Top500
-adhuc,adhūc,adhuc,Adverb,Adv.,"bis jetzt, noch",2,,,,,Campus C1,3,,,,,,,Top500
-adire,"adīre, adeō, adiī","adire, adeo, adii",,m. Akk.,"herantreten (an), bitten, aufsuchen",3,,,,,Campus C1,37,,,,,,,Top500
+acer,"ācer, ācris, ācre","acer, acris, acre",Adjektiv,,"energisch, heftig, scharf",3,,,,,Campus C1,32,,,,,,,
+ad,ad (m. Akk.),ad (m. Akk.),Präposition,,"zu, bei, nach, an",4,,,,,Campus C1,12,,,,,,,Top500
+adducere,"addūcere, addūcō, addūxī, adductum","adducere, adduco, adduxi, adductum",Verb,,"heranführen, veranlassen",2,,,,,Campus C1,23,,,,,,,Top500
+adesse,"adesse, adsum, adfuī","adesse, adsum, adfui",Verb,,"da sein, helfen",2,,,,,Campus C1,18,,,,,,,Top500
+adhuc,adhūc,adhuc,Adverb,,"bis jetzt, noch",2,,,,,Campus C1,3,,,,,,,Top500
+adire,"adīre, adeō, adiī","adire, adeo, adii",Verb,m. Akk.,"herantreten (an), bitten, aufsuchen",3,,,,,Campus C1,37,,,,,,,Top500
 aedificare,"aedificāre, aedificō","aedificare, aedifico",Verb,,bauen,1,,,,,Campus C1,11,,,,,,,
 aedificium,"aedificium, aedificii","aedificium, aedificii",Nomen,,das Gebäude,1,,,,,Campus C1,11,,,,,,,
-Aeneas,"Aenēās, Aenēae","Aeneas, Aeneae",Nomen,m,Äneas (Trojaner und Stammvater der Römer),1,,,,,Campus C1,30,,,,,,,
-Aeolus,Aeolus,Aeolus,,,Äolus (griech. Aiolos; der Gott der Winde),2,,,,,Campus C1,6,,,,,,,
+Aeneas,"Aenēās, Aenēae","Aeneas, Aeneae",Nomen,m,Äneas,1,Trojaner und Stammvater der Römer,,,,Campus C1,30,,,,,,,
+Aeolus,"Aeolus, Aeoli","Aeolus, Aeoli",Nomen,,Äolus,1,Griech. Aiolos; der Gott der Winde,,,,Campus C1,6,,,,,,,
 aestas,"aestās, aestātis","aestas, aestatis",Nomen,f,der Sommer,1,,,,,Campus C1,23,,,,,,,
-Aetna,"Aetna, Aetnae","Aetna, Aetnae",Nomen,,der Ätna (Vulkan auf Sizilien),1,,,,,Campus C1,10,,,,,,,
+Aetna,"Aetna, Aetnae","Aetna, Aetnae",Nomen,,der Ätna,1,Vulkan auf Sizilien,,,,Campus C1,10,,,,,,,
 ager,"ager, agrī","ager, agri",Nomen,m,"der Acker, das Feld, das Gebiet",3,,,,,Campus C1,15,,,,,,,Top500
 agere,"agere, agō, ēgī, āctum","agere, ago, egi, actum",Verb,,"handeln, treiben, verhandeln",3,,,,,Campus C1,27,,,,,,,Top500
-alius,"alius, alia, aliud","alius, alia, aliud",,,ein anderer,1,,,,,Campus C1,29,,,,,,,Top500
+alius,"alius, alia, aliud","alius, alia, aliud",Adjektiv,,ein anderer,1,,,,,Campus C1,29,,,,,,,Top500
 altus,"altus, a, um","altus, a, um",Adjektiv,,"hoch, tief",2,,,,,Campus C1,25,,,,,,,Top500
 amare,"amāre, amō","amare, amo",Verb,,lieben,1,,,,,Campus C1,8,,,,,,,Top500
 amica,"amīca, amīcae","amica, amicae",Nomen,,die Freundin,1,,,,,Campus C1,2,,,,,,,
@@ -27,105 +27,105 @@ amicus,"amīcus, amīci","amicus, amici",Nomen,,der Freund,1,,,,,Campus C1,4,,,,
 amittere,"āmittere, āmittō, āmīsī","amittere, amitto, amisi",Verb,,"aufgeben, verlieren",2,,,,,Campus C1,23;27,,,,,,,Top500
 amor,"amor, amōris","amor, amoris",Nomen,m,die Liebe,1,,,,,Campus C1,19,,,,,,,Top500
 amphitheatrum,"amphitheātrum, amphitheātri","amphitheatrum, amphitheatri",Nomen,,das Amphitheater,1,,,,,Campus C1,22,,,,,,,
-Amulius,Amūlius,Amulius,,,"Amulius (König von Alba, Bruder des Numitor)",2,,,,,Campus C1,33,,,,,,,
+Amulius,"Amūlius, Amūlii","Amulius, Amulii",Nomen,,Amulius,1,"König von Alba, Bruder des Numitor",,,,Campus C1,33,,,,,,,
 an,an,an,Nomen,im Fragesatz,oder (etwa),1,,,,,Campus C1,24,,,,,,,Top500
 animadvertere,"animadvertere, animadvertō, animadvertī","animadvertere, animadverto, animadverti",Verb,m. AcI / Akk.,bemerken,1,,,,,Campus C1,29,,,,,,,
 animus,"animus, animi","animus, animi",Nomen,,"der Geist, der Mut, die Gesinnung",3,,,,,Campus C1,19,,,,,,,Top500
 annus,"annus, anni","annus, anni",Nomen,,das Jahr,1,,,,,Campus C1,22,,,,,,,Top500
-ante,ante,ante,Präposition,Präp. m. Akk.,vor,1,,,,,Campus C1,12,,,,,,,Top500
-antea,anteā,antea,Adverb,Adv.,"vorher, früher",2,,,,,Campus C1,24,,,,,,,
+ante,ante (m. Akk.),ante (m. Akk.),Präposition,,vor,1,,,,,Campus C1,12,,,,,,,Top500
+antea,anteā,antea,Adverb,,"vorher, früher",2,,,,,Campus C1,24,,,,,,,
 antiquus,"antīquus, a, um","antiquus, a, um",Adjektiv,,"alt, altertümlich",2,,,,,Campus C1,15,,,,,,,
 aperire,"aperīre, aperiō, aperuī","aperire, aperio, aperui",Verb,,"aufdecken, öffnen",2,,,,,Campus C1,36,,,,,,,
 appetere,"appetere, appetō, appetīvī","appetere, appeto, appetivi",Verb,,"verstreben, haben wollen; angreifen",3,,,,,Campus C1,36,,,,,,,
-apud,apud,apud,Präposition,Präp. m. Akk.,bei,1,,,,,Campus C1,18,,,,,,,Top500
+apud,apud (m. Akk.),apud (m. Akk.),Präposition,,bei,1,,,,,Campus C1,18,,,,,,,Top500
 aqua,"aqua, aquae","aqua, aquae",Nomen,,das Wasser,1,,,,,Campus C1,6,,,,,,,Top500
 arcessere,"arcessere, arcessō, arcessīvī","arcessere, arcesso, arcessivi",Verb,,"herbeirufen, holen",2,,,,,Campus C1,35,,,,,,,
-arma,"arma, armōrum","arma, armorum",Nomen,n Pl.,"das Gerät, die Waffen",2,,Armee,,,Campus C1,26,,armōrum,,,,,Top500
-aspicere,"aspicere, aspiciō, aspexī","aspicere, aspicio, aspexi",Verb,,"erblicken, ansehen",2,,"spicken, Aspekt",,,Campus C1,17,,"aspiciō, aspexī",,,,,
+arma,"arma, armōrum","arma, armorum",Nomen,n Plural,"das Gerät, die Waffen",2,,Armee,,,Campus C1,26,,,,,,,Top500
+aspicere,"aspicere, aspiciō, aspexī","aspicere, aspicio, aspexi",Verb,,"erblicken, ansehen",2,,"spicken, Aspekt",,,Campus C1,17,,,,,,,
 audacia,"audācia, audāciae","audacia, audaciae",Nomen,,"die Frechheit, die Kühnheit",2,,,,,Campus C1,31,,,,,,,
-audire,"audīre, audiō, audīvī","audire, audio, audivi",Verb,,hören,1,,Audi hieß früher Horch,,,Campus C1,10,,"audiō, audīvī",,,,,Top500
+audire,"audīre, audiō, audīvī","audire, audio, audivi",Verb,,hören,1,,Audi hieß früher Horch,,,Campus C1,10,,,,,,,Top500
 augere,"augēre, augeō, auxī","augere, augeo, auxi",Verb,,"vergrößern, vermehren",2,,,,,Campus C1,3;28,,,,,,,
-Augias,Augīās,Augias,Nomen,m,Augias (mythischer König),1,,,,,Campus C1,27,,,,,,,
-autem,autem,autem,,nachgestellt,"aber, andererseits",2,,,,,Campus C1,15,,,,,,,Top500
-auxilium,"auxilium, auxilii","auxilium, auxilii",Nomen,,die Hilfe,1,,,,,Campus C1,15,,auxilii,,,,,Top500
-Aventinus,"Aventīnus, Aventīni","Aventinus, Aventini",Nomen,,der Aventin (Hügel Roms),1,,,,,Campus C1,34,,,,,,,
+Augias,"Augīās, Augiae","Augias, Augiae",Nomen,m,Augias,1,Mythischer König,,,,Campus C1,27,,,,,,,
+autem,autem,autem,Subjunktion,nachgestellt,"aber, andererseits",2,,,,,Campus C1,15,,,,,,,Top500
+auxilium,"auxilium, auxilii","auxilium, auxilii",Nomen,,die Hilfe,1,,,,,Campus C1,15,,,,,,,Top500
+Aventinus,"Aventīnus, Aventīni","Aventinus, Aventini",Nomen,,der Aventin,1,Hügel Roms,,,,Campus C1,34,,,,,,,
 avus,"avus, avi","avus, avi",Nomen,,der Großvater,1,,,,,Campus C1,1,,,,,,,
 basilica,"basilica, basilicae","basilica, basilicae",Nomen,,"die Markthalle, die Gerichtshalle",2,,,,,Campus C1,12,,,,,,,
 beatus,"beātus, a, um","beatus, a, um",Adjektiv,,"glücklich, reich",2,,,,,Campus C1,36,,,,,,,
 bellum,"bellum, belli","bellum, belli",Nomen,,der Krieg,1,,,,,Campus C1,29,,,,,,,Top500
 bellum gerere,bellum gerere,bellum gerere,,,Krieg führen,1,,,,,Campus C1,29,,,,,,,
-bene,bene,bene,Adverb,Adv.,gut,1,,,,,Campus C1,4,,,,,,,Top500
+bene,bene,bene,Adverb,,gut,1,,,,,Campus C1,4,,,,,,,Top500
 beneficium,"beneficium, beneficii","beneficium, beneficii",Nomen,,die Wohltat,1,,,,,Campus C1,11,,,,,,,
 bestia,"bēstia, bēstiae","bestia, bestiae",Nomen,,das (wilde) Tier,1,,,,,Campus C1,21,,,,,,,
-bibere,"bibere, bibō, bibī","bibere, bibo, bibi",Verb,,trinken,1,,,,,Campus C1,16;32,,"bibō, bibī",,,,,
-bonus,"bonus, a, um","bonus, a, um",Adjektiv,,"gut, tüchtig",2,,Bonbon,,,Campus C1,14,,"bona, bonum",,,,,Top500
+bibere,"bibere, bibō, bibī","bibere, bibo, bibi",Verb,,trinken,1,,,,,Campus C1,16;32,,,,,,,
+bonus,"bonus, a, um","bonus, a, um",Adjektiv,,"gut, tüchtig",2,,Bonbon,,,Campus C1,14,,,,,,,Top500
 cadere,"cadere, cadō, cecidī","cadere, cado, cecidi",Verb,,fallen,1,,,,,Campus C1,26;28,,,,,,,
 caedere,"caedere, caedō, cecīdī","caedere, caedo, cecidi",Verb,,"fällen, töten",2,,,,,Campus C1,31,,,,,,,
 caelum,"caelum, caeli","caelum, caeli",Nomen,,der Himmel,1,,,,,Campus C1,21,,,,,,,Top500
-Campania,Campānia,Campania,,,Kampanien (Landschaft südlich von Rom),1,,,,,Campus C1,16,,,,,,,
+Campania,"Campānia, Campāniae","Campania, Campaniae",Nomen,,Kampanien,1,Landschaft südlich von Rom,,,,Campus C1,16,,,,,,,
 campus,"campus, campi","campus, campi",Nomen,,"das Feld, der freie Platz",2,,,,,Campus C1,1,,,,,,,
-capere,"capere, capiō, cēpī","capere, capio, cepi",Verb,,"fassen, nehmen, fangen; erobern",4,,"kapieren, kapern",,,Campus C1,17;27,,"capiō, cēpī",,,,,Top500
-Capitolium,"Capitōlium, Capitōlii","Capitolium, Capitolii",Nomen,,das Kapitol (bedeutendster Hügel Roms),1,,,,,Campus C1,11,,,,,,,
+capere,"capere, capiō, cēpī","capere, capio, cepi",Verb,,"fassen, nehmen, fangen; erobern",4,,"kapieren, kapern",,,Campus C1,17;27,,,,,,,Top500
+Capitolium,"Capitōlium, Capitōlii","Capitolium, Capitolii",Nomen,,das Kapitol,1,Bedeutendster Hügel Roms,,,,Campus C1,11,,,,,,,
 captivus,"captīvus, captīvi","captivus, captivi",Nomen,,der Kriegsgefangene,1,,,,,Campus C1,9,,,,,,,
-carere,"carēre, careō","carere, careo",Verb,m. Abl.,"frei sein von, ohne (etwas) sein, nicht haben",3,,,,,Campus C1,28,,,,,,,
+carere,"carēre, careō, caruī, caritum","carere, careo, carui, caritum",Verb,m. Abl.,"frei sein von, ohne (etwas) sein, nicht haben",3,,,,,Campus C1,28,,,,,,,
 carrus,"carrus, carri","carrus, carri",Nomen,,"der Wagen, der Karren",2,,,,,Campus C1,16,,,,,,,
-Carthago,"Carthāgō, Carthāginis","Carthago, Carthaginis",Nomen,f,Karthago (Stadt in Nordafrika),1,,,,,Campus C1,30,,,,,,,
+Carthago,"Carthāgō, Carthāginis","Carthago, Carthaginis",Nomen,f,Karthago,1,Stadt in Nordafrika,,,,Campus C1,30,,,,,,,
 carus,"cārus, a, um","carus, a, um",Adjektiv,,"lieb, teuer, wertvoll",3,,,,,Campus C1,20,,,,,,,
-castra,"castra, castrōrum","castra, castrorum",Nomen,n Pl.,das Lager,1,,,,,Campus C1,26,,,,,,,Top500
+castra,"castra, castrōrum","castra, castrorum",Nomen,n Plural,das Lager,1,,,,,Campus C1,26,,,,,,,Top500
 cedere,"cēdere, cēdō, cessī","cedere, cedo, cessi",Verb,,"gehen, nachgeben, weichen",3,,,,,Campus C1,29,,,,,,,
-celer,"celer, celeris, celere","celer, celeris, celere",,,schnell,1,,,,,Campus C1,32,,"celeris, celere",,,,,Top500
+celer,"celer, celeris, celere","celer, celeris, celere",Adjektiv,,schnell,1,,,,,Campus C1,32,,,,,,,Top500
 cena,"cēna, cēnae","cena, cenae",Nomen,,"die Mahlzeit, das Essen",2,,,,,Campus C1,8,,,,,,,
 cenare,"cēnāre, cēnō","cenare, ceno",Verb,,essen,1,,,,,Campus C1,9,,,,,,,
-Cerberus,Cerberus,Cerberus,,,Zerberus (der dreiköpfige Höllenhund),1,,,,,Campus C1,28,,,,,,,
-certe / certo,certē / certō,certe / certo,Adverb,Adv.,"gewiss, sicherlich",2,,,,,Campus C1,29,,,,,,,
-ceteri,"cēterī, ae, a","ceteri, ae, a",,,die übrigen,1,,,,,Campus C1,21,,,,,,,Top500
+Cerberus,"Cerberus, Cerberi","Cerberus, Cerberi",Nomen,,Zerberus,1,Der dreiköpfige Höllenhund,,,,Campus C1,28,,,,,,,
+certe / certo,certē / certō,certe / certo,Adverb,,"gewiss, sicherlich",2,,,,,Campus C1,29,,,,,,,
+ceteri,"cēterī, ae, a","ceteri, ae, a",Adjektiv,Plural,die übrigen,1,,,,,Campus C1,21,,,,,,,Top500
 cibus,"cibus, cibi","cibus, cibi",Nomen,,"die Nahrung, die Speise, das Futter",3,,,,,Campus C1,6,,,,,,,
-circum,circum,circum,Präposition,Präp. m. Akk.,"rings um, um ... herum",2,,,,,Campus C1,31,,,,,,,
-civis,"cīvis, cīvis","civis, civis",Nomen,m (Gen. Pl. -ium),der Bürger,1,,,,,Campus C1,30,,,,,,,Top500
+circum,circum (m. Akk.),circum (m. Akk.),Präposition,,"rings um, um ... herum",2,,,,,Campus C1,31,,,,,,,
+civis,"cīvis, cīvis","civis, civis",Nomen,m (Genitiv Plural: civium),der Bürger,1,,,,,Campus C1,30,,,,,,,Top500
 civitas,"cīvitās, cīvitātis","civitas, civitatis",Nomen,f,"die Gemeinde, der Staat",2,,,,,Campus C1,20,,,,,,,Top500
 clamare,"clāmāre, clāmō","clamare, clamo",Verb,,"laut rufen, schreien",2,,,,,Campus C1,13,,,,,,,
 clamor,"clāmor, clāmōris","clamor, clamoris",Nomen,m,"das Geschrei, der Lärm",2,,,,,Campus C1,19,,,,,,,
 clarus,"clārus, a, um","clarus, a, um",Adjektiv,,"klar, hell, berühmt",3,,,,,Campus C1,15,,,,,,,Top500
 clementia,"clēmentia, clēmentiae","clementia, clementiae",Nomen,,"die Milde, die Nachsicht",2,,,,,Campus C1,9,,,,,,,
 cogitare,"cōgitāre, cōgitō","cogitare, cogito",Verb,,"denken, beabsichtigen",2,,,,,Campus C1,30,,,,,,,
-comes,"comes, comitis","comes, comitis",Nomen,m/f,"der (die) Begleiter(in), der Gefährte, die Gefährtin",3,,,,,Campus C1,32,,,,,,,
-communis,"commūnis, e","communis, e",,,"gemeinsam, allgemein",2,,,,,Campus C1,35,,,,,,,Top500
+comes,"comes, comitis","comes, comitis",Nomen,m/f,"der Begleiter, die Begleiterin, der Gefährte, die Gefährtin",4,,,,,Campus C1,32,,,,,,,
+communis,"commūnis, commūnis, commūne","communis, communis, commune",Adjektiv,,"gemeinsam, allgemein",2,,,,,Campus C1,35,,,,,,,Top500
 complere,"complēre, compleō, complēvī","complere, compleo, complevi",Verb,,"anfüllen, auffüllen",2,,,,,Campus C1,6;25,,,,,,,
-comprehendere,"comprehendere, comprehendō, comprehendī","comprehendere, comprehendo, comprehendi",Verb,,"begreifen, ergreifen, festnehmen",3,,,,,Campus C1,24;27,,"comprehendō, comprehendī",,,,,
+comprehendere,"comprehendere, comprehendō, comprehendī","comprehendere, comprehendo, comprehendi",Verb,,"begreifen, ergreifen, festnehmen",3,,,,,Campus C1,24;27,,,,,,,
 concedere,"concēdere, concēdō, concessī","concedere, concedo, concessi",Verb,,"erlauben, nachgeben, zugestehen",3,,,,,Campus C1,36,,,,,,,
 concordia,"concordia, concordiae","concordia, concordiae",Nomen,,"die Eintracht, die Einigkeit",2,,,,,Campus C1,37,,,,,,,
-Concordia,Concordia,Concordia,,,Concordia (Göttin der Eintracht),1,,,,,Campus C1,11,,,,,,,
+Concordia,"Concordia, Concordiae","Concordia, Concordiae",Nomen,,Concordia,1,Göttin der Eintracht,,,,Campus C1,11,,,,,,,
 condere,"condere, condō, condidī","condere, condo, condidi",Verb,,"verwahren, verbergen; erbauen, gründen",4,,,,,Campus C1,34,,,,,,,
 confirmare,"cōnfirmāre, cōnfirmō","confirmare, confirmo",Verb,,"bekräftigen, ermutigen, stärken",3,,,,,Campus C1,37,,,,,,,
-consilium,"cōnsilium, consilii","consilium, consilii",Nomen,,"die Beratung, der Beschluss, der Plan, der Rat",4,,,,,Campus C1,11,,consilii,,,,,Top500
+consilium,"cōnsilium, consilii","consilium, consilii",Nomen,,"die Beratung, der Beschluss, der Plan, der Rat",4,,,,,Campus C1,11,,,,,,,Top500
 consilium capere,cōnsilium capere,consilium capere,,,einen Plan (Entschluss) fassen,1,,,,,Campus C1,27,,,,,,,
 consistere,"cōnsistere, cōnsistō, cōnstitī","consistere, consisto, constiti",Verb,,"stehenbleiben, haltmachen, sich aufstellen",3,,,,,Campus C1,17;29,,,,,,,Top500
-constat,cōnstat,constat,,,"es ist bekannt, es steht fest",2,,,,,Campus C1,29,,,,,,,
+constat,cōnstat,constat,Verb,,"es ist bekannt, es steht fest",2,,,,,Campus C1,29,,,,,,,
 contendere,"contendere, contendō, contendī","contendere, contendo, contendi",Verb,,"sich anstrengen, kämpfen; eilen; behaupten",4,,,,,Campus C1,34,,,,,,,Top500
 convenire,"convenīre, conveniō, convēnī","convenire, convenio, conveni",Verb,,"zusammenkommen, zusammenpassen, besuchen",3,,,,,Campus C1,30,,,,,,,Top500
 copia,"cōpia, cōpiae","copia, copiae",Nomen,,"die Menge, der Vorrat, die Möglichkeit; Pl. die Truppen",4,,,,,Campus C1,6;35,,,,,,,Top500
 creare,"creāre, creō","creare, creo",Verb,,"erschaffen, wählen",2,,,,,Campus C1,18,,,,,,,
 credere,"crēdere, crēdō, crēdidī","credere, credo, credidi",Verb,,"glauben, anvertrauen",2,,,,,Campus C1,35,,,,,,,Top500
-Creta,Crēta,Creta,,,Kreta (griech. Insel),1,,,,,Campus C1,10,,,,,,,
-crudelis,"crūdēlis, e","crudelis, e",,,grausam,1,,,,,Campus C1,33,,,,,,,
-cui?,cui?,cui?,,,wem?,1,,,,,Campus C1,5,,,,,,,
-cum (m. Abl.),cum (m. Abl.),cum (m. Abl.),Präposition,Präp. m. Abl.,"mit, zusammen mit",2,,,,,Campus C1,12,,Präp. m. Abl.,,,,,Top500
-cum (Subj.),cum (Subj.),cum (Subj.),Subjunktion,Subj.,als (plötzlich); (immer) wenn,2,,,,,Campus C1,25,,Subj.,,,,,Top500
-cuncti,"cūnctī, ae, a","cuncti, ae, a",,,alle (zusammen),1,,,,,Campus C1,14,,,,,,,
-cur?,cūr?,cur?,,,warum?,1,,,,,Campus C1,2,,,,,,,Top500
+Creta,"Crēta, Crētae","Creta, Cretae",Nomen,,Kreta,1,Griech. Insel,,,,Campus C1,10,,,,,,,
+crudelis,"crūdēlis, crūdēlis, crūdēle","crudelis, crudelis, crudele",Adjektiv,,grausam,1,,,,,Campus C1,33,,,,,,,
+cui,cui?,cui?,Pronomen,,wem?,1,,,,,Campus C1,5,,,,,,,
+cum (m. Abl.),cum (m. Abl.),cum (m. Abl.),Präposition,,"mit, zusammen mit",2,,,,,Campus C1,12,,,,,,,Top500
+cum (Subj.),cum (Subj.),cum (Subj.),Subjunktion,,als (plötzlich); (immer) wenn,2,,,,,Campus C1,25,,,,,,,Top500
+cuncti,"cūnctī, ae, a","cuncti, ae, a",Adjektiv,Plural,alle (zusammen),1,,,,,Campus C1,14,,,,,,,
+cur?,cūr?,cur?,Adverb,,warum?,1,,,,,Campus C1,2,,,,,,,Top500
 cura,"cūra, cūrae","cura, curae",Nomen,,"die Pflege, die Sorge",2,,,,,Campus C1,36,,,,,,,Top500
-curare,"cūrāre, cūrō, cūrāvī","curare, curo, curavi",Verb,,"pflegen, sorgen für",2,,"Kur, kurieren",,,Campus C1,24,,"cūrō, cūrāvī",,,,,
-curia,"cūria, cūriae","curia, curiae",Nomen,,die Kurie (Sitzungsgebäude des Senats),1,,,,,Campus C1,11,,,,,,,
+curare,"cūrāre, cūrō","curare, curo",Verb,,"pflegen, sorgen für",2,,"Kur, kurieren",,,Campus C1,24,,,,,,,
+curia,"cūria, cūriae","curia, curiae",Nomen,,die Kurie,1,Sitzungsgebäude des Senats,,,,Campus C1,11,,,,,,,
 dare,"dare, dō, dedī","dare, do, dedi",Verb,,geben,1,,,,,Campus C1,20;28,,,,,,,Top500
-de,dē,de,Präposition,Präp. m. Abl.,"von, von ... her, von ... weg, von ... herab; über",5,,,,,Campus C1,14,,,,,,,Top500
+de,dē (m. Abl.),de (m. Abl.),Präposition,,"von, von ... her, von ... weg, von ... herab; über",5,,,,,Campus C1,14,,,,,,,Top500
 de salute desperare,dē salūte dēspērāre,de salute desperare,,,die Hoffnung auf Rettung aufgeben,1,,,,,Campus C1,31,,,,,,,
 dea,"dea, deae","dea, deae",Nomen,,die Göttin,1,,,,,Campus C1,11,,,,,,,
-debere,dēbēre,debere,,,"müssen, sollen",2,,,,,Campus C1,2,,,,,,,Top500
+debere,"dēbēre, dēbeō, dēbuī, dēbitum","debere, debeo, debui, debitum",Verb,,"müssen, sollen",2,,,,,Campus C1,2,,,,,,,Top500
 decem,decem,decem,,indekl.,zehn,1,,,,,Campus C1,14,,,,,,,
 decimus,"decimus, a, um","decimus, a, um",Adjektiv,,"der (die, das) zehnte",2,,,,,Campus C1,23,,,,,,,
-deducere,"dēdūcere, dēdūcō, dēdūxī","deducere, deduco, deduxi",Verb,,"wegführen, hinführen",2,,,,,Campus C1,23,,"dēdūcō, dēdūxī",,,,,
-deesse,"dēesse, dēsum","deesse, desum",,,"abwesend sein, fehlen",2,,,,,Campus C1,23,,,,,,,
-defendere,"dēfendere, dēfendō, dēfendī","defendere, defendo, defendi",Verb,ā m. Abl.,"abwehren, verteidigen (vor / gegen)",2,,,,,Campus C1,33,,,,,,,Top500
+deducere,"dēdūcere, dēdūcō, dēdūxī","deducere, deduco, deduxi",Verb,,"wegführen, hinführen",2,,,,,Campus C1,23,,,,,,,
+deesse,"dēesse, dēsum, dēfuī","deesse, desum, defui",Verb,,"abwesend sein, fehlen",2,,,,,Campus C1,23,,,,,,,
+defendere,"dēfendere, dēfendō, dēfendī","defendere, defendo, defendi",Verb,ā m. Abl.,"abwehren, verteidigen",2,vor / gegen,,,,Campus C1,33,,,,,,,Top500
 delectare,"dēlectāre, dēlectō","delectare, delecto",Verb,,"erfreuen, unterhalten",2,,,,,Campus C1,8,,,,,,,
 delere,"dēlēre, dēleō, dēlēvī","delere, deleo, delevi",Verb,,"zerstören, vernichten",2,,,,,Campus C1,6;25,,,,,,,
 deligere,"dēligere, dēligō, dēlēgī","deligere, deligo, delegi",Verb,,(aus)wählen,1,,,,,Campus C1,34,,,,,,,
@@ -133,423 +133,426 @@ demonstrare,"dēmōnstrāre, dēmōnstrō","demonstrare, demonstro",Verb,,"bewei
 descendere,"dēscendere, dēscendō, dēscendī","descendere, descendo, descendi",Verb,,herabsteigen,1,,,,,Campus C1,17;27,,,,,,,
 desiderare,"dēsīderāre, dēsīderō","desiderare, desidero",Verb,,"sich sehnen nach, vermissen",2,,,,,Campus C1,10,,,,,,,
 deus,"deus, dei","deus, dei",Nomen,,"der Gott, die Gottheit",2,,,,,Campus C1,6,,,,,,,Top500
-di!,dī!,di!,,Vok.,(oh) Götter!,1,,,,,Campus C1,25,,,,,,,
-Diana,Diāna,Diana,,,Diana (Göttin der Jagd),1,,,,,Campus C1,21,,,,,,,
-dicere,"dīcere, dīcō, dīxī","dicere, dico, dixi",Verb,,"sagen, sprechen",2,,"diktieren, Diktat",,,Campus C1,16;27,,"dīcō, dīxī",,,,,Top500
-Dido,"Dīdō, ōnis","Dido, onis",Nomen,f,Dido (Königin Karthagos),1,,,,,Campus C1,30,,,,,,,
+di!,dī!,di!,Nomen,Vokativ,(oh) Götter!,1,,,,,Campus C1,25,,,,,,,
+Diana,"Diāna, Diānae","Diana, Dianae",Nomen,,Diana,1,Göttin der Jagd,,,,Campus C1,21,,,,,,,
+dicere,"dīcere, dīcō, dīxī","dicere, dico, dixi",Verb,,"sagen, sprechen",2,,"diktieren, Diktat",,,Campus C1,16;27,,,,,,,Top500
+Dido,"Dīdō, Dīdōnis","Dido, Didonis",Nomen,f,Dido,1,Königin Karthagos,,,,Campus C1,30,,,,,,,
 discipulus,"discipulus, discipuli","discipulus, discipuli",Nomen,,der Schüler,1,,,,,Campus C1,11,,,,,,,
-diu,diū,diu,Adverb,Adv.,lange (Zeit),1,,,,,Campus C1,7,,,,,,,Top500
-docere,"docēre, doceō","docere, doceo",Verb,,"lehren, unterrichten",2,,,,,Campus C1,3,,,,,,,
-dolere,dolēre,dolere,,,"schmerzen, wehtun",2,,,,,Campus C1,2,,,,,,,
-dolere (m. Abl.),dolēre (m. Abl.),dolere (m. Abl.),,m. Abl.,traurig sein über,1,,,,,Campus C1,28,,,,,,,
+diu,diū,diu,Adverb,,lange (Zeit),1,,,,,Campus C1,7,,,,,,,Top500
+docere,"docēre, doceō, docuī, doctum","docere, doceo, docui, doctum",Verb,,"lehren, unterrichten",2,,,,,Campus C1,3,,,,,,,
+dolere,"dolēre, doleō, doluī","dolere, doleo, dolui",Verb,,"schmerzen, wehtun",2,,,,,Campus C1,2,,,,,,,
+dolere (m. Abl.),dolēre (m. Abl.),dolere (m. Abl.),Verb,m. Abl.,traurig sein über,1,,,,,Campus C1,28,,,,,,,
 dolor,"dolor, dolōris","dolor, doloris",Nomen,m,der Schmerz,1,,,,,Campus C1,22,,,,,,,Top500
 dolus,"dolus, doli","dolus, doli",Nomen,,"die List, die Täuschung",2,,,,,Campus C1,9,,,,,,,
 domina,"domina, dominae","domina, dominae",Nomen,,"die Herrin, die Dame",2,,,,,Campus C1,8,,,,,,,
 dominus,"dominus, domini","dominus, domini",Nomen,,der Herr,1,,,,,Campus C1,3,,,,,,,Top500
 donum,"dōnum, dōni","donum, doni",Nomen,,das Geschenk,1,,,,,Campus C1,11,,,,,,,
-dubitare,"dubitāre, dubitō","dubitare, dubito",Verb,,zweifeln; zögern (m. Inf.),2,,,,,Campus C1,9,,,,,,,Top500
+dubitare,"dubitāre, dubitō","dubitare, dubito",Verb,,zweifeln; zögern,2,Mit Infinitiv,,,,Campus C1,9,,,,,,,Top500
 ducere,"dūcere, dūco, dūxī","ducere, duco, duxi",Verb,,"führen, ziehen",2,,,,,Campus C1,16;27,,,,,,,Top500
-dulcis,"dulcis, e","dulcis, e",,,"angenehm, süß",2,,,,,Campus C1,33,,,,,,,
-dum,dum,dum,Subjunktion,Subj.,"während, solange, bis",3,,,,,Campus C1,19,,,,,,,Top500
-duo,"duo, duae, duo","duo, duae, duo",,,"zwei, beide",2,,,,,Campus C1,16,,,,,,,Top500
+dulcis,"dulcis, dulcis, dulce","dulcis, dulcis, dulce",Adjektiv,,"angenehm, süß",2,,,,,Campus C1,33,,,,,,,
+dum,dum,dum,Subjunktion,,"während, solange, bis",3,,,,,Campus C1,19,,,,,,,Top500
+duo,"duo, duae, duo","duo, duae, duo",Adjektiv,,"zwei, beide",2,,,,,Campus C1,16,,,,,,,Top500
 duodecim,duodecim,duodecim,,indekl.,zwölf,1,,,,,Campus C1,27,,,,,,,
-e / ex,ē / ex,e / ex,Präposition,Präp. m. Abl.,"aus, von ... her",2,,,,,Campus C1,12,,,,,,,Top500
+e / ex,ē / ex (m. Abl.),e / ex (m. Abl.),Präposition,,"aus, von ... her",2,,,,,Campus C1,12,,,,,,,Top500
 ea hora,eā hōrā,ea hora,,,in dieser Stunde,1,,,,,Campus C1,28,,,,,,,
 ecce,ecce,ecce,,,schau! sieh da! schaut! seht da!,1,,,,,Campus C1,22,,,,,,,
-educere,"ēdūcere, ēdūcō","educere, educo",Verb,,herausführen,1,,,,,Campus C1,23,,,,,,,
-ego,ego,ego,,Nom.,ich (betont),1,,,,,Campus C1,13,,,,,,,Top500
-enim,enim,enim,,nachgestellt,"nämlich, denn",2,,,,,Campus C1,18,,,,,,,Top500
-eo,eō,eo,Adverb,Adv.,dorthin; deswegen,2,,,,,Campus C1,37,,,,,,,Top500
+educere,"ēdūcere, ēdūcō, ēdūxī, ēductum","educere, educo, eduxi, eductum",Verb,,herausführen,1,,,,,Campus C1,23,,,,,,,
+ego,ego,ego,Pronomen,Nom.,ich,1,Betont,,,,Campus C1,13,,,,,,,Top500
+enim,enim,enim,Subjunktion,nachgestellt,"nämlich, denn",2,,,,,Campus C1,18,,,,,,,Top500
+eo,eō,eo,Adverb,,dorthin; deswegen,2,,,,,Campus C1,37,,,,,,,Top500
 eo anno,eō annō,eo anno,,,in diesem Jahr,1,,,,,Campus C1,28,,,,,,,
-equus,"equus, equi","equus, equi",Nomen,,das Pferd,1,,,,,Campus C1,1,,equi,,,,,Top500
-ergo,ergō,ergo,Adverb,Adv.,"also, deshalb",2,,,,,Campus C1,34,,,,,,,Top500
+equus,"equus, equi","equus, equi",Nomen,,das Pferd,1,,,,,Campus C1,1,,,,,,,Top500
+ergo,ergō,ergo,Adverb,,"also, deshalb",2,,,,,Campus C1,34,,,,,,,Top500
 errare,"errāre, errō","errare, erro",Verb,,"umherirren, (sich) irren",2,,,,,Campus C1,13,,,,,,,
-esse,"esse, sum, fuī","esse, sum, fui",,,"sein, sich befinden",2,,,,,Campus C1,2;25,,"sum, fuī",,,,,Top500
-est,est,est,,,"er (sie, es) ist",2,,,,,Campus C1,2,,,,,,,
-et,et,et,,,"und, auch",2,,,,,Campus C1,1,,,,,,,Top500
-et ... et,et ... et,et ... et,,,sowohl ... als auch,1,,,,,Campus C1,35,,,,,,,Top500
-etiam,etiam,etiam,,,"auch, sogar",2,,et + iam,,,Campus C1,5,,,,,,,Top500
-etsi,etsī,etsi,,,"auch wenn, obwohl",2,,,,,Campus C1,28,,,,,,,
-Europa,Eurōpa,Europa,,,"Europa [Bereits im 5. Jh. v. Chr. teilte der griech. Historiker und Geograf Herodot die Welt in die drei Erdteile Europa, Asien und Libyen (Afrika) ein. Diese Einteilung behielt in der gesamten Antike Gültigkeit.]",2,,,,,Campus C1,10,,,,,,,
-Eurystheus,"Eurystheus, Eurysthei","Eurystheus, Eurysthei",Nomen,m,Eurystheus (mythischer König),1,,,,,Campus C1,27,,,,,,,
-exercere,"exercēre, exerceō","exercere, exerceo",Verb,,"üben, trainieren; quälen",3,,,,,Campus C1,22,,,,,,,
-exire,"exīre, exeō, exiī","exire, exeo, exii",,,"herausgehen, hinausgehen",2,,,,,Campus C1,37,,,,,,,
+esse,"esse, sum, fuī","esse, sum, fui",Verb,,"sein, sich befinden",2,,,,,Campus C1,2;25,,,,,,,Top500
+est,est,est,Verb,,"er (sie, es) ist",2,,,,,Campus C1,2,,,,,,,
+et,et,et,Subjunktion,,"und, auch",2,,,,,Campus C1,1,,,,,,,Top500
+et ... et,et ... et,et ... et,Subjunktion,,sowohl ... als auch,1,,,,,Campus C1,35,,,,,,,Top500
+etiam,etiam,etiam,Adverb,,"auch, sogar",2,,et + iam,,,Campus C1,5,,,,,,,Top500
+etsi,etsī,etsi,Subjunktion,,"auch wenn, obwohl",2,,,,,Campus C1,28,,,,,,,
+Europa,"Eurōpa, Eurōpae","Europa, Europae",Nomen,,Europa,1,"Bereits im 5. Jh. v. Chr. teilte der griech. Historiker und Geograf Herodot die Welt in die drei Erdteile Europa, Asien und Libyen (Afrika) ein. Diese Einteilung behielt in der gesamten Antike Gültigkeit.",,,,Campus C1,10,,,,,,,
+Eurystheus,"Eurystheus, Eurysthei","Eurystheus, Eurysthei",Nomen,m,Eurystheus,1,Mythischer König,,,,Campus C1,27,,,,,,,
+exercere,"exercēre, exerceō, exercuī, exercitum","exercere, exerceo, exercui, exercitum",Verb,,"üben, trainieren; quälen",3,,,,,Campus C1,22,,,,,,,
+exire,"exīre, exeō, exiī","exire, exeo, exii",Verb,,"herausgehen, hinausgehen",2,,,,,Campus C1,37,,,,,,,
 existimare,"exīstimāre, exīstimō","existimare, existimo",Verb,,"meinen, einschätzen",2,,,,,Campus C1,21,,,,,,,Top500
-exspectare,"exspectāre, exspectō, exspectāvī","exspectare, exspecto, exspectavi",Verb,,"warten (auf), erwarten",2,,Harry: Expecto patronum,,,Campus C1,10,,"exspectō, exspectāvī",,,,,Top500
+exspectare,"exspectāre, exspectō","exspectare, exspecto",Verb,,"warten (auf), erwarten",2,,Harry: Expecto patronum,,,Campus C1,10,,,,,,,Top500
 fabula,"fābula, fābulae","fabula, fabulae",Nomen,,"die Erzählung, die Geschichte, das Theaterstück",3,,,,,Campus C1,27,,,,,,,
 facere,"facere, faciō, fēcī","facere, facio, feci",Verb,,"machen, tun, handeln",3,,,,,Campus C1,17;27,,,,,,,Top500
 factum,"factum, facti","factum, facti",Nomen,,"die Handlung, die Tat, die Tatsache",3,,,,,Campus C1,26,,,,,,,Top500
 familia,"familia, familiae","familia, familiae",Nomen,,die Familie,1,,,,,Campus C1,1,,,,,,,
-Faustulus,Faustulus,Faustulus,,,Faustulus,1,"Hirte, der Romulus und Remus  entdeckte",,,,Campus C1,32,,,,,,,
+Faustulus,"Faustulus, Faustuli","Faustulus, Faustuli",Nomen,,Faustulus,1,"Hirte, der Romulus und Remus  entdeckte",,,,Campus C1,32,,,,,,,
 ferrum,"ferrum, ferri","ferrum, ferri",Nomen,,das Eisen; die Waffe,2,,,,,Campus C1,31,,,,,,,Top500
 filia,"fīlia, fīliae","filia, filiae",Nomen,,die Tochter,1,,,,,Campus C1,7,,,,,,,Top500
-filius,"fīlius, filii","filius, filii",Nomen,,der Sohn,1,,,,,Campus C1,9,,filii,,,,,Top500
-finis,"fīnis, fīnis","finis, finis",Nomen,m (Gen. Pl. -ium),"das Ende, die Grenze, das Ziel, der Zweck; Pl. das Gebiet",5,,,,,Campus C1,30,,,,,,,Top500
+filius,"fīlius, filii","filius, filii",Nomen,,der Sohn,1,,,,,Campus C1,9,,,,,,,Top500
+finis,"fīnis, fīnis","finis, finis",Nomen,m (Genitiv Plural finium),"das Ende, die Grenze, das Ziel, der Zweck; Pl. das Gebiet",5,,,,,Campus C1,30,,,,,,,Top500
 flere,"flēre, fleō, flēvī","flere, fleo, flevi",Verb,,"weinen, beweinen",2,,,,,Campus C1,5;25,,,,,,,
 fluvius,"fluvius, fluvii","fluvius, fluvii",Nomen,,der Fluss,1,,,,,Campus C1,6,,,,,,,
-fons,"fōns, fontis","fons, fontis",Nomen,m (Gen. Pl. -ium),"die Quelle, der Ursprung",2,,,,,Campus C1,23,,,,,,,
-fortis,"fortis, e","fortis, e",,,"kräftig, tapfer",2,,,,,Campus C1,33,,,,,,,Top500
+fons,"fōns, fontis","fons, fontis",Nomen,m (Genitiv Plural fontium),"die Quelle, der Ursprung",2,,,,,Campus C1,23,,,,,,,
+fortis,"fortis, fortis, forte","fortis, fortis, forte",Adjektiv,,"kräftig, tapfer",2,,,,,Campus C1,33,,,,,,,Top500
 fortuna,"fortūna, fortūnae","fortuna, fortunae",Nomen,,"das Schicksal, das Glück",2,,,,,Campus C1,35,,,,,,,Top500
 forum,"forum, fori","forum, fori",Nomen,,"das Forum, der Marktplatz",2,,,,,Campus C1,11,,,,,,,
 frater,"frāter, frātris","frater, fratris",Nomen,m,der Bruder,1,,,,,Campus C1,20,,,,,,,Top500
 frumentum,"frūmentum, frūmenti","frumentum, frumenti",Nomen,,das Getreide,1,,,,,Campus C1,11,,,,,,,Top500
-fuga,"fuga, fugae","fuga, fugae",Nomen,,die Flucht,1,,Musik: Fuge. Englisch: refugee – Flüchtling,,,Campus C1,25,,fugae,,,,,Top500
-fur,"fūr, fūris","fur, furis",Nomen,m,der Dieb,1,,,,,Campus C1,19,,fūris,,,,,
-gaudere,"gaudēre, gaudeō","gaudere, gaudeo",Verb,,sich freuen,1,,,,,Campus C1,4,,,,,,,
-gaudere (m. Abl.),gaudēre (m. Abl.),gaudere (m. Abl.),,m. Abl.,sich freuen über,1,,Gaudi,,,Campus C1,28,,m. Abl.,,,,,
+fuga,"fuga, fugae","fuga, fugae",Nomen,,die Flucht,1,,Musik: Fuge. Englisch: refugee – Flüchtling,,,Campus C1,25,,,,,,,Top500
+fur,"fūr, fūris","fur, furis",Nomen,m,der Dieb,1,,,,,Campus C1,19,,,,,,,
+gaudere,"gaudēre, gaudeō, gavīsus sum","gaudere, gaudeo, gavisus sum",Verb,,sich freuen,1,,,,,Campus C1,4,,,,,,,
+gaudere (m. Abl.),gaudēre (m. Abl.),gaudere (m. Abl.),,m. Abl.,sich freuen über,1,,Gaudi,,,Campus C1,28,,,,,,,
 gladiator,"gladiātor, gladiātōris","gladiator, gladiatoris",Nomen,m,der Gladiator,1,,,,,Campus C1,22,,,,,,,
-gladius,"gladius, gladii","gladius, gladii",Nomen,,das Schwert,1,,Gladiator = Schwertkämpfer,,,Campus C1,5,,gladii,,,,,
+gladius,"gladius, gladii","gladius, gladii",Nomen,,das Schwert,1,,Gladiator = Schwertkämpfer,,,Campus C1,5,,,,,,,
 gloria,"glōria, glōriae","gloria, gloriae",Nomen,,"der Ruhm, die Ehre",2,,,,,Campus C1,35,,,,,,,Top500
-Graecus,"Graecus, a, um","Graecus, a, um",Adjektiv,,griechisch; Subst. der Grieche,2,,,,,Campus C1,18,,,,,,,
+Graecus (Adj.),"Graecus, a, um","Graecus, a, um",Adjektiv,,griechisch; Subst. der Grieche,2,,,,,Campus C1,18,,,,,,,
+Graecus (Subst.),"Graecus, Graeci","Graecus, Graeci",Nomen,,der Grieche,1,,,,,Campus C1,18,,,,,,,
 gratia,"grātia, grātiae","gratia, gratiae",Nomen,,der Dank,1,,,,,Campus C1,6,,,,,,,Top500
 gratiam habere,grātiam habēre,gratiam habere,,,"danken, dankbar sein",2,,,,,Campus C1,6,,,,,,,
-habere,"habēre, habeō","habere, habeo",Verb,,"haben, halten",2,,,,,Campus C1,6,,,,,,,Top500
+habere,"habēre, habeō, habuī","habere, habeo, habui",Verb,,"haben, halten",2,,,,,Campus C1,6,,,,,,,Top500
 habitare,"habitāre, habitō","habitare, habito",Verb,,"wohnen, bewohnen",2,,,,,Campus C1,10,,,,,,,
-Hercules,"Herculēs, is","Hercules, is",Nomen,m,Herkules (sagenhafter Held),1,,,,,Campus C1,27,,,,,,,
-heri,herī,heri,Adverb,Adv.,gestern,1,,,,,Campus C1,20,,,,,,,
-hic,hīc,hic,Adverb,Adv.,hier,1,,,,,Campus C1,3,,,,,,,Top500
-hodie,hodiē,hodie,Adverb,Adv.,heute,1,,,,,Campus C1,11,,,,,,,
+Hercules,"Herculēs, Herculis","Hercules, Herculis",Nomen,m,Herkules,1,Sagenhafter Held,,,,Campus C1,27,,,,,,,
+heri,herī,heri,Adverb,,gestern,1,,,,,Campus C1,20,,,,,,,
+hic,hīc,hic,Adverb,,hier,1,,,,,Campus C1,3,,,,,,,Top500
+hodie,hodiē,hodie,Adverb,,heute,1,,,,,Campus C1,11,,,,,,,
 homo,"homō, hominis","homo, hominis",Nomen,m,der Mensch,1,,,,,Campus C1,23,,,,,,,Top500
 honestus,"honestus, a, um","honestus, a, um",Adjektiv,,"ehrenhaft, angesehen",2,,,,,Campus C1,29,,,,,,,
 honor,"honor, honōris","honor, honoris",Nomen,m,"die Ehre, das Ehrenamt",2,,,,,Campus C1,18,,,,,,,Top500
 hora,"hōra, hōrae","hora, horae",Nomen,,die Stunde,1,,,,,Campus C1,14,,,,,,,
-hostis,"hostis, hostis","hostis, hostis",Nomen,m (Gen. Pl. -ium),der Feind (Landesfeind),1,,,,,Campus C1,35,,,,,,,Top500
-iacere,"iacēre, iaceō","iacere, iaceo",Verb,,liegen,1,,,,,Campus C1,26,,,,,,,
-iam,iam,iam,Adverb,Adv.,"schon, bereits; nun",3,,,,,Campus C1,4,,,,,,,Top500
-ibi,ibī,ibi,Adverb,Adv.,dort,1,,,,,Campus C1,3,,,,,,,Top500
+hostis,"hostis, hostis","hostis, hostis",Nomen,m (Genitiv Plural hostium),der Feind (Landesfeind),1,,,,,Campus C1,35,,,,,,,Top500
+iacere,"iacēre, iaceō, iacuī","iacere, iaceo, iacui",Verb,,liegen,1,,,,,Campus C1,26,,,,,,,
+iam,iam,iam,Adverb,,"schon, bereits; nun",3,,,,,Campus C1,4,,,,,,,Top500
+ibi,ibī,ibi,Adverb,,dort,1,,,,,Campus C1,3,,,,,,,Top500
 idoneus,"idōneus, a, um","idoneus, a, um",Adjektiv,,"geeignet, passend",2,,,,,Campus C1,34,,,,,,,
 imperare,"imperāre, imperō","imperare, impero",Verb,,"befehlen, herrschen (über)",2,,,,,Campus C1,9,,,,,,,Top500
 imperator,"imperātor, imperātōris","imperator, imperatoris",Nomen,m,"der Befehlshaber, der Feldherr, der Kaiser",3,,,,,Campus C1,18,,,,,,,Top500
 imperium,"imperium, imperii","imperium, imperii",Nomen,,"der Befehl, die Herrschaft, das Reich",3,,,,,Campus C1,14,,,,,,,Top500
-in (m. Abl.),in (m. Abl.),in (m. Abl.),Präposition,Präp. m. Abl.,"in, an, auf, bei",4,Frage: Wo?,,,,Campus C1,1,,Präp. m. Abl.,,,,,Top500
-in (m. Akk.),in (m. Akk.),in (m. Akk.),Präposition,Präp. m. Akk.,"in (... hinein), nach (wohin?)",2,,,,,Campus C1,12,,,,,,,Top500
+in (m. Abl.),in (m. Abl.),in (m. Abl.),Präposition,,"in, an, auf, bei",4,Frage: Wo?,,,,Campus C1,1,,,,,,,Top500
+in (m. Akk.),in (m. Akk.),in (m. Akk.),Präposition,,"in (... hinein), nach",2,Frage: Wohin?,,,,Campus C1,12,,,,,,,Top500
 in animo habere,in animō habēre,in animo habere,,,"im Sinn haben, vorhaben",2,,,,,Campus C1,19,,,,,,,
 in honore esse,in honōre esse,in honore esse,,,"in Ehren stehen, angesehen sein",2,,,,,Campus C1,18,,,,,,,
-inanis,"inānis, e","inanis, e",,,"leer, wertlos",2,,,,,Campus C1,35,,,,,,,
+inanis,"inānis, inānis, ināne","inanis, inanis, inane",Adjektiv,,"leer, wertlos",2,,,,,Campus C1,35,,,,,,,
 indicare,"indicāre, indicō","indicare, indico",Verb,,"anzeigen, melden",2,,,,,Campus C1,12,,,,,,,
-ingenium,"ingenium, ingenii","ingenium, ingenii",Nomen,,"die Begabung, das Talent, der Verstand",3,,"Ingenieur, Genie",,,Campus C1,11,,ingenii,,,,,Top500
-inire,"inīre, ineō, iniī","inire, ineo, inii",,,"hineingehen (in), beginnen",2,,,,,Campus C1,37,,,,,,,
+ingenium,"ingenium, ingenii","ingenium, ingenii",Nomen,,"die Begabung, das Talent, der Verstand",3,,"Ingenieur, Genie",,,Campus C1,11,,,,,,,Top500
+inire,"inīre, ineō, iniī","inire, ineo, inii",Verb,,"hineingehen (in), beginnen",2,,,,,Campus C1,37,,,,,,,
 iniuria,"iniūria, iniūriae","iniuria, iniuriae",Nomen,,"das Unrecht, die Beleidigung; die Rechtsverletzung",3,,,,,Campus C1,9,,,,,,,Top500
 insula,"īnsula, īnsulae","insula, insulae",Nomen,,die Insel; der Wohnblock,2,,,,,Campus C1,7,,,,,,,
 interficere,"interficere, interficiō, interfēcī","interficere, interficio, interfeci",Verb,,"töten, vernichten",2,,,,,Campus C1,22;27,,,,,,,Top500
 intrare,"intrāre, intrō","intrare, intro",Verb,,"betreten, eintreten",2,,,,,Campus C1,8,,,,,,,
 invenire,"invenīre, inveniō, invēnī","invenire, invenio, inveni",Verb,,"finden, erfinden",2,,,,,Campus C1,13;27,,,,,,,Top500
-ire,"īre, eō, iī","ire, eo, ii",,,gehen,1,,,,,Campus C1,37,,,,,,,Top500
-is,"is, ea, id","is, ea, id",,,"dieser, diese, dieses; er, sie, es",6,,,,,Campus C1,26,,"ea, id",,,,,Top500
-ita,ita,ita,Adverb,Adv.,so,1,,,,,Campus C1,13,,,,,,,Top500
-Italia,Italia,Italia,,,Italien,1,,,,,Campus C1,31,,,,,,,
-itaque,itaque,itaque,,,deshalb,1,,,,,Campus C1,5,,,,,,,Top500
-iterum,iterum,iterum,Adverb,Adv.,"wiederum, zum zweiten Mal",2,,iterum reimt sich mit wiederum,,,Campus C1,5,,,,,,,
-Iuppiter,"Iuppiter, Iovis","Iuppiter, Iovis",Nomen,m,Jupiter (höchster Gott der Römer),1,,,,,Campus C1,21,,,,,,,
-iuvenis (Adj.),"iuvenis, iuvenis","iuvenis, iuvenis",Nomen,Adj. m/f,jung,1,,,,,Campus C1,32,,iuvenis,,,,,
-iuvenis (Subst.),"iuvenis, iuvenis","iuvenis, iuvenis",Nomen,m,der junge Mann,1,,,,,Campus C1,32,,iuvenis,,,,,
+ire,"īre, eō, iī","ire, eo, ii",Verb,,gehen,1,,,,,Campus C1,37,,,,,,,Top500
+is,"is, ea, id","is, ea, id",Pronomen,,"dieser, diese, dieses; er, sie, es",6,,,,,Campus C1,26,,,,,,,Top500
+ita,ita,ita,Adverb,,so,1,,,,,Campus C1,13,,,,,,,Top500
+Italia,"Italia, Italiae","Italia, Italiae",Nomen,,Italien,1,,,,,Campus C1,31,,,,,,,
+itaque,itaque,itaque,Adverb,,deshalb,1,,,,,Campus C1,5,,,,,,,Top500
+iterum,iterum,iterum,Adverb,,"wiederum, zum zweiten Mal",2,,iterum reimt sich mit wiederum,,,Campus C1,5,,,,,,,
+Iuppiter,"Iuppiter, Iovis","Iuppiter, Iovis",Nomen,m,Jupiter,1,Höchster Gott der Römer,,,,Campus C1,21,,,,,,,
+iuvenis (Adj.),"iuvenis, iuvenis, iuvene","iuvenis, iuvenis, iuvene",Adjektiv,,jung,1,,,,,Campus C1,32,,,,,,,
+iuvenis (Subst.),"iuvenis, iuvenis","iuvenis, iuvenis",Nomen,m/f,"der junge Mann, die junge Frau",2,,,,,Campus C1,32,,,,,,,
 labor,"labor, labōris","labor, laboris",Nomen,m,"die Arbeit, die Anstrengung",2,,,,,Campus C1,27,,,,,,,Top500
 laborare,"labōrāre, labōrō","laborare, laboro",Verb,,"arbeiten, sich anstrengen",2,,,,,Campus C1,8,,,,,,,
-laborare (m. Abl.),labōrāre (m. Abl.),laborare (m. Abl.),,m. Abl.,"leiden an, in Not / Sorge sein wegen",2,,,,,Campus C1,28,,,,,,,
+laborare (m. Abl.),labōrāre (m. Abl.),laborare (m. Abl.),Verb,m. Abl.,"leiden an, in Not / Sorge sein wegen",2,,,,,Campus C1,28,,,,,,,
 lacrima,"lacrima, lacrimae","lacrima, lacrimae",Nomen,,die Träne,1,,,,,Campus C1,7,,,,,,,Top500
 laetitia,"laetitia, laetitiae","laetitia, laetitiae",Nomen,,die Freude,1,,,,,Campus C1,7,,,,,,,
-Laocoon,"Lāocoōn, Lāocoontis","Laocoon, Laocoontis",Nomen,m,Laokoon (trojanischer Priester),1,,,,,Campus C1,29,,,,,,,
-latere,"latēre, lateō","latere, lateo",Verb,,verborgen sein,1,,,,,Campus C1,5,,,,,,,
-Latini,"Latīnī, Latīnōrum","Latini, Latinorum",Nomen,m Pl.,die Latiner (Volksstamm in Italien),1,,,,,Campus C1,31,,,,,,,
-Latinus,Latīnus,Latinus,,,Latinus (König der Latiner),1,,,,,Campus C1,31,,,,,,,
+Laocoon,"Lāocoōn, Lāocoontis","Laocoon, Laocoontis",Nomen,m,Laokoon,1,Trojanischer Priester,,,,Campus C1,29,,,,,,,
+latere,"latēre, lateō, latuī","latere, lateo, latui",Verb,,verborgen sein,1,,,,,Campus C1,5,,,,,,,
+Latini,"Latīnī, Latīnōrum","Latini, Latinorum",Nomen,m Plural,die Latiner,1,Volksstamm in Italien,,,,Campus C1,31,,,,,,,
+Latinus,"Latīnus, Latīni","Latinus, Latini",Nomen,,Latinus,1,König der Latiner,,,,Campus C1,31,,,,,,,
 laudare,"laudāre, laudō","laudare, laudo",Verb,,loben,1,,,,,Campus C1,8,,,,,,,Top500
 leo,"leō, leōnis","leo, leonis",Nomen,m,der Löwe,1,,,,,Campus C1,23,,,,,,,
 lex,"lēx, lēgis","lex, legis",Nomen,f,"das Gesetz, die Bedingung",2,,,,,Campus C1,36,,,,,,,Top500
-libenter,libenter,libenter,Adverb,Adv.,gerne,1,,,,,Campus C1,8,,,,,,,
-liber,"līber, lībera, līberum","liber, libera, liberum",,,frei,1,,,,,Campus C1,15,,,,,,,Top500
+libenter,libenter,libenter,Adverb,,gerne,1,,,,,Campus C1,8,,,,,,,
+liber,"līber, lībera, līberum","liber, libera, liberum",Adjektiv,,frei,1,,,,,Campus C1,15,,,,,,,Top500
 liberare,"līberāre, līberō","liberare, libero",Verb,,"befreien, freilassen",2,,,,,Campus C1,13,,,,,,,
-liberi,"līberī, līberōrum","liberi, liberorum",Nomen,m Pl.,die Kinder,1,,,,,Campus C1,26,,līberōrum,,,,,Top500
+liberi,"līberī, līberōrum","liberi, liberorum",Nomen,m Plural,die Kinder,1,,,,,Campus C1,26,,,,,,,Top500
 libertas,"lībertās, lībertātis","libertas, libertatis",Nomen,f,die Freiheit,1,,,,,Campus C1,20,,,,,,,Top500
-licet,licet,licet,,,"es ist erlaubt, es ist möglich",2,,,,,Campus C1,18,,,,,,,Top500
+licet,licet,licet,Verb,,"es ist erlaubt, es ist möglich",2,,,,,Campus C1,18,,,,,,,Top500
 lingua,"lingua, linguae","lingua, linguae",Nomen,,"die Sprache, die Rede",2,,,,,Campus C1,3,,,,,,,
-Livius,Līvius,Livius,,,Titus Livius (röm. Geschichtsschreiber),1,,,,,Campus C1,34,,,,,,,
+Livius,"Līvius, Līvii","Livius, Livii",Nomen,,Titus Livius,1,Röm. Geschichtsschreiber,,,,Campus C1,34,,,,,,,
 locus,"locus, loci","locus, loci",Nomen,,"der Ort, der Platz, die Stelle",3,,,,,Campus C1,33,,,,,,,Top500
 ludus,"lūdus, lūdi","ludus, ludi",Nomen,,das Spiel; die Schule,2,,,,,Campus C1,10,,,,,,,
 lux,"lūx, lūcis","lux, lucis",Nomen,f,"das Licht, das Tageslicht",2,,,,,Campus C1,25,,,,,,,Top500
-magis,magis,magis,,,mehr,1,,,,,Campus C1,17,,,,,,,Top500
+magis,magis,magis,Adverb,,mehr,1,,,,,Campus C1,17,,,,,,,Top500
 magister,"magister, magistrī","magister, magistri",Nomen,m,"der Lehrer, der Meister",2,,,,,Campus C1,15,,,,,,,
 magnitudo,"magnitūdō, magnitūdinis","magnitudo, magnitudinis",Nomen,f,die Größe,1,,,,,Campus C1,23,,,,,,,Top500
-magnus,"magnus, a, um","magnus, a, um",Adjektiv,,"groß, bedeutend",2,,,,,Campus C1,14,,"magna, magnum",,,,,Top500
-malle,"mālle, mālō","malle, malo",,,lieber wollen,1,,,,,Campus C1,19,,,,,,,
+magnus,"magnus, a, um","magnus, a, um",Adjektiv,,"groß, bedeutend",2,,,,,Campus C1,14,,,,,,,Top500
+malle,"mālle, mālō, māluī","malle, malo, malui",Verb,,lieber wollen,1,,,,,Campus C1,19,,,,,,,
 malus,"malus, a, um","malus, a, um",Adjektiv,,"schlecht, schlimm",2,,,,,Campus C1,24,,,,,,,Top500
 manere,"manēre, maneō, mānsī","manere, maneo, mansi",Verb,,"bleiben, (er)warten",2,,,,,Campus C1,12;27,,,,,,,Top500
-maritus,"marītus, marīti","maritus, mariti",Nomen,,der Ehemann,1,,Englisch: to marry – heiraten,,,Campus C1,30,,marīti,,,,,
+maritus,"marītus, marīti","maritus, mariti",Nomen,,der Ehemann,1,,Englisch: to marry – heiraten,,,Campus C1,30,,,,,,,
 mater,"māter, mātris","mater, matris",Nomen,f,die Mutter,1,,,,,Campus C1,20,,,,,,,Top500
-maxime,maximē,maxime,Adverb,Adv.,"am meisten, besonders",2,,,,,Campus C1,34,,,,,,,
-me,mē,me,,Akk.,mich,1,,,,,Campus C1,13,,,,,,,
-mecum,mēcum,mecum,,,mit mir,1,,,,,Campus C1,13,,,,,,,
+maxime,maximē,maxime,Adverb,,"am meisten, besonders",2,,,,,Campus C1,34,,,,,,,
+me,mē,me,Pronomen,Akk.,mich,1,,,,,Campus C1,13,,,,,,,
+mecum,mēcum,mecum,Pronomen,,mit mir,1,,,,,Campus C1,13,,,,,,,
 mensa,"mēnsa, mēnsae","mensa, mensae",Nomen,,der (Ess-)Tisch,1,,,,,Campus C1,8,,,,,,,
 mercator,"mercātor, mercātōris","mercator, mercatoris",Nomen,m,"der Kaufmann, der Händler",2,,,,,Campus C1,18,,,,,,,
-Mercurius,Mercurius,Mercurius,,,Merkur (Götterbote),1,,,,,Campus C1,21,,,,,,,
+Mercurius,"Mercurius, Mercurii","Mercurius, Mercurii",Nomen,,Merkur,1,Götterbote,,,,Campus C1,21,,,,,,,
 meus,"meus, a, um","meus, a, um",Adjektiv,,mein,1,,,,,Campus C1,14,,,,,,,Top500
-mihi,mihi,mihi,,Dat.,mir,1,,,,,Campus C1,13,,,,,,,
-miles,"mīles, mīlitis","miles, militis",Nomen,m,der Soldat,1,,Militär,,,Campus C1,32,,mīlitis,,,,,Top500
-Minerva,Minerva,Minerva,,,Minerva (Göttin der Weisheit),1,,,,,Campus C1,21,,,,,,,
+mihi,mihi,mihi,Pronomen,Dat.,mir,1,,,,,Campus C1,13,,,,,,,
+miles,"mīles, mīlitis","miles, militis",Nomen,m,der Soldat,1,,Militär,,,Campus C1,32,,,,,,,Top500
+Minerva,"Minerva, Minervae","Minerva, Minervae",Nomen,,Minerva,1,Göttin der Weisheit,,,,Campus C1,21,,,,,,,
 mirus,"mīrus, a, um","mirus, a, um",Adjektiv,,"erstaunlich, sonderbar",2,,,,,Campus C1,24,,,,,,,
-miser,"miser, misera, miserum","miser, misera, miserum",,,"arm, erbärmlich, unglücklich",3,,,,,Campus C1,15,,,,,,,Top500
+miser,"miser, misera, miserum","miser, misera, miserum",Adjektiv,,"arm, erbärmlich, unglücklich",3,,,,,Campus C1,15,,,,,,,Top500
 mittere,"mittere, mittō, mīsī","mittere, mitto, misi",Verb,,"(los)lassen, schicken, werfen",3,,,,,Campus C1,16;27,,,,,,,Top500
 modestia,"modestia, modestiae","modestia, modestiae",Nomen,,"die Bescheidenheit, der Anstand",2,,,,,Campus C1,9,,,,,,,
-monere,monēre,monere,,,"mahnen, ermahnen",2,,,,,Campus C1,2,,,,,,,
-mons,"mōns, montis","mons, montis",Nomen,m (Gen. Pl. -ium),der Berg,1,,,,,Campus C1,23,,,,,,,Top500
+monere,"monēre, moneō, monuī","monere, moneo, monui",Verb,,"mahnen, ermahnen",2,,,,,Campus C1,2,,,,,,,
+mons,"mōns, montis","mons, montis",Nomen,m (Genitiv Plural montium),der Berg,1,,,,,Campus C1,23,,,,,,,Top500
 monstrum,"mōnstrum, mōnstri","monstrum, monstri",Nomen,,das Ungeheuer,1,,,,,Campus C1,24,,,,,,,
 monumentum,"monumentum, monumenti","monumentum, monumenti",Nomen,,das Denkmal,1,,,,,Campus C1,30,,,,,,,
-mors,"mors, mortis","mors, mortis",Nomen,f (Gen. Pl. -ium),der Tod,1,,,,,Campus C1,22,,,,,,,Top500
-mortuus,"mortuus, a, um","mortuus, a, um",Adjektiv,,"gestorben, tot; Subst. der Tote",3,,,,,Campus C1,21,,,,,,,
+mors,"mors, mortis","mors, mortis",Nomen,f (Genitiv Plural mortium),der Tod,1,,,,,Campus C1,22,,,,,,,Top500
+mortuus (Adj.),"mortuus, a, um","mortuus, a, um",Adjektiv,,"gestorben, tot",2,,,,,Campus C1,21,,,,,,,
+mortuus (Subst.),"mortuus, mortui","mortuus, mortui",Nomen,,der Tote,1,,,,,Campus C1,21,,,,,,,
 mos,"mōs, mōris","mos, moris",Nomen,m,"die Sitte, der Brauch; Pl. der Charakter",3,,,,,Campus C1,36,,,,,,,Top500
 movere,"movēre, moveō, mōvī","movere, moveo, movi",Verb,,"bewegen, beeindrucken",2,,,,,Campus C1,7;27,,,,,,,Top500
-mox,mox,mox,Adverb,Adv.,bald,1,,,,,Campus C1,7,,,,,,,
+mox,mox,mox,Adverb,,bald,1,,,,,Campus C1,7,,,,,,,
 mulier,"mulier, mulieris","mulier, mulieris",Nomen,f,die Frau,1,,,,,Campus C1,19,,,,,,,Top500
 multitudo,"multitūdō, multitūdinis","multitudo, multitudinis",Nomen,f,"die große Zahl, die Menge",2,,,,,Campus C1,23,,,,,,,Top500
-multum,multum,multum,Adverb,Adv.,"sehr, viel",2,,,,,Campus C1,34,,,,,,,
+multum,multum,multum,Adverb,,"sehr, viel",2,,,,,Campus C1,34,,,,,,,
 multum valere,multum valēre,multum valere,,,großen Einfluss haben,1,,,,,Campus C1,34,,,,,,,
 multus,"multus, a, um","multus, a, um",Adjektiv,,viel,1,,,,,Campus C1,14,,,,,,,Top500
-munire,"mūnīre, mūniō","munire, munio",Verb,,"bauen, befestigen, schützen",3,,,,,Campus C1,31,,,,,,,
+munire,"mūnīre, mūniō, mūnīvī, mūnītum","munire, munio, munivi, munitum",Verb,,"bauen, befestigen, schützen",3,,,,,Campus C1,31,,,,,,,
 murus,"mūrus, mūri","murus, muri",Nomen,,die Mauer,1,,,,,Campus C1,1,,,,,,,
-nam,nam,nam,,,"denn, nämlich",2,,,,,Campus C1,3,,,,,,,Top500
+nam,nam,nam,Subjunktion,,"denn, nämlich",2,,,,,Campus C1,3,,,,,,,Top500
 narrare,"narrāre, narrō","narrare, narro",Verb,,erzählen,1,,,,,Campus C1,14,,,,,,,
 natio,"nātiō, nātiōnis","natio, nationis",Nomen,f,"das Volk, der Volksstamm",2,,,,,Campus C1,23,,,,,,,
 natura,"nātūra, nātūrae","natura, naturae",Nomen,,"die Natur, das Wesen, die Beschaffenheit",3,,,,,Campus C1,6,,,,,,,Top500
 negotium,"negōtium, negōtii","negotium, negotii",Nomen,,"die Aufgabe, das Geschäft; die Angelegenheit",3,,,,,Campus C1,22,,,,,,,
-Neptunus,Neptūnus,Neptunus,,,Neptun (Gott des Meeres),1,,,,,Campus C1,21,,,,,,,
-neque,neque,neque,,,"und nicht, auch nicht",2,,,,,Campus C1,3,,,,,,,Top500
-neque ... neque,neque ... neque,neque ... neque,,,weder ... noch,1,,,,,Campus C1,3,,,,,,,Top500
-nescire,"nescīre, nesciō","nescire, nescio",Verb,,"nicht wissen, nicht kennen, nicht verstehen",3,,,,,Campus C1,10,,,,,,,Top500
-niger,"niger, nigra, nigrum","niger, nigra, nigrum",,,"schwarz, dunkel",2,,,,,Campus C1,15,,,,,,,
-nihil,nihil,nihil,,,nichts,1,,,,,Campus C1,10,,,,,,,Top500
-nisi,nisī,nisi,Subjunktion,Subj.,wenn nicht,1,,,,,Campus C1,23,,,,,,,Top500
-nobis,nōbīs,nobis,,Dat.,uns,1,,,,,Campus C1,13,,,,,,,
-nobiscum,nōbīscum,nobiscum,,,mit uns,1,,,,,Campus C1,13,,,,,,,
-nocte,nocte,nocte,,,nachts,1,,,,,Campus C1,28,,,,,,,
-nolle,"nolle, nōlō","nolle, nolo",,,nicht wollen,1,,,,,Campus C1,19,,,,,,,Top500
-non,nōn,non,,,nicht,1,,,,,Campus C1,2,,,,,,,Top500
-non iam,nōn iam,non iam,,,nicht mehr,1,,,,,Campus C1,4,,,,,,,
-nondum,nōndum,nondum,Adverb,Adv.,noch nicht,1,,,,,Campus C1,25,,,,,,,
-nonne?,nōnne?,nonne?,,,(etwa) nicht?,1,,,,,Campus C1,17,,,,,,,
-nos,nōs,nos,,Nom. / Akk.,wir / uns,1,,,,,Campus C1,13,,,,,,,Top500
-noster,"noster, nostra, nostrum","noster, nostra, nostrum",,,unser,1,,,,,Campus C1,15,,,,,,,Top500
+Neptunus,"Neptūnus, Neptūni","Neptunus, Neptuni",Nomen,,Neptun (Gott des Meeres),1,,,,,Campus C1,21,,,,,,,
+neque,neque,neque,Subjunktion,,"und nicht, auch nicht",2,,,,,Campus C1,3,,,,,,,Top500
+neque ... neque,neque ... neque,neque ... neque,Subjunktion,,weder ... noch,1,,,,,Campus C1,3,,,,,,,Top500
+nescire,"nescīre, nesciō, nescīvī","nescire, nescio, nescivi",Verb,,"nicht wissen, nicht kennen, nicht verstehen",3,,,,,Campus C1,10,,,,,,,Top500
+niger,"niger, nigra, nigrum","niger, nigra, nigrum",Adjektiv,,"schwarz, dunkel",2,,,,,Campus C1,15,,,,,,,
+nihil,nihil,nihil,Adverb,,nichts,1,,,,,Campus C1,10,,,,,,,Top500
+nisi,nisī,nisi,Subjunktion,,wenn nicht,1,,,,,Campus C1,23,,,,,,,Top500
+nobis,nōbīs,nobis,Pronomen,Dat.,uns,1,,,,,Campus C1,13,,,,,,,
+nobiscum,nōbīscum,nobiscum,Pronomen,,mit uns,1,,,,,Campus C1,13,,,,,,,
+nocte,nocte,nocte,Adverb,,nachts,1,,,,,Campus C1,28,,,,,,,
+nolle,"nolle, nōlō, nōluī","nolle, nolo, nolui",Verb,,nicht wollen,1,,,,,Campus C1,19,,,,,,,Top500
+non,nōn,non,Adverb,,nicht,1,,,,,Campus C1,2,,,,,,,Top500
+non iam,nōn iam,non iam,Adverb,,nicht mehr,1,,,,,Campus C1,4,,,,,,,
+nondum,nōndum,nondum,Adverb,,noch nicht,1,,,,,Campus C1,25,,,,,,,
+nonne,nōnne?,nonne?,,,(etwa) nicht?,1,,,,,Campus C1,17,,,,,,,
+nos,nōs,nos,Pronomen,Nom. / Akk.,wir / uns,1,,,,,Campus C1,13,,,,,,,Top500
+noster,"noster, nostra, nostrum","noster, nostra, nostrum",Adjektiv,,unser,1,,,,,Campus C1,15,,,,,,,Top500
 novem,novem,novem,,indekl.,neun,1,,,,,Campus C1,33,,,,,,,
 novus,"novus, a, um","novus, a, um",Adjektiv,,"neu, ungewöhnlich",2,,,,,Campus C1,14,,,,,,,Top500
-nox,"nox, noctis","nox, noctis",Nomen,f  (Gen. Pl. -ium),die Nacht,1,,,,,Campus C1,25,,,,,,,Top500
-Numitor,"Numitor, Numitōris","Numitor, Numitoris",Nomen,m,"Numitor (König von Alba, Großvater von Romulus und Remus)",2,,,,,Campus C1,33,,,,,,,
-numquam,numquam,numquam,Adverb,Adv.,niemals,1,,,,,Campus C1,4,,,,,,,Top500
-nunc,nunc,nunc,Adverb,Adv.,"nun, jetzt",2,,,,,Campus C1,2,,,,,,,Top500
+nox,"nox, noctis","nox, noctis",Nomen,f  (Genitiv Plural noctium),die Nacht,1,,,,,Campus C1,25,,,,,,,Top500
+Numitor,"Numitor, Numitōris","Numitor, Numitoris",Nomen,m,Numitor,1,"König von Alba, Großvater von Romulus und Remus",,,,Campus C1,33,,,,,,,
+numquam,numquam,numquam,Adverb,,niemals,1,,,,,Campus C1,4,,,,,,,Top500
+nunc,nunc,nunc,Adverb,,"nun, jetzt",2,,,,,Campus C1,2,,,,,,,Top500
 nuntiare,"nūntiāre, nūntiō","nuntiare, nuntio",Verb,,melden,1,,,,,Campus C1,21,,,,,,,Top500
 nuntius,"nūntius, nūntii","nuntius, nuntii",Nomen,,"der Bote, die Nachricht",2,,,,,Campus C1,16,,,,,,,
-occidere,"occidere, óccidō, óccidī","occidere, occido, occidi",Verb,,"(zu Boden) fallen, umkommen, untergehen",3,,,,,Campus C1,28,,,,,,,
-occidereII,"occīdereII, occīdō, occīdī","occidereII, occido, occidi",,,"niederschlagen, töten",2,,,,,Campus C1,31,,,,,,,
+occidere,"occidere, óccidō, óccidī, óccisum","occidere, occido, occidi, occisum",Verb,,"(zu Boden) fallen, umkommen, untergehen",3,,,,,Campus C1,28,,,,,,,
+occidere (langes i),"occīdere, occīdō, occīdī, occīsum","occidere, occido, occidi, occisum",Verb,,"niederschlagen, töten",2,,,,,Campus C1,31,,,,,,,
 occupare,"occupāre, occupō","occupare, occupo",Verb,,"besetzen, einnehmen",2,,,,,Campus C1,35,,,,,,,Top500
 octo,octō,octo,,indekl.,acht,1,,,,,Campus C1,14,,,,,,,
-oculus,"oculus, oculi","oculus, oculi",Nomen,,das Auge,1,,,,,Campus C1,2,,oculi,,,,,Top500
+oculus,"oculus, oculi","oculus, oculi",Nomen,,das Auge,1,,,,,Campus C1,2,,,,,,,Top500
 officium,"officium, officii","officium, officii",Nomen,,"der Dienst, die Pflicht, das Pflichtgefühl",3,,,,,Campus C1,28,,,,,,,Top500
 officium praestare,officium praestāre,officium praestare,,,"eine Pflicht leisten, erfüllen",2,,,,,Campus C1,28,,,,,,,
 omittere,"omittere, omittō, omīsī","omittere, omitto, omisi",Verb,,"aufgeben, beiseite lassen",2,,,,,Campus C1,37,,,,,,,
-omnis,"omnis, e","omnis, e",,,"jeder, ganz; Pl. alle",3,,,,,Campus C1,33,,,,,,,Top500
-oportet,oportet,oportet,,,"es gehört sich, es ist nötig",2,,,,,Campus C1,30,,,,,,,Top500
+omnis,"omnis, omnis, omne","omnis, omnis, omne",Adjektiv,,"jeder, ganz; Pl. alle",3,,,,,Campus C1,33,,,,,,,Top500
+oportet,oportet,oportet,Verb,,"es gehört sich, es ist nötig",2,,,,,Campus C1,30,,,,,,,Top500
 oppidum,"oppidum, oppidi","oppidum, oppidi",Nomen,,die Stadt (Kleinstadt),1,,,,,Campus C1,16,,,,,,,Top500
 opportunus,"opportūnus, a, um","opportunus, a, um",Adjektiv,,"geeignet, günstig",2,,,,,Campus C1,34,,,,,,,
 ora,"ōra, ōrae","ora, orae",Nomen,,die Küste,1,,,,,Campus C1,29,,,,,,,
 ordo,"ōrdō, ōrdinis","ordo, ordinis",Nomen,m,"die Ordnung, die Reihe, der Stand",3,,,,,Campus C1,37,,,,,,,Top500
 ornamentum,"ōrnāmentum, ōrnāmenti","ornamentum, ornamenti",Nomen,,"der Schmuck, das Schmuckstück",2,,,,,Campus C1,12,,,,,,,
 ornare,"ōrnāre, ōrnō","ornare, orno",Verb,,"ausstatten, schmücken",2,,,,,Campus C1,8,,,,,,,
-ostendere,"ostendere, ostendō, ostendī","ostendere, ostendo, ostendi",Verb,,"zeigen, erklären",2,,,,,Campus C1,16;28,,"ostendō, ostendī",,,,,Top500
-Palatium,"Palātium, Palātii","Palatium, Palatii",Nomen,,der Palatin (Hügel Roms),1,,,,,Campus C1,15,,,,,,,
+ostendere,"ostendere, ostendō, ostendī","ostendere, ostendo, ostendi",Verb,,"zeigen, erklären",2,,,,,Campus C1,16;28,,,,,,,Top500
+Palatium,"Palātium, Palātii","Palatium, Palatii",Nomen,,der Palatin,1,Hügel Roms,,,,Campus C1,15,,,,,,,
 parare,"parāre, parō","parare, paro",Verb,,"(vor)bereiten, vorhaben (m. Inf.); erwerben",3,,,,,Campus C1,8,,,,,,,Top500
-parentes,"parentes, parentum","parentes, parentum",Nomen,m Pl.,die Eltern,1,,,,,Campus C1,36,,,,,,,Top500
-parere,pārēre,parere,,,gehorchen,1,,,,,Campus C1,2,,,,,,,
-pars,"pars, partis","pars, partis",Nomen,f (Gen. Pl. -ium),"der Teil, die Seite",2,,,,,Campus C1,22,,,,,,,Top500
-parvus,"parvus, a, um","parvus, a, um",Adjektiv,,"klein, gering",2,,,,,Campus C1,14,,"parva, parvum",,,,,Top500
+parentes,"parentes, parentum","parentes, parentum",Nomen,m Plural,die Eltern,1,,,,,Campus C1,36,,,,,,,Top500
+parere,"pārēre, pāreō, pāruī, pāritum","parere, pareo, parui, paritum",Verb,,gehorchen,1,,,,,Campus C1,2,,,,,,,
+pars,"pars, partis","pars, partis",Nomen,f (Genitiv Plural partium),"der Teil, die Seite",2,,,,,Campus C1,22,,,,,,,Top500
+parvus,"parvus, a, um","parvus, a, um",Adjektiv,,"klein, gering",2,,,,,Campus C1,14,,,,,,,Top500
 pater,"pater, patris","pater, patris",Nomen,m,der Vater,1,,,,,Campus C1,20,,,,,,,Top500
-patere,"patēre, pateō","patere, pateo",Verb,,offen stehen,1,,,,,Campus C1,10,,,,,,,
+patere,"patēre, pateō, patuī","patere, pateo, patui",Verb,,offen stehen,1,,,,,Campus C1,10,,,,,,,
 patria,"patria, patriae","patria, patriae",Nomen,,die Heimat,1,,,,,Campus C1,9,,,,,,,Top500
-paulatim,paulātim,paulatim,Adverb,Adv.,allmählich,1,,,,,Campus C1,29,,,,,,,
+paulatim,paulātim,paulatim,Adverb,,allmählich,1,,,,,Campus C1,29,,,,,,,
 paulo post,paulō post,paulo post,,,(ein) wenig später,1,,,,,Campus C1,26,,,,,,,
 pecunia,"pecūnia, pecūniae","pecunia, pecuniae",Nomen,,"das Geld, das Vermögen",2,,,,,Campus C1,19,,,,,,,Top500
-pellere,"pellere, pellō, pepulī","pellere, pello, pepuli",Verb,,"stoßen, schlagen, (ver)treiben",3,,,,,Campus C1,32,,"pellō, pepulī",,,,,
-per,per,per,Präposition,Präp. m. Akk.,"durch, hindurch",2,,,,,Campus C1,16,,,,,,,Top500
+pellere,"pellere, pellō, pepulī","pellere, pello, pepuli",Verb,,"stoßen, schlagen, (ver)treiben",3,,,,,Campus C1,32,,,,,,,
+per,per (m. Akk.),per (m. Akk.),Präposition,,"durch, hindurch",2,,,,,Campus C1,16,,,,,,,Top500
 periculum,"perīculum, perīculi","periculum, periculi",Nomen,,die Gefahr,1,,,,,Campus C1,24,,,,,,,Top500
-petere,"petere, petō, petīvī","petere, peto, petivi",Verb,,"aufsuchen, (er)streben, bitten, verlangen; angreifen",5,,,,,Campus C1,18;29,,"petō, petīvī",,,,,Top500
+petere,"petere, petō, petīvī","petere, peto, petivi",Verb,,"aufsuchen, (er)streben, bitten, verlangen; angreifen",5,,,,,Campus C1,18;29,,,,,,,Top500
 pietas,"pietās, pietātis","pietas, pietatis",Nomen,f,"das Pflichtgefühl, die Frömmigkeit",2,,,,,Campus C1,20,,,,,,,
 pius,"pius, a, um","pius, a, um",Adjektiv,,"fromm, gerecht, pflichtbewusst",3,,,,,Campus C1,17,,,,,,,
-placere,"placēre, placeō","placere, placeo",Verb,,gefallen,1,,,,,Campus C1,5,,,,,,,Top500
-plebs,"plēbs, plēbis","plebs, plebis",Nomen,f,"das (nicht adelige, einfache) Volk",2,,,,,Campus C1,36,,,,,,,
+placere,"placēre, placeō, placuī, placitum","placere, placeo, placui, placitum",Verb,,gefallen,1,,,,,Campus C1,5,,,,,,,Top500
+plebs,"plēbs, plēbis","plebs, plebis",Nomen,f,das Volk,1,"Das nicht adelige, einfache Volk",,,,Campus C1,36,,,,,,,
 plenus,"plēnus, a, um","plenus, a, um",Adjektiv,,voll,1,,,,,Campus C1,19,,,,,,,
-Pluto,"Plūtō, Plūtōnis","Pluto, Plutonis",Nomen,m,Pluto (Gott der Unterwelt),1,,,,,Campus C1,28,,,,,,,
-Pompei,"Pompēī, Pompēiōrum","Pompei, Pompeiorum",Nomen,m Pl.,Pompeji (Stadt in Kampanien),1,,,,,Campus C1,26,,,,,,,
-Pompeianus,"Pompēiānus, a, um","Pompeianus, a, um",Adjektiv,,pompejanisch; Subst. Pompejaner,2,,,,,Campus C1,18,,,,,,,
+Pluto,"Plūtō, Plūtōnis","Pluto, Plutonis",Nomen,m,Pluto,1,Gott der Unterwelt,,,,Campus C1,28,,,,,,,
+Pompei,"Pompēī, Pompēiōrum","Pompei, Pompeiorum",Nomen,m Plural,Pompeji,1,Stadt in Kampanien,,,,Campus C1,26,,,,,,,
+Pompeianus (Adj.),"Pompēiānus, a, um","Pompeianus, a, um",Adjektiv,,pompejanisch,1,,,,,Campus C1,18,,,,,,,
+Pompeianus (Subst.),"Pompēiānus, Pompēiāni","Pompeianus, Pompeiani",Nomen,,der Pompejaner,1,,,,,Campus C1,18,,,,,,,
 populus,"populus, populi","populus, populi",Nomen,,das Volk,1,,,,,Campus C1,6,,,,,,,Top500
 porta,"porta, portae","porta, portae",Nomen,,das Tor,1,,,,,Campus C1,11,,,,,,,
-portare,"portāre, portō, portavi","portare, porto, portavi",Verb,,"bringen, tragen",2,,,,,Campus C1,8,,"portō, portavi",,,,,
-posse,"posse, possum, potuī","posse, possum, potui",,,können,1,,,,,Campus C1,17;25,,,,,,,Top500
-post,post,post,Präposition,Präp. m. Akk.,"hinter, nach",2,,,,,Campus C1,12,,,,,,,Top500
-postea,posteā,postea,Adverb,Adv.,"nachher, später",2,,,,,Campus C1,26,,,,,,,Top500
+portare,"portāre, portō","portare, porto",Verb,,"bringen, tragen",2,,,,,Campus C1,8,,,,,,,
+posse,"posse, possum, potuī","posse, possum, potui",Verb,,können,1,,,,,Campus C1,17;25,,,,,,,Top500
+post,post (m. Akk.),post (m. Akk.),Präposition,,"hinter, nach",2,,,,,Campus C1,12,,,,,,,Top500
+postea,posteā,postea,Adverb,,"nachher, später",2,,,,,Campus C1,26,,,,,,,Top500
 postquam,postquam,postquam,Subjunktion,Subj. m. Perf.,"nachdem, als",2,,,,,Campus C1,33,,,,,,,Top500
 potestas,"potestās, potestātis","potestas, potestatis",Nomen,f,"die (Amts-)Gewalt, die Macht",2,,,,,Campus C1,20,,,,,,,Top500
-praebere,"praebēre, praebeō","praebere, praebeo",Verb,,"geben, hinhalten",2,,,,,Campus C1,4,,,,,,,
+praebere,"praebēre, praebeō, praebuī, praebitum","praebere, praebeo, praebui, praebitum",Verb,,"geben, hinhalten",2,,,,,Campus C1,4,,,,,,,
 praemium,"praemium, praemii","praemium, praemii",Nomen,,"die Belohnung, der Lohn",2,,,,,Campus C1,20,,,,,,,
 praestare,"praestāre, praestō, praestitī","praestare, praesto, praestiti",Verb,m. Akk.,"gewähren, leisten, zeigen",3,,,,,Campus C1,28,,,,,,,
 pretium,"pretium, pretii","pretium, pretii",Nomen,,"der Preis, der Wert",2,,,,,Campus C1,12,,,,,,,
 prima luce,prīmā lūce,prima luce,,,bei Tagesanbruch,1,,,,,Campus C1,28,,,,,,,
-primo,prīmō,primo,Adverb,Adv.,zuerst,1,,,,,Campus C1,4,,,,,,,
-primum,prīmum,primum,Adverb,Adv.,"erstens, zuerst, zum ersten Mal",3,,,,,Campus C1,24,,,,,,,Top500
+primo,prīmō,primo,Adverb,,zuerst,1,,,,,Campus C1,4,,,,,,,
+primum,prīmum,primum,Adverb,,"erstens, zuerst, zum ersten Mal",3,,,,,Campus C1,24,,,,,,,Top500
 primus,"prīmus, a, um","primus, a, um",Adjektiv,,"der (die, das) erste",2,,,,,Campus C1,22,,,,,,,Top500
 probare,"probāre, probō","probare, probo",Verb,,"prüfen, beweisen, für gut befinden",3,,,,,Campus C1,12,,,,,,,
-profecto,profectō,profecto,Adverb,Adv.,"sicherlich, tatsächlich",2,,,,,Campus C1,6,,,,,,,
-prohibere,"prohibēre, prohibeō","prohibere, prohibeo",Verb,(ā) m. Abl.,"abhalten (von), hindern (an)",2,,,,,Campus C1,28,,,,,,,Top500
-properare,"properāre, properō, properāvī","properare, propero, properavi",Verb,,"eilen, sich beeilen",2,,,,,Campus C1,8,,"properō, properāvī",,,,,
-propter,propter,propter,Präposition,Präp. m. Akk.,wegen,1,,,,,Campus C1,22,,,,,,,Top500
+profecto,profectō,profecto,Adverb,,"sicherlich, tatsächlich",2,,,,,Campus C1,6,,,,,,,
+prohibere,"prohibēre, prohibeō, prohibuī, prohibitum","prohibere, prohibeo, prohibui, prohibitum",Verb,(ā) m. Abl.,"abhalten (von), hindern (an)",2,,,,,Campus C1,28,,,,,,,Top500
+properare,"properāre, properō","properare, propero",Verb,,"eilen, sich beeilen",2,,,,,Campus C1,8,,,,,,,
+propter,propter (m. Akk.),propter (m. Akk.),Präposition,,wegen,1,,,,,Campus C1,22,,,,,,,Top500
 provincia,"prōvincia, prōvinciae","provincia, provinciae",Nomen,,die Provinz,1,,,,,Campus C1,9,,,,,,,Top500
 puella,"puella, puellae","puella, puellae",Nomen,,das Mädchen,1,,,,,Campus C1,1,,,,,,,
-puer,"puer, puerī","puer, pueri",Nomen,m,"der Junge, der Bub",2,,puella,,,Campus C1,15,,puerī,,,,,Top500
+puer,"puer, puerī","puer, pueri",Nomen,m,"der Junge, der Bub",2,,puella,,,Campus C1,15,,,,,,,Top500
 pugna,"pūgna, pūgnae","pugna, pugnae",Nomen,,der Kampf,1,,,,,Campus C1,9,,,,,,,
-pugnare,"pūgnāre, pūgnō, pūgnāvī","pugnare, pugno, pugnavi",Verb,,kämpfen,1,,,,,Campus C1,9,,"pūgnō, pūgnāvī",,,,,Top500
-pulcher,"pulcher, pulchra, pulchrum","pulcher, pulchra, pulchrum",,,schön,1,,,,,Campus C1,15,,,,,,,Top500
+pugnare,"pūgnāre, pūgnō","pugnare, pugno",Verb,,kämpfen,1,,,,,Campus C1,9,,,,,,,Top500
+pulcher,"pulcher, pulchra, pulchrum","pulcher, pulchra, pulchrum",Adjektiv,,schön,1,,,,,Campus C1,15,,,,,,,Top500
 putare,"putāre, putō","putare, puto",Verb,,"glauben, meinen",2,,,,,Campus C1,29,,,,,,,Top500
 quaerere,"quaerere, quaerō, quaesīvī","quaerere, quaero, quaesivi",Verb,,"erwerben wollen, suchen, fragen",3,,,,,Campus C1,30,,,,,,,Top500
-quam,quam,quam,,,"als, wie",2,,,,,Campus C1,17,,,,,,,Top500
-quamquam,quamquam,quamquam,Subjunktion,Subj.,obwohl,1,,,,,Campus C1,19,,,,,,,Top500
-quando?,quandō?,quando?,,,wann?,1,,,,,Campus C1,36,,,,,,,
+quam,quam,quam,Adverb,,"als, wie",2,,,,,Campus C1,17,,,,,,,Top500
+quamquam,quamquam,quamquam,Subjunktion,,obwohl,1,,,,,Campus C1,19,,,,,,,Top500
+quando,quandō?,quando?,Adverb,,wann?,1,,,,,Campus C1,36,,,,,,,
 quartus,"quārtus, a, um","quartus, a, um",Adjektiv,,"der (die, das) vierte",2,,,,,Campus C1,14,,,,,,,
 quattuor,quattuor,quattuor,,indekl.,vier,1,,,,,Campus C1,14,,,,,,,
-quemadmodum,quemadmodum,quemadmodum,,,"auf welche Weise, wie",2,,,,,Campus C1,35,,,,,,,
-qui,"quī, quae, quod","qui, quae, quod",,,"welcher, welche, welches; der, die, das",6,,,,,Campus C1,34,,,,,,,Top500
-quia,quia,quia,Subjunktion,Subj.,weil,1,,,,,Campus C1,19,,,,,,,Top500
-quid?,quid?,quid?,,,was?,1,,,,,Campus C1,2,,,,,,,Top500
-quidem,quidem,quidem,Adverb,Adv.,"freilich, gewiss, wenigstens, zwar",4,,,,,Campus C1,31,,,,,,,Top500
-quin?,quīn?,quin?,,,warum nicht?,1,,,,,Campus C1,17,,,,,,,Top500
+quemadmodum,quemadmodum,quemadmodum,Adverb,,"auf welche Weise, wie",2,,,,,Campus C1,35,,,,,,,
+qui,"quī, quae, quod","qui, quae, quod",Pronomen,,"welcher, welche, welches; der, die, das",6,,,,,Campus C1,34,,,,,,,Top500
+quia,quia,quia,Subjunktion,,weil,1,,,,,Campus C1,19,,,,,,,Top500
+quid,quid?,quid?,Pronomen,,was?,1,,,,,Campus C1,2,,,,,,,Top500
+quidem,quidem,quidem,Adverb,,"freilich, gewiss, wenigstens, zwar",4,,,,,Campus C1,31,,,,,,,Top500
+quin,quīn?,quin?,Adverb,,warum nicht?,1,,,,,Campus C1,17,,,,,,,Top500
 quinque,quinque,quinque,,indekl.,fünf,1,,,,,Campus C1,12,,,,,,,
 quintus,"quintus, a, um","quintus, a, um",Adjektiv,,"der (die, das) fünfte",2,,,,,Campus C1,27,,,,,,,
-quis?,quis?,quis?,,,wer?,1,,,,,Campus C1,3,,,,,,,Top500
-quo,quō,quo,,,"wo, wohin",2,,,,,Campus C1,37,,,,,,,Top500
-quod,quod,quod,Subjunktion,Subj.,weil; dass,2,,,,,Campus C1,19,,,,,,,Top500
-recte,rēctē,recte,Adverb,Adv.,"richtig, zu Recht",2,,,,,Campus C1,4,,,,,,,Top500
-redire,"redīre, redeō, rediī","redire, redeo, redii",,,"zurückgehen, zurückkehren",2,,,,,Campus C1,37,,,,,,,Top500
-regio,"regiō, regiōnis","regio, regionis",Nomen,f,"das Gebiet, die Gegend, die Richtung",3,,Region,,,Campus C1,23,,regiōnis,,,,,Top500
+quis,quis?,quis?,Pronomen,,wer?,1,,,,,Campus C1,3,,,,,,,Top500
+quo,quō,quo,Adverb,,"wo, wohin",2,,,,,Campus C1,37,,,,,,,Top500
+quod,quod,quod,Subjunktion,,weil; dass,2,,,,,Campus C1,19,,,,,,,Top500
+recte,rēctē,recte,Adverb,,"richtig, zu Recht",2,,,,,Campus C1,4,,,,,,,Top500
+redire,"redīre, redeō, rediī","redire, redeo, redii",Verb,,"zurückgehen, zurückkehren",2,,,,,Campus C1,37,,,,,,,Top500
+regio,"regiō, regiōnis","regio, regionis",Nomen,f,"das Gebiet, die Gegend, die Richtung",3,,Region,,,Campus C1,23,,,,,,,Top500
 relinquere,"relinquere, relinquō, relīquī","relinquere, relinquo, reliqui",Verb,,"verlassen, zurücklassen",2,,,,,Campus C1,16;27,,,,,,,Top500
-reliquiae,"reliquiae, reliquiārum","reliquiae, reliquiarum",Nomen,f Pl.,"das Überbleibsel, der Überrest, die Ruine",3,,,,,Campus C1,26,,,,,,,
-repellere,"repellere, repellō, reppulī","repellere, repello, reppuli",Verb,,"zurückstoßen, abweisen, vertreiben",3,,,,,Campus C1,32,,"repellō, reppulī",,,,,
+reliquiae,"reliquiae, reliquiārum","reliquiae, reliquiarum",Nomen,f Plural,"das Überbleibsel, der Überrest, die Ruine",3,,,,,Campus C1,26,,,,,,,
+repellere,"repellere, repellō, reppulī","repellere, repello, reppuli",Verb,,"zurückstoßen, abweisen, vertreiben",3,,,,,Campus C1,32,,,,,,,
 resistere,"resistere, resistō, restitī","resistere, resisto, restiti",Verb,,stehenbleiben; Widerstand leisten,2,,,,,Campus C1,36,,,,,,,
 respondere,"respondēre, respondeō, respondī","respondere, respondeo, respondi",Verb,,antworten,1,,,,,Campus C1,3;34,,,,,,,Top500
 rex,"rēx, rēgis","rex, regis",Nomen,m,der König,1,,,,,Campus C1,27,,,,,,,Top500
 ridere,"rīdēre, rīdeō, rīsī","ridere, rideo, risi",Verb,,"lachen, auslachen",2,,,,,Campus C1,2;34,,,,,,,
 rogare,"rogāre, rogō","rogare, rogo",Verb,,"fragen, bitten",2,,,,,Campus C1,8,,,,,,,Top500
-Roma,Rōma,Roma,,,Rom,1,,,,,Campus C1,7,,,,,,,
-Romanus,"Rōmānus, a, um","Romanus, a, um",Adjektiv,,römisch,1,,,,,Campus C1,9;14,,,,,,,
-RomanusS,"RōmānusS, Rōmāni","RomanusS, Romani",,,"der Römer, der Einwohner Roms",2,,,,,Campus C1,9,,,,,,,
-Romulus / Remus,Rōmulus / Remus,Romulus / Remus,,,Romulus / Remus,1,Zwillingsbrüder und sagenhafte Gründer Roms,,,,Campus C1,32,,,,,,,
+Roma,"Rōma, Rōmae","Roma, Romae",Nomen,,Rom,1,,,,,Campus C1,7,,,,,,,
+Romanus (Adj.),"Rōmānus, a, um","Romanus, a, um",Adjektiv,,römisch,1,,,,,Campus C1,9;14,,,,,,,
+Romanus (Subst.),"Rōmānus, Rōmāni","Romanus, Romani",Nomen,,"der Römer, der Einwohner Roms",2,,,,,Campus C1,9,,,,,,,
+Romulus / Remus,Rōmulus / Remus,Romulus / Remus,Nomen,,Romulus / Remus,1,Zwillingsbrüder und sagenhafte Gründer Roms,,,,Campus C1,32,,,,,,,
 sacrum,"sacrum, sacri","sacrum, sacri",Nomen,,"das Opfer, das Heiligtum",2,,,,,Campus C1,17,,,,,,,
 sacrum facere,sacrum facere,sacrum facere,,,"ein Opfer bringen, opfern",2,,,,,Campus C1,17,,,,,,,
-saepe,saepe,saepe,Adverb,Adv.,oft,1,,,,,Campus C1,4,,,,,,,Top500
+saepe,saepe,saepe,Adverb,,oft,1,,,,,Campus C1,4,,,,,,,Top500
 salus,"salūs, salūtis","salus, salutis",Nomen,f,"die Gesundheit, die Rettung, der Gruß, das Glück",4,,,,,Campus C1,25,,,,,,,Top500
 salutare,"salūtāre, salūtō","salutare, saluto",Verb,,(be)grüßen,1,,,,,Campus C1,20,,,,,,,
 salve! salvete!,salvē! salvēte!,salve! salvete!,,,"sei(d) gegrüßt!, grüß dich / euch!",2,,,,,Campus C1,20,,,,,,,
-Saturnus,Sāturnus,Saturnus,,,"Saturn (röm. Gott der Fruchtbarkeit, besonders des Ackerbaus. In seinem Tempel auf dem Forum Romanum war das aerārium, in dem die Staatskasse, das Staatsarchiv und die Feldzeichen der röm. Legionen aufbewahrt wurden.)",4,,,,,Campus C1,11,,,,,,,
+Saturnus,"Sāturnus, Sāturni","Saturnus, Saturni",Nomen,,Saturn,1,"Röm. Gott der Fruchtbarkeit, besonders des Ackerbaus. In seinem Tempel auf dem Forum Romanum war das aerārium, in dem die Staatskasse, das Staatsarchiv und die Feldzeichen der röm. Legionen aufbewahrt wurden.",,,,Campus C1,11,,,,,,,
 sceleratus,"scelerātus, scelerāti","sceleratus, scelerati",Nomen,,der Verbrecher,1,,,,,Campus C1,5,,,,,,,
-scire,"scīre, sciō, scīvī","scire, scio, scivi",Verb,,"wissen, kennen, verstehen",3,,,,,Campus C1,10,,"sciō, scīvī",,,,,Top500
+scire,"scīre, sciō, scīvī","scire, scio, scivi",Verb,,"wissen, kennen, verstehen",3,,,,,Campus C1,10,,,,,,,Top500
 scribere,"scrībere, scrībō, scrīpsī","scribere, scribo, scripsi",Verb,,"schreiben, beschreiben",2,,,,,Campus C1,16;34,,,,,,,Top500
-se,sē,se,,Akk. / Abl.,sich,1,,,,,Campus C1,19,,,,,,,
-secum,sēcum,secum,,,"mit sich, bei sich",2,,"mecum, tecum",,,Campus C1,30,,,,,,,Top500
+se,sē,se,Pronomen,Akk. / Abl.,sich,1,,,,,Campus C1,19,,,,,,,
+secum,sēcum,secum,Pronomen,,"mit sich, bei sich",2,,"mecum, tecum",,,Campus C1,30,,,,,,,Top500
 secundus,"secundus, a, um","secundus, a, um",Adjektiv,,"der (die, das) zweite; günstig",3,,,,,Campus C1,27,,,,,,,
-sed,sed,sed,,,"aber, sondern",2,,,,,Campus C1,3,,,,,,,Top500
-sedere,"sedēre, sedeō","sedere, sedeo",Verb,,sitzen,1,,,,,Campus C1,3,,,,,,,
-semper,semper,semper,Adverb,Adv.,immer,1,,,,,Campus C1,4,,,,,,,Top500
+sed,sed,sed,Subjunktion,,"aber, sondern",2,,,,,Campus C1,3,,,,,,,Top500
+sedere,"sedēre, sedeō, sēdī, sessum","sedere, sedeo, sedi, sessum",Verb,,sitzen,1,,,,,Campus C1,3,,,,,,,
+semper,semper,semper,Adverb,,immer,1,,,,,Campus C1,4,,,,,,,Top500
 senator,"senātor, senātōris","senator, senatoris",Nomen,m,der Senator,1,,,,,Campus C1,18,,,,,,,
-sentire,"sentīre, sentiō, sēnsī","sentire, sentio, sensi",Verb,,"fühlen, meinen, wahrnehmen",3,,sensibel,,,Campus C1,29,,"sentiō, sēnsī",,,,,Top500
+sentire,"sentīre, sentiō, sēnsī","sentire, sentio, sensi",Verb,,"fühlen, meinen, wahrnehmen",3,,sensibel,,,Campus C1,29,,,,,,,Top500
 septem,septem,septem,,indekl.,sieben,1,,,,,Campus C1,12,,,,,,,
 serva,"serva, servae","serva, servae",Nomen,,"die Sklavin, die Dienerin",2,,,,,Campus C1,1,,,,,,,
-servare,"servāre, servō, servāvī","servare, servo, servavi",Verb,,"bewahren, retten; beobachten",3,,"konservieren, observieren, servus",,,Campus C1,15,,"servō, servāvī",,,,,Top500
+servare,"servāre, servō","servare, servo",Verb,,"bewahren, retten; beobachten",3,,"konservieren, observieren, servus",,,Campus C1,15,,,,,,,Top500
 servitus,"servitūs, servitūtis","servitus, servitutis",Nomen,f,die Sklaverei,1,,,,,Campus C1,20,,,,,,,
 servus,"servus, servi","servus, servi",Nomen,,"der Sklave, der Diener",2,,,,,Campus C1,1,,,,,,,Top500
 sex,sex,sex,,indekl.,sechs,1,,,,,Campus C1,12,,,,,,,
-si,sī,si,Subjunktion,Subj.,"wenn, falls",2,,,,,Campus C1,19,,,,,,,Top500
-sibi,sibi,sibi,,Dat.,(für) sich,1,,,,,Campus C1,30,,,,,,,
-sic,sīc,sic,Adverb,Adv.,so,1,,,,,Campus C1,4,,,,,,,Top500
-Sicilia,"Sicilia, Siciliae","Sicilia, Siciliae",Nomen,,"die Insel Sizilien (an der „Stiefelspitze“ Italiens, wurde 241 v. Chr. erste röm. Provinz.)",2,,,,,Campus C1,10,,,,,,,
-signum,"sīgnum, sīgni","signum, signi",Nomen,,"das Merkmal, das Zeichen; die Statue",3,,Signal,,,Campus C1,32,,sīgni,,,,,Top500
-silva,"silva, silvae","silva, silvae",Nomen,,der Wald,1,,,,,Campus C1,1,,silvae,,,,,Top500
-sine,sine,sine,Präposition,Präp. m. Abl.,ohne,1,,,,,Campus C1,12,,,,,,,Top500
+si,sī,si,Subjunktion,,"wenn, falls",2,,,,,Campus C1,19,,,,,,,Top500
+sibi,sibi,sibi,Pronomen,Dat.,(für) sich,1,,,,,Campus C1,30,,,,,,,
+sic,sīc,sic,Adverb,,so,1,,,,,Campus C1,4,,,,,,,Top500
+Sicilia,"Sicilia, Siciliae","Sicilia, Siciliae",Nomen,,die Insel Sizilien,1,"An der „Stiefelspitze“ Italiens, wurde 241 v. Chr. erste röm. Provinz.",,,,Campus C1,10,,,,,,,
+signum,"sīgnum, sīgni","signum, signi",Nomen,,"das Merkmal, das Zeichen; die Statue",3,,Signal,,,Campus C1,32,,,,,,,Top500
+silva,"silva, silvae","silva, silvae",Nomen,,der Wald,1,,,,,Campus C1,1,,,,,,,Top500
+sine,sine (m. Abl.),sine (m. Abl.),Präposition,,ohne,1,,,,,Campus C1,12,,,,,,,Top500
 sol,"sōl, sōlis","sol, solis",Nomen,m,die Sonne,1,,,,,Campus C1,23,,,,,,,Top500
-solum,sōlum,solum,Adverb,Adv.,nur,1,,,,,Campus C1,21,,,,,,,
-sonus,"sonus, soni","sonus, soni",Nomen,,"der Ton, der Klang, das Geräusch",3,,,,,Campus C1,5,,soni,,,,,
+solum,sōlum,solum,Adverb,,nur,1,,,,,Campus C1,21,,,,,,,
+sonus,"sonus, soni","sonus, soni",Nomen,,"der Ton, der Klang, das Geräusch",3,,,,,Campus C1,5,,,,,,,
 soror,"soror, sorōris","soror, sororis",Nomen,f,die Schwester,1,,,,,Campus C1,19,,,,,,,
 spectare,"spectāre, spectō","spectare, specto",Verb,,"betrachten, anschauen, hinsehen",3,,,,,Campus C1,9,,,,,,,
 sperare,"spērāre, spērō","sperare, spero",Verb,,"erwarten, hoffen",2,,,,,Campus C1,31,,,,,,,
 stare,"stāre, stō, stetī","stare, sto, steti",Verb,,stehen,1,,,,,Campus C1,16;28,,,,,,,Top500
-statim,statim,statim,Adverb,Adv.,sofort,1,,,,,Campus C1,5,,,,,,,
+statim,statim,statim,Adverb,,sofort,1,,,,,Campus C1,5,,,,,,,
 statua,"statua, statuae","statua, statuae",Nomen,,die Statue,1,,,,,Campus C1,11,,,,,,,
-studere,"studēre, studeō","studere, studeo",Verb,,"sich bemühen, studieren",2,,,,,Campus C1,4,,,,,,,
+studere,"studēre, studeō, studuī","studere, studeo, studui",Verb,,"sich bemühen, studieren",2,,,,,Campus C1,4,,,,,,,
 studium,"studium, studii","studium, studii",Nomen,,"die Beschäftigung, das Engagement, das Interesse",3,,,,,Campus C1,11,,,,,,,Top500
 stultus,"stultus, a, um","stultus, a, um",Adjektiv,,dumm,1,,,,,Campus C1,14,,,,,,,
-sub (m. Abl.),sub (m. Abl.),sub (m. Abl.),Präposition,Präp. m. Abl.,unter (wo?),1,,,,,Campus C1,24,,,,,,,Top500
-sub (m. Akk.),sub (m. Akk.),sub (m. Akk.),Präposition,Präp. m. Akk.,unter (wohin?),1,,,,,Campus C1,24,,,,,,,
-subito,subitō,subito,Adverb,Adv.,plötzlich,1,,,,,Campus C1,5,,,,,,,
+sub (m. Abl.),sub (m. Abl.),sub (m. Abl.),Präposition,,unter (wo?),1,,,,,Campus C1,24,,,,,,,Top500
+sub (m. Akk.),sub (m. Akk.),sub (m. Akk.),Präposition,,unter (wohin?),1,,,,,Campus C1,24,,,,,,,
+subito,subitō,subito,Adverb,,plötzlich,1,,,,,Campus C1,5,,,,,,,
 summus,"summus, a, um","summus, a, um",Adjektiv,,"der höchste, oberste",2,,,,,Campus C1,15,,,,,,,Top500
 sunt,sunt,sunt,,,sie sind,1,,,,,Campus C1,2,,,,,,,
 superare,"superāre, superō","superare, supero",Verb,,"besiegen, überwinden, übertreffen",3,,,,,Campus C1,9,,,,,,,Top500
 superbia,"superbia, superbiae","superbia, superbiae",Nomen,,"der Stolz, der Hochmut",2,,,,,Campus C1,9,,,,,,,
 surgere,"surgere, surgō, surrēxī","surgere, surgo, surrexi",Verb,,"aufrichten; sich erheben, aufstehen",3,,,,,Campus C1,23;31,,,,,,,
-suus,"suus, a, um","suus, a, um",Adjektiv,,"sein, ihr",2,,,,,Campus C1,30,,"sua, suum",,,,,Top500
-Syria,Syria,Syria,,,Syrien (seit 64 v. Chr. röm. Provinz mit der Hauptstadt Antiocheia (h. Antakya)),1,,,,,Campus C1,9,,,,,,,
+suus,"suus, a, um","suus, a, um",Adjektiv,,"sein, ihr",2,,,,,Campus C1,30,,,,,,,Top500
+Syria,"Syria, Syriae","Syria, Syriae",Nomen,,Syrien,1,Seit 64 v. Chr. röm. Provinz mit der Hauptstadt Antiocheia (heute Antakya),,,,Campus C1,9,,,,,,,
 tabula,"tabula, tabulae","tabula, tabulae",Nomen,,"die (Schreib-)Tafel, das Gemälde",2,,,,,Campus C1,4,,,,,,,
-tacere,tacēre,tacere,,,"schweigen, verschweigen",2,,,,,Campus C1,2,,,,,,,
-tam,tam,tam,,,so,1,,,,,Campus C1,20,,,,,,,Top500
-tamen,tamen,tamen,,,"dennoch, jedoch",2,,,,,Campus C1,3,,,,,,,Top500
-tamquam,tamquam,tamquam,Adverb,Adv.,wie,1,,,,,Campus C1,32,,,,,,,
-tandem,tandem,tandem,Adverb,Adv.,endlich,1,,,,,Campus C1,7,,,,,,,Top500
-tantum,tantum,tantum,Adverb,Adv.,nur,1,nachgestellt,,,,Campus C1,5,,,,,,,Top500
+tacere,"tacēre, taceō, tacuī, tacitum","tacere, taceo, tacui, tacitum",Verb,,"schweigen, verschweigen",2,,,,,Campus C1,2,,,,,,,
+tam,tam,tam,Adverb,,so,1,,,,,Campus C1,20,,,,,,,Top500
+tamen,tamen,tamen,Adverb,,"dennoch, jedoch",2,,,,,Campus C1,3,,,,,,,Top500
+tamquam,tamquam,tamquam,Adverb,,wie,1,,,,,Campus C1,32,,,,,,,
+tandem,tandem,tandem,Adverb,,endlich,1,,,,,Campus C1,7,,,,,,,Top500
+tantum,tantum,tantum,Adverb,nachgestellt,nur,1,,,,,Campus C1,5,,,,,,,Top500
 tantus,"tantus, a, um","tantus, a, um",Adjektiv,,"so groß, so viel",2,,,,,Campus C1,18,,,,,,,Top500
-Tarquinii,Tarquiniī,Tarquinii,,,die Tarquinier (etruskisches Königsgeschlecht),1,,,,,Campus C1,36,,,,,,,
-Tarquinius Superbus,Tarquinius Superbus,Tarquinius Superbus,,,Tarquinius Superbus (letzter etruskischer König von Rom),1,,,,,Campus C1,36,,,,,,,
+Tarquinii,"Tarquiniī, Tarquiniorum","Tarquinii, Tarquiniorum",Nomen,,die Tarquinier,1,Etruskisches Königsgeschlecht,,,,Campus C1,36,,,,,,,
+Tarquinius Superbus,Tarquinius Superbus,Tarquinius Superbus,Nomen,,Tarquinius Superbus,1,Letzter etruskischer König von Rom,,,,Campus C1,36,,,,,,,
 Tartarus,"Tartarus, Tartari","Tartarus, Tartari",Nomen,,"der Tartarus, die Unterwelt",2,,,,,Campus C1,21,,,,,,,
-te,tē,te,,Akk.,dich,1,,,,,Campus C1,13,,,,,,,
+te,tē,te,Pronomen,Akk.,dich,1,,,,,Campus C1,13,,,,,,,
 tectum,"tēctum, tēcti","tectum, tecti",Nomen,,das Dach; das Haus,2,,,,,Campus C1,25,,,,,,,
-tecum,tēcum,tecum,,,mit dir,1,,,,,Campus C1,13,,,,,,,
+tecum,tēcum,tecum,Pronomen,,mit dir,1,,,,,Campus C1,13,,,,,,,
 templum,"templum, templi","templum, templi",Nomen,,der Tempel,1,,,,,Campus C1,11,,,,,,,Top500
-temptare,"temptāre, temptō, temptāvī","temptare, tempto, temptavi",Verb,,"angreifen; prüfen, versuchen",3,,,,,Campus C1,26,,"temptō, temptāvī",,,,,
-tenebrae,"tenebrae, tenebrārum","tenebrae, tenebrarum",Nomen,f Pl.,"die Dunkelheit, die Finsternis",2,,,,,Campus C1,26,,,,,,,
-tenere,"tenēre, teneō","tenere, teneo",Verb,,"halten, festhalten, besitzen; beherrschen",4,,,,,Campus C1,4,,,,,,,Top500
+temptare,"temptāre, temptō","temptare, tempto",Verb,,"angreifen; prüfen, versuchen",3,,,,,Campus C1,26,,,,,,,
+tenebrae,"tenebrae, tenebrārum","tenebrae, tenebrarum",Nomen,f Plural,"die Dunkelheit, die Finsternis",2,,,,,Campus C1,26,,,,,,,
+tenere,"tenēre, teneō, tenuī, tentum","tenere, teneo, tenui, tentum",Verb,,"halten, festhalten, besitzen; beherrschen",4,,,,,Campus C1,4,,,,,,,Top500
 terra,"terra, terrae","terra, terrae",Nomen,,"die Erde, das Land",2,,,,,Campus C1,21,,,,,,,Top500
-terrere,"terrēre, terreō","terrere, terreo",Verb,,erschrecken,1,,,,,Campus C1,5,,,,,,,
+terrere,"terrēre, terreō, terruī, territum","terrere, terreo, terrui, territum",Verb,,erschrecken,1,,,,,Campus C1,5,,,,,,,
 tertius,"tertius, a, um","tertius, a, um",Adjektiv,,"der (die, das) dritte",2,,,,,Campus C1,27,,,,,,,Top500
-thermae,"thermae, ārum","thermae, arum",Nomen,f Pl.,"die warmen Bäder, die Thermen",2,,,,,Campus C1,19,,,,,,,
-tibi,tibi,tibi,,Dat.,dir,1,,,,,Campus C1,13,,,,,,,
-timere,timēre,timere,,,"fürchten, Angst haben",2,,,,,Campus C1,2,,,,,,,Top500
+thermae,"thermae, thermārum","thermae, thermarum",Nomen,f Plural,"die warmen Bäder, die Thermen",2,,,,,Campus C1,19,,,,,,,
+tibi,tibi,tibi,Pronomen,Dat.,dir,1,,,,,Campus C1,13,,,,,,,
+timere,"timēre, timeō, timuī","timere, timeo, timui",Verb,,"fürchten, Angst haben",2,,,,,Campus C1,2,,,,,,,Top500
 timor,"timor, timōris","timor, timoris",Nomen,m,"die Angst, die Furcht",2,,,,,Campus C1,25,,,,,,,
 toga,"toga, togae","toga, togae",Nomen,,die Toga,1,,,,,Campus C1,7,,,,,,,
 torquere,"torquēre, torqueō, torsī","torquere, torqueo, torsi",Verb,,drehen; quälen,2,,,,,Campus C1,5;27,,,,,,,
 trahere,"trahere, trahō, trāxī","trahere, traho, traxi",Verb,,"schleppen, ziehen",2,,,,,Campus C1,16;28,,,,,,,Top500
-tres,"trēs, trēs, tria","tres, tres, tria",,,drei,1,,,,,Campus C1,33,,,,,,,Top500
-tribunus,"tribūnus, tribūni","tribunus, tribuni",Nomen,,"der Tribun (führender Vertreter eines Stadtbezirks, einer Legion oder der Plebs)",2,,,,,Campus C1,37,,,,,,,
-tristis,"trīstis, e","tristis, e",,,"traurig, unfreundlich",2,,,,,Campus C1,33,,,,,,,
+tres,"trēs, trēs, tria","tres, tres, tria",Adjektiv,,drei,1,,,,,Campus C1,33,,,,,,,Top500
+tribunus,"tribūnus, tribūni","tribunus, tribuni",Nomen,,der Tribun,1,"Führender Vertreter eines Stadtbezirks, einer Legion oder der Plebs",,,,Campus C1,37,,,,,,,
+tristis,"trīstis, trīstis, trīste","tristis, tristis, triste",Adjektiv,,"traurig, unfreundlich",2,,,,,Campus C1,33,,,,,,,
 Troianus,"Trōiānus, a, um","Troianus, a, um",Adjektiv,,"trojanisch; Subst. der Trojaner, der Einwohner von Troja",3,,,,,Campus C1,29,,,,,,,
-tu,tū,tu,,Nom.,du (betont),1,,,,,Campus C1,13,,,,,,,Top500
-tum,tum,tum,Adverb,Adv.,"da, dann, darauf, damals",4,,,,,Campus C1,4,,,,,,,Top500
+tu,tū,tu,Pronomen,Nom.,du,1,Betont,,,,Campus C1,13,,,,,,,Top500
+tum,tum,tum,Adverb,,"da, dann, darauf, damals",4,,,,,Campus C1,4,,,,,,,Top500
 tunica,"tunica, tunicae","tunica, tunicae",Nomen,,die Tunika,1,,,,,Campus C1,7,,,,,,,
 turba,"turba, turbae","turba, turbae",Nomen,,die (Menschen-)Menge,1,,,,,Campus C1,7,,,,,,,
-Turnus,Turnus,Turnus,,,"Turnus (Anführer der Rutuler, Gegner des Äneas)",2,,,,,Campus C1,31,,,,,,,
-turpis,"turpis, e","turpis, e",,,"unanständig, hässlich, schändlich",3,,,,,Campus C1,33,,,,,,,
+Turnus,"Turnus, Turni","Turnus, Turni",Nomen,,Turnus,1,"Anführer der Rutuler, Gegner des Äneas",,,,Campus C1,31,,,,,,,
+turpis,"turpis, turpis, turpe","turpis, turpis, turpe",Adjektiv,,"unanständig, hässlich, schändlich",3,,,,,Campus C1,33,,,,,,,
 tutus,"tūtus, a, um","tutus, a, um",Adjektiv,,sicher,1,,,,,Campus C1,35,,,,,,,Top500
 tuus,"tuus, a, um","tuus, a, um",Adjektiv,,dein,1,,,,,Campus C1,14,,,,,,,Top500
-ubi?,ubī?,ubi?,,,wo?,1,,,,,Campus C1,8,,,,,,,Top500
+ubi,ubī?,ubi?,Adverb,,wo?,1,,,,,Campus C1,8,,,,,,,Top500
 umbra,"umbra, umbrae","umbra, umbrae",Nomen,,der Schatten,1,,,,,Campus C1,12,,,,,,,
-unde?,unde?,unde?,,,woher?,1,,,,,Campus C1,10,,,,,,,Top500
+unde,unde?,unde?,Adverb,,woher?,1,,,,,Campus C1,10,,,,,,,Top500
 unus,"ūnus, a, um","unus, a, um",Adjektiv,,"einer, ein einziger",2,,,,,Campus C1,33,,,,,,,Top500
 unus e / ex,ūnus ē / ex,unus e / ex,,m. Abl.,einer von,1,,,,,Campus C1,33,,,,,,,Top500
-urbs,"urbs, urbis","urbs, urbis",Nomen,f (Gen. Pl. -ium),die Stadt; die Stadt Rom,2,,,,,Campus C1,22,,,,,,,Top500
-ut,ut,ut,,,wie,1,,,,,Campus C1,10,,,,,,,Top500
-uxor,"uxor, uxōris","uxor, uxoris",Nomen,f,die Ehefrau,1,,,,,Campus C1,18,,uxōris,,,,,Top500
-vale! valete!,valē! valēte!,vale! valete!,,,Leb wohl! Lebt wohl!,1,,,,,Campus C1,7,,,,,,,
-valere,"valēre, valeō","valere, valeo",Verb,,"gesund sein, stark sein, Einfluss haben",3,,,,,Campus C1,7,,,,,,,Top500
+urbs,"urbs, urbis","urbs, urbis",Nomen,f (Genitiv Plural urbium),die Stadt; die Stadt Rom,2,,,,,Campus C1,22,,,,,,,Top500
+ut,ut,ut,Adverb,,wie,1,,,,,Campus C1,10,,,,,,,Top500
+uxor,"uxor, uxōris","uxor, uxoris",Nomen,f,die Ehefrau,1,,,,,Campus C1,18,,,,,,,Top500
+vale! valete!,valē! valēte!,vale! valete!,Verb,Imperativ,Leb wohl! Lebt wohl!,1,,,,,Campus C1,7,,,,,,,
+valere,"valēre, valeō, valuī","valere, valeo, valui",Verb,,"gesund sein, stark sein, Einfluss haben",3,,,,,Campus C1,7,,,,,,,Top500
 varius,"varius, a, um","varius, a, um",Adjektiv,,"bunt, verschieden, vielfältig",3,,,,,Campus C1,21,,,,,,,
-vel,vel,vel,,,oder,1,,,,,Campus C1,22,,,,,,,Top500
-velle,"velle, volō, voluī","velle, volo, volui",,,wollen,1,,,,,Campus C1,19;25,,"volō, voluī",,,,,Top500
-vendere,"vēndere, vēndō","vendere, vendo",Verb,,verkaufen,1,,,,,Campus C1,18,,,,,,,
+vel,vel,vel,Subjunktion,,oder,1,,,,,Campus C1,22,,,,,,,Top500
+velle,"velle, volō, voluī","velle, volo, volui",Verb,,wollen,1,,,,,Campus C1,19;25,,,,,,,Top500
+vendere,"vēndere, vēndō, vendidī, venditum","vendere, vendo, vendidi, venditum",Verb,,verkaufen,1,,,,,Campus C1,18,,,,,,,
 venia,"venia, veniae","venia, veniae",Nomen,,"der Gefallen; die Nachsicht, die Verzeihung",3,,,,,Campus C1,31,,,,,,,
 venire,"venīre, veniō, vēnī","venire, venio, veni",Verb,,kommen,1,,,,,Campus C1,10;27,,,,,,,Top500
 ventus,"ventus, venti","ventus, venti",Nomen,,der Wind,1,,,,,Campus C1,6,,,,,,,Top500
 verbum,"verbum, verbi","verbum, verbi",Nomen,,"das Wort, die Äußerung",2,,,,,Campus C1,11,,,,,,,Top500
 vertere,"vertere, vertō, vertī","vertere, verto, verti",Verb,,"drehen, wenden",2,,,,,Campus C1,27,,,,,,,
-vester,"vester, vestra, vestrum","vester, vestra, vestrum",,,euer,1,,,,,Campus C1,15,,,,,,,Top500
-Vesuvius,Vesuvius,Vesuvius,,,Vesuv (Vulkan in Kampanien),1,,,,,Campus C1,16,,,,,,,
+vester,"vester, vestra, vestrum","vester, vestra, vestrum",Adjektiv,,euer,1,,,,,Campus C1,15,,,,,,,Top500
+Vesuvius,"Vesuvius, Vesuvii","Vesuvius, Vesuvii",Nomen,,Vesuv,1,Vulkan in Kampanien,,,,Campus C1,16,,,,,,,
 via,"via, viae","via, viae",Nomen,,"der Weg, die Straße",2,,,,,Campus C1,1,,,,,,,Top500
 victor,"victor, victōris","victor, victoris",Nomen,m,der Sieger,1,,,,,Campus C1,22,,,,,,,Top500
 videre,"vidēre, videō, vīdī","videre, video, vidi",Verb,,sehen,1,,,,,Campus C1,7;27,,,,,,,Top500
@@ -559,16 +562,16 @@ vincere,"vincere, vincō, vīcī","vincere, vinco, vici",Verb,,"(be)siegen, übe
 vinea,"vīnea, vīneae","vinea, vineae",Nomen,,der Weinberg; der Weinstock,2,,,,,Campus C1,16,,,,,,,
 vinum,"vīnum, vīni","vinum, vini",Nomen,,der Wein,1,,,,,Campus C1,17,,,,,,,
 violare,"violāre, violō","violare, violo",Verb,,"verwunden, verletzen, entehren",3,,,,,Campus C1,31,,,,,,,
-vir,"vir, virī","vir, viri",Nomen,m,der Mann,1,,,,,Campus C1,15,,virī,,,,,Top500
+vir,"vir, virī","vir, viri",Nomen,m,der Mann,1,,,,,Campus C1,15,,,,,,,Top500
 virgo,"virgō, virginis","virgo, virginis",Nomen,f,"das Mädchen, die Jungfrau",2,,,,,Campus C1,36,,,,,,,Top500
 virtus,"virtūs, virtūtis","virtus, virtutis",Nomen,f,"die Tapferkeit, die Tüchtigkeit, die Leistung; die Tugend",4,,,,,Campus C1,22,,,,,,,Top500
 vita,"vīta, vītae","vita, vitae",Nomen,,das Leben,1,,,,,Campus C1,15,,,,,,,Top500
 vivere,"vīvere, vīvō, vīxī","vivere, vivo, vixi",Verb,,leben,1,,,,,Campus C1,30,,,,,,,Top500
-vix,vix,vix,Adverb,Adv.,"kaum, (nur) mit Mühe",2,,,,,Campus C1,25,,,,,,,
-vobis,vōbīs,vobis,,Dat.,euch,1,,,,,Campus C1,13,,,,,,,
-vobiscum,vōbīscum,vobiscum,,,mit euch,1,,,,,Campus C1,13,,,,,,,
+vix,vix,vix,Adverb,,"kaum, (nur) mit Mühe",2,,,,,Campus C1,25,,,,,,,
+vobis,vōbīs,vobis,Pronomen,Dat.,euch,1,,,,,Campus C1,13,,,,,,,
+vobiscum,vōbīscum,vobiscum,Pronomen,,mit euch,1,,,,,Campus C1,13,,,,,,,
 vocare,"vocāre, vocō","vocare, voco",Verb,,"rufen; nennen, benennen",3,,,,,Campus C1,8,,,,,,,Top500
 voluntas,"voluntās, voluntātis","voluntas, voluntatis",Nomen,f,"der Wille, die Absicht",2,,,,,Campus C1,20,,,,,,,
-vos,vōs,vos,,Nom. / Akk.,ihr / euch,1,,,,,Campus C1,13,,,,,,,Top500
+vos,vōs,vos,Pronomen,Nom. / Akk.,ihr / euch,1,,,,,Campus C1,13,,,,,,,Top500
 vox,"vōx, vōcis","vox, vocis",Nomen,f,"die Stimme, die Äußerung, der Laut",3,,,,,Campus C1,25,,,,,,,Top500
-Vulcanus,Vulcānus,Vulcanus,,,"Vulkan (griech. Hephaistos; Gott der Feuerﬂamme und der Schmiedekunst, schmiedete Blitze des Jupiter. Seine Schmiede lag unter dem sizilischen Vulkan Ätna.)",3,,,,,Campus C1,10,,,,,,,
+Vulcanus,"Vulcānus, Vulcāni","Vulcanus, Vulcani",Nomen,,Vulkan,1,"Griech. Hephaistos; Gott der Feuerﬂamme und der Schmiedekunst, schmiedete Blitze des Jupiter. Seine Schmiede lag unter dem sizilischen Vulkan Ätna.",,,,Campus C1,10,,,,,,,
