@@ -166,14 +166,6 @@ class _StyleInspector:
         return False
 
 
-def _first_span_text(elem: Element) -> str:
-    for e in elem.iter():
-        if _local_name(e.tag).lower() == "span":
-            return "".join(e.itertext()).strip()
-    msg = 'Element {elem} does not contain a "<span>" element.'
-    raise ValueError(msg)
-
-
 def _extract_full_form_display(paragraph_element: Element, _plain_text: str) -> str:
     result = ""
     pieces = _text_pieces_from_node(paragraph_element)
@@ -216,19 +208,16 @@ def _compress_full_form_display(s: str) -> str:
     return s.strip()
 
 
-def _part_of_speech_from_notes_foreign(notes_foreign) -> str:
-    pos_regex_to_name = {
-        re.compile(r"Präp\."): "Präposition",
-        re.compile(r"Adv\."): "Adverb",
-        re.compile(r"Subj\."): "Subjunktion",
-        re.compile(r"^[mfn]$"): "Nomen",
-        re.compile(r"[mfn]\s"): "Nomen",
-        re.compile(r"m/f"): "Nomen",
-    }
-    for regex, pos_name in pos_regex_to_name.items():
-        if regex.search(notes_foreign):
-            return pos_name
-    return ""
+def _fix_notes_foreign(notes_foreign: str) -> str:
+    stripped_notes_foreign = notes_foreign.strip()
+    if (
+        len(stripped_notes_foreign) > 2  # noqa: PLR2004
+        and stripped_notes_foreign[0] == "("
+        and stripped_notes_foreign[-1] == ")"
+    ):
+        return stripped_notes_foreign[1:-1].strip()
+
+    return stripped_notes_foreign
 
 
 def _format_mismatch(field: str, info: str) -> str:
@@ -306,6 +295,12 @@ def _merge(headword, prev, extracted) -> tuple[list[str], dict[str, any]]:
     if msg:
         messages.append(msg)
 
+    msg, new["PartOfSpeech"] = _merge_non_empty(
+        "PartOfSpeech", prev["PartOfSpeech"], extracted["PartOfSpeech"]
+    )
+    if msg:
+        messages.append(msg)
+
     msg, new["NotesForeign"] = _merge_non_empty(
         "NotesForeign", prev["NotesForeign"], extracted["NotesForeign"]
     )
@@ -337,9 +332,7 @@ def _merge(headword, prev, extracted) -> tuple[list[str], dict[str, any]]:
         messages.append(msg)
 
     msg, new["ReferenceSection"] = _merge_sets(
-        "ReferenceSection",
-        _split_to_int_set(prev["ReferenceSection"], ";"),
-        extracted["ReferenceSection"],
+        "ReferenceSection", prev["ReferenceSection"], extracted["ReferenceSection"]
     )
     if msg:
         messages.append(msg)
@@ -387,6 +380,111 @@ def _merge(headword, prev, extracted) -> tuple[list[str], dict[str, any]]:
     return messages, new
 
 
+def _expand_part_of_speech(full_form_display: str, notes_foreign: str, meanings: str) -> str:
+    pos_regex_to_name = {
+        re.compile(r"Präp\."): "Präposition",
+        re.compile(r"Adv\."): "Adverb",
+        re.compile(r"Subj\."): "Subjunktion",
+        re.compile(r"^[mfn]$"): "Nomen",
+        re.compile(r"[mfn]\s"): "Nomen",
+        re.compile(r"m/f"): "Nomen",
+    }
+    for regex, pos_name in pos_regex_to_name.items():
+        if regex.search(notes_foreign):
+            return pos_name
+
+    full_form_normalized = _normalize_nfkd_strip(full_form_display)
+    full_form_parts = [part.strip() for part in full_form_normalized.split(",")]
+
+    if len(full_form_parts) == 2 and (  # noqa: PLR2004
+        (full_form_parts[0].endswith("us") and full_form_parts[1].endswith("i"))
+        or (full_form_parts[0].endswith("a") and full_form_parts[1].endswith("ae"))
+        or (full_form_parts[0].endswith("um") and full_form_parts[1].endswith("i"))
+    ):
+        return "Nomen"
+
+    if len(full_form_parts) >= 2:  # noqa: PLR2004
+        if (
+            full_form_parts[0].endswith("us")
+            and full_form_parts[1].endswith("a")
+            and full_form_parts[2].endswith("um")
+        ):
+            return "Adjektiv"
+        if (
+            (full_form_parts[0].endswith("are") and full_form_parts[1].endswith("o"))
+            or (full_form_parts[0].endswith("ere") and full_form_parts[1].endswith("o"))
+            or (full_form_parts[0].endswith("ire") and full_form_parts[1].endswith("io"))
+        ):
+            return "Verb"
+
+    if len(full_form_parts) == 1 and (
+        full_form_parts[0].endswith("us")
+        or full_form_parts[0].endswith("a")
+        or full_form_parts[0].endswith("um")
+    ):
+        articles = {"der", "die", "das"}
+        alen = 3
+        if len(meanings) > alen and meanings[:alen].lower() in articles:
+            return "Nomen"
+
+    return ""
+
+
+def _expand_full_form_display(full_form_display: str, part_of_speech: str) -> str:
+    if part_of_speech != "Nomen":
+        return full_form_display
+
+    full_form_parts = [part.strip() for part in full_form_display.split(",")]
+    if len(full_form_parts) > 1 or len(full_form_parts[0].split(" ")) > 1:
+        return full_form_display
+
+    if full_form_parts[0].endswith("us"):
+        return f"{full_form_parts[0]}, {full_form_parts[0][:-2]}i"
+
+    if full_form_parts[0].endswith("a"):
+        return f"{full_form_parts[0]}, {full_form_parts[0][:-1]}ae"
+
+    if full_form_parts[0].endswith("um"):
+        return f"{full_form_parts[0]}, {full_form_parts[0][:-2]}i"
+
+    return full_form_display
+
+
+def _expand(entry: dict[str, any]) -> dict[str, any]:
+    # **Late fixing**
+    # Only after merge, I know whether I must fix `PartOfSpeech`. This cannot be determined during
+    # extraction from a file.
+    if entry["PartOfSpeech"] == "":
+        expanded_part_of_speech = _expand_part_of_speech(
+            entry["FullFormDisplay"], entry["NotesForeign"], entry["Meanings"]
+        )
+    else:
+        expanded_part_of_speech = entry["PartOfSpeech"]
+    expanded_full_form_display = _expand_full_form_display(entry["FullFormDisplay"], expanded_part_of_speech)
+
+    def _expand_field(key: str, value: any) -> any:
+        if key == "PartOfSpeech":
+            return expanded_part_of_speech
+        if key == "FullFormDisplay":
+            return expanded_full_form_display
+        return value
+
+    return {key: _expand_field(key, value) for key, value in entry.items()}
+
+
+def _transform_output(entry: dict[str, any], book: str) -> dict[str, any]:
+    def _transform_field(key: str, value: any) -> any:
+        if key == "ReferenceSection":
+            return ";".join(map(str, sorted(value)))
+        return value
+
+    out = {key: _transform_field(key, value) for key, value in entry.items()}
+    out["FullFormNormalized"] = _normalize_nfkd_strip(out["FullFormDisplay"])
+    out["NumberOfMeanings"] = out["Meanings"].count(",") + out["Meanings"].count(";") + 1
+    out["ReferenceBook"] = book
+    return out
+
+
 def _iter_entries_from_tree(tree: ElementTree):
     extractor = _ElementTreeParagraphExtractor()
     styler = _StyleInspector(tree)
@@ -409,7 +507,7 @@ def _iter_entries_from_tree(tree: ElementTree):
         pre_full_form_display = _extract_full_form_display(elem, text)
         extracted_full_form_display = _compress_full_form_display(pre_full_form_display)
         headword = _normalize_nfkd_strip(extracted_full_form_display.split(",")[0])
-        extracted_notes_foreign = left[len(pre_full_form_display) :].strip()
+        extracted_notes_foreign = _fix_notes_foreign(left[len(pre_full_form_display) :])
 
         m = re.match(r"(?s)^(?P<mean>.*?)(?P<numbers>\d+(?:[.,]\s*\d+)*)\s*$", right)
         if not m:
@@ -430,6 +528,7 @@ def _iter_entries_from_tree(tree: ElementTree):
         yield {
             "Headword": headword,
             "FullFormDisplay": extracted_full_form_display,
+            "PartOfSpeech": "",
             "NotesForeign": extracted_notes_foreign,
             "Meanings": extracted_meanings,
             "NotesNative": "",
@@ -459,8 +558,9 @@ def _iter_entries_from_csv(csv_reader: csv.DictReader):
         refs = {int(r.strip()) for r in ref_raw.split(";") if r.strip()}
         yield {
             "Headword": headword,
-            "FullFormDisplay": row.get("FullFormDisplay", "").strip(),
-            "NotesForeign": row.get("NotesForeign", "").strip(),
+            "FullFormDisplay": _compress_full_form_display(row["FullFormDisplay"]),
+            "PartOfSpeech": row.get("PartOfSpeech", "").strip(),
+            "NotesForeign": _fix_notes_foreign(row.get("NotesForeign", "")),
             "Meanings": row.get("Meanings", "").strip(),
             "NotesNative": row.get("NotesNative", "").strip(),
             "MnemonicHint": row.get("MnemonicHint", "").strip(),
@@ -515,7 +615,8 @@ def convert(readers, out_file: TextIO, book: str, console_obj) -> None:
             if headword in vocabulary_list:
                 prev = vocabulary_list[headword]
 
-                messages, new = _merge(headword, prev, extracted)
+                messages, merged = _merge(headword, prev, extracted)
+                vocabulary_list[headword] = merged
 
                 with_info_messages = True
                 print_logs = (
@@ -527,18 +628,11 @@ def convert(readers, out_file: TextIO, book: str, console_obj) -> None:
                         console_obj.print("- " + msg)
 
             else:
-                new = extracted
+                vocabulary_list[headword] = extracted
 
-            new["FullFormNormalized"] = _normalize_nfkd_strip(new["FullFormDisplay"])
-            new["PartOfSpeech"] = _part_of_speech_from_notes_foreign(new["NotesForeign"])
-            new["NumberOfMeanings"] = new["Meanings"].count(",") + new["Meanings"].count(";") + 1
-            new["ReferenceBook"] = book
-            new["ReferenceSection"] = ";".join(map(str, sorted(new["ReferenceSection"])))
-
-            vocabulary_list[headword] = new
-
-    sorted_vocabulary_list = sorted(vocabulary_list.values(), key=lambda row: row["Headword"].lower())
+    expanded_vocabulary_list = [_expand(row) for row in vocabulary_list.values()]
+    sorted_vocabulary_list = sorted(expanded_vocabulary_list, key=lambda row: row["Headword"].lower())
     for row in sorted_vocabulary_list:
-        writer.writerow(row)
+        writer.writerow(_transform_output(row, book))
 
     console_obj.print(f"Converted {len(vocabulary_list)} entries.")

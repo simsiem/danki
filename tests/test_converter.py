@@ -1,6 +1,5 @@
 import csv
 import io
-from pathlib import Path
 
 import pytest
 
@@ -40,8 +39,16 @@ def _run_conversion(body: str, expected_csv: str, book: str) -> FakeConsole:
     [
         (
             "<p><span>auxilium</span>    die Hilfe15</p>",
-            #    1        2        3          6     7      12   13
-            "auxilium,auxilium,auxilium,,,die Hilfe,1,,,,,book1,15,,,,,,,",
+            #    1              2                  3            4        6     7      12   13
+            'auxilium,"auxilium, auxilii","auxilium, auxilii",Nomen,,die Hilfe,1,,,,,book1,15,,,,,,,',
+        ),
+        (
+            "<p><span>amīca</span>    die Freundin15</p>",
+            'amica,"amīca, amīcae","amica, amicae",Nomen,,die Freundin,1,,,,,book1,15,,,,,,,',
+        ),
+        (
+            "<p><span>amīcus</span>    der Freund15</p>",
+            'amicus,"amīcus, amīci","amicus, amici",Nomen,,der Freund,1,,,,,book1,15,,,,,,,',
         ),
         (
             "<p><span>ā / ab</span> Präp. m. Abl.    von, von ... her16</p>",
@@ -61,15 +68,15 @@ def _run_conversion(body: str, expected_csv: str, book: str) -> FakeConsole:
         ),
         (
             "<p><span>ostendere, ostendō, ostendī</span>    zeigen, erklären<span>16. 28</span></p>",
-            'ostendere,"ostendere, ostendō, ostendī","ostendere, ostendo, ostendi",,,"zeigen, erklären",2,,,,,book1,16;28,,,,,,,',
+            'ostendere,"ostendere, ostendō, ostendī","ostendere, ostendo, ostendi",Verb,,"zeigen, erklären",2,,,,,book1,16;28,,,,,,,',
         ),
         (
             "<p><span>beātus, beāta,beātum</span>    glücklich, reich36</p>",
-            'beatus,"beātus, a, um","beatus, a, um",,,"glücklich, reich",2,,,,,book1,36,,,,,,,',
+            'beatus,"beātus, a, um","beatus, a, um",Adjektiv,,"glücklich, reich",2,,,,,book1,36,,,,,,,',
         ),
         (
             '<p class="paragraph-P5"><span class="text-T13">auxilium</span><span class="text-T14">    die Hilfe</span><span class="text-T15">15</span></p>',  # noqa: RUF001
-            "auxilium,auxilium,auxilium,,,die Hilfe,1,,,,,book1,15,,,,,,,Top500",
+            'auxilium,"auxilium, auxilii","auxilium, auxilii",Nomen,,die Hilfe,1,,,,,book1,15,,,,,,,Top500',
         ),
         (
             '<p class="paragraph-P5"><span class="text-T13">ā / ab</span><span class="text-T6"> </span><span class="text-T7">Präp. m. Abl.    </span><span class="text-T8">von, von ... her</span><span class="text-T9">16</span></p>',  # noqa: RUF001
@@ -85,7 +92,7 @@ def _run_conversion(body: str, expected_csv: str, book: str) -> FakeConsole:
         ),
         (
             '<p class="paragraph-P6"><span class="text-T13">ostendere, ostendō, ostendī</span><span class="text-T11">    zeigen, erklären</span><span class="text-T12">16. 28</span></p>',  # noqa: RUF001
-            'ostendere,"ostendere, ostendō, ostendī","ostendere, ostendo, ostendi",,,"zeigen, erklären",2,,,,,book1,16;28,,,,,,,Top500',
+            'ostendere,"ostendere, ostendō, ostendī","ostendere, ostendo, ostendi",Verb,,"zeigen, erklären",2,,,,,book1,16;28,,,,,,,Top500',
         ),
         (
             '<p class="paragraph-P6"><span class="text-T21">dum</span><span class="text-T11">  </span><span class="text-T22">Subj.</span><span class="text-T11">    während, solange, bis</span><span class="text-T12">19</span></p>',  # noqa: RUF001
@@ -97,7 +104,7 @@ def _run_conversion(body: str, expected_csv: str, book: str) -> FakeConsole:
         ),
         (
             '<p class="paragraph-P1"><span class="text-T5">-que</span><span class="text-T6">  (angehängt)    und</span><span class="text-T8">14</span></p>',  # noqa: RUF001
-            "-que,-que,-que,,(angehängt),und,1,,,,,book1,14,,,,,,,",
+            "-que,-que,-que,,angehängt,und,1,,,,,book1,14,,,,,,,",
         ),
         (
             '<p class="paragraph-P6"><span class="text-T27">tamquam</span><span class="text-T6">   </span><span class="text-T7">Adv.</span><span class="text-T6">    wie</span><span class="text-T8">32</span></p>',  # noqa: RUF001
@@ -161,7 +168,7 @@ et,et,et,,,und,1,,,,,book1,5,,,,,,,
 <p><span>audīre, audiō</span>    hören, lernen32</p>
 <p><span>audīre, audio, audīvī, audītum</span>    hören, lernen32</p>
 """,
-            'audire,"audīre, audiō","audire, audio",,,"hören, lernen",2,,,,,book1,32,,,,,,,',
+            'audire,"audīre, audiō","audire, audio",Verb,,"hören, lernen",2,,,,,book1,32,,,,,,,',
         ),
         (
             # Correct mismatch behaviour if new entry offers better FullFormDisplay.
@@ -171,7 +178,7 @@ et,et,et,,,und,1,,,,,book1,5,,,,,,,
 <p><span>audīre, audiō</span>    hören, lernen32</p>
 <p><span>audīre, audiō, audīvī, audītum</span>    hören32</p>
 """,
-            'audire,"audīre, audiō, audīvī, audītum","audire, audio, audivi, auditum",,,"hören, lernen",2,,,,,book1,32,,,,,,,',
+            'audire,"audīre, audiō, audīvī, audītum","audire, audio, audivi, auditum",Verb,,"hören, lernen",2,,,,,book1,32,,,,,,,',
         ),
     ],
 )
@@ -191,7 +198,7 @@ def test_duplicate_mismatch_logs_and_keep_first(body, expected_csv):
 <p><span>audīre, audiō</span>    hören, lernen32</p>
 <p><span>audīre, audiō, audīvī, audītum</span>    hören, lernen32</p>
 """,
-            'audire,"audīre, audiō, audīvī, audītum","audire, audio, audivi, auditum",,,"hören, lernen",2,,,,,book1,32,,,,,,,',
+            'audire,"audīre, audiō, audīvī, audītum","audire, audio, audivi, auditum",Verb,,"hören, lernen",2,,,,,book1,32,,,,,,,',
         ),
         (
             # Correct grammatical forms in first paragraph. Keep first paragraph.
@@ -199,15 +206,15 @@ def test_duplicate_mismatch_logs_and_keep_first(body, expected_csv):
 <p><span>Rōma, Rōmae</span>    die Stadt Rom32</p>
 <p><span>Rōma</span>    die Stadt Rom32</p>
 """,
-            'Roma,"Rōma, Rōmae","Roma, Romae",,,die Stadt Rom,1,,,,,book1,32,,,,,,,',
+            'Roma,"Rōma, Rōmae","Roma, Romae",Nomen,,die Stadt Rom,1,,,,,book1,32,,,,,,,',
         ),
         (
-            # Correct grammatical forms in first paragraph. Keep first paragraph.
+            # Extended section list in second paragraph. Keep second paragraph.
             """\
 <p><span>Rōma, Rōmae</span>    die Stadt Rom32</p>
 <p><span>Rōma, Rōmae</span>    die Stadt Rom32.21</p>
 """,
-            'Roma,"Rōma, Rōmae","Roma, Romae",,,die Stadt Rom,1,,,,,book1,21;32,,,,,,,',
+            'Roma,"Rōma, Rōmae","Roma, Romae",Nomen,,die Stadt Rom,1,,,,,book1,21;32,,,,,,,',
         ),
     ],
 )
@@ -231,14 +238,14 @@ def test_non_matching_paragraph_logged():
 
 
 def test_single_csv_passthrough_matches_reference():
-    ref_path = Path("tests/test_reference.csv")
-    assert ref_path.exists()
     in_str = """\
 Headword,FullFormDisplay,FullFormNormalized,PartOfSpeech,NotesForeign,Meanings,NumberOfMeanings,NotesNative,MnemonicHint,PronunciationText,AudioUrl,ReferenceBook,ReferenceSection,Exercise1Front,Exercise1Back,Exercise2Front,Exercise2Back,Exercise3Front,Exercise3Back,Tags
 -ne,-ne,-ne,,,Partikel im dir. Fragesatz (unübersetzt),1,,,,,Campus C1,13,,,,,,,Top500
 a / ab,ā / ab,a / ab,Präposition,Präp. m. Abl.,"von, von ... her",2,,,,,Campus C1,16,,,,,,,Top500
-abire,"abīre, abeō, abiī","abire, abeo, abii",,B,weggehen,1,C,D,E,F,Campus C1,37,G,H,I,J,K,L,Top500
+abire,"abīre, abeō, abiī","abire, abeo, abii",Verb,B,weggehen,1,C,D,E,F,Campus C1,37,G,H,I,J,K,L,Top500
 Aeneas,"Aenēās, Aenēae","Aeneas, Aeneae",Nomen,m,Äneas (Trojaner und Stammvater der Römer),1,,,,,Campus C1,30,,,,,,,
+Romulus / Remus,Rōmulus / Remus,Romulus / Remus,Nomen,,Romulus / Remus,1,Zwillingsbrüder und sagenhafte Gründer Roms,,,,Campus C1,32,,,,,,,
+Tarquinius Superbus,Tarquinius Superbus,Tarquinius Superbus,Nomen,,Tarquinius Superbus,1,Letzter etruskischer König von Rom,,,,Campus C1,36,,,,,,,
 vox,"vōx, vōcis","vox, vocis",Nomen,f,"die Stimme, die Äußerung, der Laut",3,,,,,Campus C1,25,,,,,,,Top500
 """
     reader = csv.DictReader(io.StringIO(in_str))
@@ -257,7 +264,7 @@ def test_multi_file_merge_csv_fodt_html():
     csv_str = """\
 Headword,FullFormDisplay,FullFormNormalized,PartOfSpeech,NotesForeign,Meanings,NumberOfMeanings,NotesNative,MnemonicHint,PronunciationText,AudioUrl,ReferenceBook,ReferenceSection,Exercise1Front,Exercise1Back,Exercise2Front,Exercise2Back,Exercise3Front,Exercise3Back,Tags
 a / ab,ā / ab,a / ab,Präposition,Präp. m. Abl.,"von, von ... her",2,,,,,Campus C1,16,,Ex1B,,,,,Top500
-accipere,"accipere","accipere",,,"erhalten, erfahren, annehmen",3,,,,,Campus C1,34,,,,,,,Top500
+accipere,"accipere","accipere",Verb,,"erhalten, erfahren, annehmen",3,,,,,Campus C1,34,,,,,,,Top500
 """
     csv_reader = csv.DictReader(io.StringIO(csv_str))
 
@@ -279,6 +286,6 @@ accipere,"accipere","accipere",,,"erhalten, erfahren, annehmen",3,,,,,Campus C1,
 Headword,FullFormDisplay,FullFormNormalized,PartOfSpeech,NotesForeign,Meanings,NumberOfMeanings,NotesNative,MnemonicHint,PronunciationText,AudioUrl,ReferenceBook,ReferenceSection,Exercise1Front,Exercise1Back,Exercise2Front,Exercise2Back,Exercise3Front,Exercise3Back,Tags
 a / ab,ā / ab,a / ab,Präposition,Präp. m. Abl.,"von, von ... her",2,,,,,Campus C1,16,,Ex1B,,,,,Top500
 abire,abire,abire,,,weggehen,1,,,,,Campus C1,37,,,,,,,
-accipere,"accipere, accipiō, accēpī, acceptum","accipere, accipio, accepi, acceptum",,,"erhalten, erfahren, annehmen",3,,,,,Campus C1,34,,,,,,,Top500
+accipere,"accipere, accipiō, accēpī, acceptum","accipere, accipio, accepi, acceptum",Verb,,"erhalten, erfahren, annehmen",3,,,,,Campus C1,34,,,,,,,Top500
 """
     )
