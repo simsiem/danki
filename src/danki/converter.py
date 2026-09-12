@@ -228,10 +228,6 @@ def _format_merge(field: str, info: str) -> str:
     return f"Merge {field} - {info}."
 
 
-def _split_to_int_set(text: str, sep: str) -> set[int]:
-    return {int(part) for part in text.split(sep)}
-
-
 def _merge_non_empty(field, previous, later) -> tuple[str | None, str]:
     if previous == later:
         return None, previous
@@ -548,20 +544,27 @@ def _iter_entries_from_tree(tree: ElementTree):
 
 def _iter_entries_from_csv(csv_reader: csv.DictReader):
     for i, row in enumerate(csv_reader, start=1):
-        # Expect keys matching _FIELDNAMES; missing keys handled by get
-        headword = row.get("Headword", "").strip()
-        if not headword:
-            yield {"__warning__": f"CSV row {i} missing Headword, skipping"}
-            continue
+        # Expect keys matching _FIELDNAMES;
+        # Optional missing keys handled by get
+        # Mandatory fields: Headword, FullFormDisplay, Meanings
         # ReferenceSection stored as ';' joined string in CSV
+        if "Headword" not in row:
+            yield {"__warning__": f"Row {i} missing Headword, skipping."}
+            continue
+        if "FullFormDisplay" not in row:
+            yield {"__warning__": f"Row {i} missing FullFormDisplay, skipping."}
+            continue
+        if "Meanings" not in row:
+            yield {"__warning__": f"Row {i} missing Meanings, skipping."}
+            continue
         ref_raw = row.get("ReferenceSection", "")
         refs = {int(r.strip()) for r in ref_raw.split(";") if r.strip()}
         yield {
-            "Headword": headword,
-            "FullFormDisplay": _compress_full_form_display(row["FullFormDisplay"]),
+            "Headword": row["Headword"].strip(),
+            "FullFormDisplay": row["FullFormDisplay"].strip(),
             "PartOfSpeech": row.get("PartOfSpeech", "").strip(),
-            "NotesForeign": _fix_notes_foreign(row.get("NotesForeign", "")),
-            "Meanings": row.get("Meanings", "").strip(),
+            "NotesForeign": row.get("NotesForeign", "").strip(),
+            "Meanings": row["Meanings"].strip(),
             "NotesNative": row.get("NotesNative", "").strip(),
             "MnemonicHint": row.get("MnemonicHint", "").strip(),
             "PronunciationText": row.get("PronunciationText", "").strip(),
