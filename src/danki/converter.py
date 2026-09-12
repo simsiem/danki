@@ -221,11 +221,11 @@ def _fix_notes_foreign(notes_foreign: str) -> str:
 
 
 def _format_mismatch(field: str, info: str) -> str:
-    return f"WARNING: Mismatch for {field} - {info}."
+    return f"Mismatch for {field} - {info}."
 
 
 def _format_merge(field: str, info: str) -> str:
-    return f"INFO: Merge {field} - {info}."
+    return f"Merge {field} - {info}."
 
 
 def _split_to_int_set(text: str, sep: str) -> set[int]:
@@ -577,7 +577,14 @@ def _iter_entries_from_csv(csv_reader: csv.DictReader):
         }
 
 
-def convert(readers, out_file: TextIO, book: str, console_obj) -> None:
+def convert(
+    readers,
+    out_file: TextIO,
+    book: str,
+    console_obj,
+    *,
+    show_merge_messages: bool = False,
+) -> None:
     """Convert vocabulary from a single ElementTree or an iterable of readers and write CSV to out_file.
     Backwards compatible: if `readers` is an ElementTree the previous behaviour is preserved.
     """
@@ -592,11 +599,13 @@ def convert(readers, out_file: TextIO, book: str, console_obj) -> None:
     writer.writeheader()
 
     vocabulary_list = {}
+    deferred_messages: set[str] = set()
 
     # Normalize readers input: if single ElementTree passed, wrap into iterable
     reader_iterable = [readers] if isinstance(readers, ElementTree) else list(readers)
 
     for src_idx, reader in enumerate(reader_iterable, start=1):
+        source_name = getattr(reader, "source_name", None) or f"input {src_idx}"
         if isinstance(reader, ElementTree):
             entry_iter = _iter_entries_from_tree(reader)
         elif isinstance(reader, csv.DictReader):
@@ -618,17 +627,17 @@ def convert(readers, out_file: TextIO, book: str, console_obj) -> None:
                 messages, merged = _merge(headword, prev, extracted)
                 vocabulary_list[headword] = merged
 
-                with_info_messages = True
-                print_logs = (
-                    len(messages) > 0 if with_info_messages else any("WARNING" in m for m in messages)
-                )
-                if print_logs:
-                    console_obj.print(f'Changes for "{headword}" in input {src_idx}:')
-                    for msg in messages:
-                        console_obj.print("- " + msg)
+                for msg in messages:
+                    if msg.startswith("Merge ") and not show_merge_messages:
+                        continue
+                    deferred_messages.add(f"{source_name}: {headword}: {msg}")
 
             else:
                 vocabulary_list[headword] = extracted
+
+        for msg in sorted(deferred_messages):
+            console_obj.print(msg)
+        deferred_messages.clear()
 
     expanded_vocabulary_list = [_expand(row) for row in vocabulary_list.values()]
     sorted_vocabulary_list = sorted(expanded_vocabulary_list, key=lambda row: row["Headword"].lower())

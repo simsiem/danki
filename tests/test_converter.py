@@ -7,7 +7,9 @@ from danki import converter
 from tests.convert_helpers import FakeConsole, make_fodt, make_html
 
 
-def _run_conversion(body: str, expected_csv: str, book: str) -> FakeConsole:
+def _run_conversion(
+    body: str, expected_csv: str, book: str, *, show_merge_messages: bool = False
+) -> FakeConsole:
     expected_head_line = "Headword,FullFormDisplay,FullFormNormalized,PartOfSpeech,NotesForeign,Meanings,NumberOfMeanings,NotesNative,MnemonicHint,PronunciationText,AudioUrl,ReferenceBook,ReferenceSection,Exercise1Front,Exercise1Back,Exercise2Front,Exercise2Back,Exercise3Front,Exercise3Back,Tags"
     out = io.StringIO()
     console = FakeConsole()
@@ -21,7 +23,7 @@ def _run_conversion(body: str, expected_csv: str, book: str) -> FakeConsole:
         msg = f"Unknown type of body for test case. Body starts with {body_snippet}"
         raise ValueError(msg)
 
-    converter.convert(tree, out, book, console)
+    converter.convert(tree, out, book, console, show_merge_messages=show_merge_messages)
 
     lines = out.getvalue().splitlines()
     expected_lines = [expected_head_line, *expected_csv.splitlines()]
@@ -219,7 +221,7 @@ def test_duplicate_mismatch_logs_and_keep_first(body, expected_csv):
     ],
 )
 def test_duplicate_merge(body, expected_csv):
-    console = _run_conversion(body, expected_csv, "book1")
+    console = _run_conversion(body, expected_csv, "book1", show_merge_messages=True)
 
     is_mismatch = any("Mismatch for" in m for m in console.messages)
     assert not is_mismatch, f"Conversion free of warnings, got: {console.messages}"
@@ -235,6 +237,49 @@ def test_non_matching_paragraph_logged():
 
     found = any(m.startswith("WARNING: Paragraph") for m in console.messages)
     assert found, f"Expected warning about non-matching paragraph, got: {console.messages}"
+
+
+@pytest.mark.parametrize(
+    ("first_body", "second_body", "show_merge_messages", "expected_output"),
+    [
+        (
+            "<p><span>ācer</span>   energisch 32</p>",
+            """\
+<p><span>ācer</span>   anders 32</p>
+<p><span>ācer</span>   anders 32,50</p>
+""",
+            True,
+            """\
+second.html: acer: Merge ReferenceSection - previous = "{32}", chosen = "{32, 50}".
+second.html: acer: Mismatch for Meanings - previous = "energisch", later = "anders".
+Converted 1 entries.
+""",
+        ),
+        (
+            "<p><span>ācer</span>   energisch 32</p>",
+            """\
+<p><span>ācer</span>   anders 32</p>
+<p><span>ācer</span>   anders 32,50</p>
+""",
+            False,
+            """\
+second.html: acer: Mismatch for Meanings - previous = "energisch", later = "anders".
+Converted 1 entries.
+""",
+        ),
+    ],
+)
+def test_message_summary(first_body, second_body, show_merge_messages, expected_output):
+    first = make_html(first_body)
+    second = make_html(second_body)
+    first.source_name = "first.html"
+    second.source_name = "second.html"
+
+    out = io.StringIO()
+    console = FakeConsole()
+    converter.convert([first, second], out, "book1", console, show_merge_messages=show_merge_messages)
+
+    assert console.messages == expected_output.splitlines()
 
 
 def test_single_csv_passthrough_matches_reference():

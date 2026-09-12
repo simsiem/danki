@@ -15,7 +15,9 @@ app = App(help_format="restructuredtext")
 
 
 @app.command()
-def convert(inputs: list[Path], /, output_file: Path, *, book: str | None = None) -> None:
+def convert(
+    inputs: list[Path], /, output_file: Path, *, book: str | None = None, print_merge: bool = False
+) -> None:
     """Convert a Campus C1 vocabulary list to a Danki CSV file.
 
     Parameters
@@ -41,15 +43,19 @@ def convert(inputs: list[Path], /, output_file: Path, *, book: str | None = None
             if ext == ".csv":
                 f = input_file.open("r", encoding="utf-8", newline="")
                 csv_files.append(f)
-                readers.append(csv.DictReader(f))
+                reader = csv.DictReader(f)
+                reader.source_name = input_file.name
+                readers.append(reader)
             elif ext in (".fodt", ".html", ".xhtml"):
-                readers.append(ET.parse(input_file))  # noqa: S314
+                tree = ET.parse(input_file)  # noqa: S314
+                tree.source_name = input_file.name
+                readers.append(tree)
             else:
                 console.print(f"Error: unsupported input file type: {input_file}")
                 return 1
 
         with output_file.open("w", encoding="utf-8", newline="") as output_file_fd:
-            converter.convert(readers, output_file_fd, _book, console)
+            converter.convert(readers, output_file_fd, _book, console, show_merge_messages=print_merge)
 
     except Exception as e:  # noqa: BLE001
         console.print(f"Error: {e}")
