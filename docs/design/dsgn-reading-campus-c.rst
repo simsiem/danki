@@ -29,10 +29,14 @@ specified in the next section.
        is not preceded with a "/" or ",". In other words, a pure white space separator terminates
        `FullFormDisplay`, but ", " and "/ " do not.
 
-    If this field contains three comma-separated elements that are the same except for the prefix "us", "a",
-    "um", then compress it like in the following example:
+    Apply the following style conventions:
 
         beātus, beāta, beātum  ->  beātus, a, um
+        dulcis, dulce          ->  dulcis, dulcis, dulce
+        dulcis, e              ->  dulcis, dulcis, dulce
+    
+    If `NotesForeign` indicates that the entry is a preposition, add "(m. Akk.)" or "(m. Abl.)" to
+    `FullFormDisplay` (not to headword).
 
 `NotesForeign`:
     The substring between first `FullFormDisplay` and `Meanings` is a note.
@@ -84,4 +88,3 @@ Testing Decisions
 
 - Module tests use small crafted strings (XHTML, FODT and CSV snippets).
 - Use `docs/test_book_C1.html` as a golden integration sample for XHMTL and `docs/test_book_C2.fodt` for FODT.
-

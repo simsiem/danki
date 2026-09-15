@@ -189,35 +189,65 @@ def _snippet(text: str) -> str:
     return text[:snippet_length].replace("\n", " ")
 
 
-def _compress_full_form_display(s: str) -> str:
-    """If `s` contains three comma-separated forms that share a common
-    prefix and the suffixes are exactly 'us', 'a', 'um', compress them to
-    the form: <fullfirst>, <second-suffix>, <third-suffix>.
-    Example: "beātus, beāta, beātum" -> "beātus, a, um".
-    """
-    parts = [p.strip() for p in s.split(",")]
-    if len(parts) != 3:  # noqa: PLR2004
-        return s.strip()
+def _fix_full_form_display(pre_full_form_display: str, _notes_foreign: str) -> str:
+    """Apply style conventions to FullFormDisplay."""
+    parts = [p.strip() for p in pre_full_form_display.split(",")]
 
-    a, b, c = parts
+    # Compress adjective forms of the type: "beātus, beāta, beātum" -> "beātus, a, um"
+    if len(parts) == 3:  # noqa: PLR2004
+        a, b, c = parts
+        suf_a_sg = "us"
+        if (
+            len(a) > len(suf_a_sg)
+            and a[-len(suf_a_sg) :] == suf_a_sg
+            and b == a[: -len(suf_a_sg)] + "a"
+            and c == a[: -len(suf_a_sg)] + "um"
+        ):
+            return f"{a}, a, um"
+        suf_a_pl = "ī"
+        if (
+            len(a) > len(suf_a_pl)
+            and a[-len(suf_a_pl) :] == suf_a_pl
+            and b == a[: -len(suf_a_pl)] + "ae"
+            and c == a[: -len(suf_a_pl)] + "a"
+        ):
+            return f"{a}, ae, a"
+        return pre_full_form_display.strip()
 
-    sa = "us"
-    if len(a) > len(sa) and a[-2:] == sa and b == a[:-2] + "a" and c == a[:-2] + "um":
-        return f"{a}, a, um"
+    # Expand adjectives of the form dulcis, dulce or dulcis, e -> dulcis, dulcis, dulce
+    if len(parts) == 2:  # noqa: PLR2004
+        a, b = parts
+        suf_a_sg = "is"
+        if len(a) > len(suf_a_sg) and a[-len(suf_a_sg) :] == suf_a_sg and b == a[: -len(suf_a_sg)] + "e":
+            return f"{a}, {a}, {b}"
+        if len(a) > len(suf_a_sg) and a[-len(suf_a_sg) :] == suf_a_sg and b == "e":
+            return f"{a}, {a}, {a[: -len(suf_a_sg)]}e"
 
-    return s.strip()
+    # Add case information to prepositions
+    if len(parts) == 1 and "(" not in pre_full_form_display:
+        if "Präp. m. Akk." in _notes_foreign:
+            return f"{pre_full_form_display.strip()} (m. Akk.)"
+        if "Präp. m. Abl." in _notes_foreign:
+            return f"{pre_full_form_display.strip()} (m. Abl.)"
+
+    return pre_full_form_display.strip()
 
 
 def _fix_notes_foreign(notes_foreign: str) -> str:
-    stripped_notes_foreign = notes_foreign.strip()
+    fixed_notes_foreign = notes_foreign.strip()
     if (
-        len(stripped_notes_foreign) > 2  # noqa: PLR2004
-        and stripped_notes_foreign[0] == "("
-        and stripped_notes_foreign[-1] == ")"
+        len(fixed_notes_foreign) > 2  # noqa: PLR2004
+        and fixed_notes_foreign[0] == "("
+        and fixed_notes_foreign[-1] == ")"
     ):
-        return stripped_notes_foreign[1:-1].strip()
+        fixed_notes_foreign = fixed_notes_foreign[1:-1].strip()
 
-    return stripped_notes_foreign
+    return (
+        fixed_notes_foreign.replace("Pl.", "Plural")
+        .replace("Gen.", "Genitiv")
+        .replace("Vok.", "Vokativ")
+        .replace("Dat.", "Dativ")
+    )
 
 
 def _format_mismatch(field: str, info: str) -> str:
@@ -501,9 +531,9 @@ def _iter_entries_from_tree(tree: ElementTree):
         right = text[m.end() :].strip()
 
         pre_full_form_display = _extract_full_form_display(elem, text)
-        extracted_full_form_display = _compress_full_form_display(pre_full_form_display)
-        headword = _normalize_nfkd_strip(extracted_full_form_display.split(",")[0])
+        headword = _normalize_nfkd_strip(pre_full_form_display.split(",")[0])
         extracted_notes_foreign = _fix_notes_foreign(left[len(pre_full_form_display) :])
+        extracted_full_form_display = _fix_full_form_display(pre_full_form_display, extracted_notes_foreign)
 
         m = re.match(r"(?s)^(?P<mean>.*?)(?P<numbers>\d+(?:[.,]\s*\d+)*)\s*$", right)
         if not m:
