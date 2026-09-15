@@ -35,12 +35,20 @@ def _local_name(tag: str) -> str:
     return tag.rsplit("}", 1)[-1] if "}" in tag else tag
 
 
-def _normalize_nfkd_strip(s: str) -> str:
+def _normalize_removed_diacritics(s: str) -> str:
     if s is None:
         return ""
     nk = unicodedata.normalize("NFKD", s)
     stripped = "".join(ch for ch in nk if not unicodedata.combining(ch))
     return re.sub(r"\s+", " ", stripped).strip()
+
+
+def _normalize_composed(s: str) -> str:
+    """Normalize input text to a canonical composed form (NFC) and trim whitespace."""
+    if s is None:
+        return ""
+    n = unicodedata.normalize("NFC", s)
+    return re.sub(r"\s+", " ", n).strip()
 
 
 def _text_pieces_from_node(node: Element) -> list[str]:
@@ -191,7 +199,8 @@ def _snippet(text: str) -> str:
 
 def _fix_full_form_display(pre_full_form_display: str, _notes_foreign: str) -> str:
     """Apply style conventions to FullFormDisplay."""
-    parts = [p.strip() for p in pre_full_form_display.split(",")]
+    normalized_full_form_display = _normalize_composed(pre_full_form_display)
+    parts = [p.strip() for p in normalized_full_form_display.split(",")]
 
     # Compress adjective forms of the type: "beātus, beāta, beātum" -> "beātus, a, um"
     if len(parts) == 3:  # noqa: PLR2004
@@ -212,7 +221,7 @@ def _fix_full_form_display(pre_full_form_display: str, _notes_foreign: str) -> s
             and c == a[: -len(suf_a_pl)] + "a"
         ):
             return f"{a}, ae, a"
-        return pre_full_form_display.strip()
+        return normalized_full_form_display.strip()
 
     # Expand adjectives of the form dulcis, dulce or dulcis, e -> dulcis, dulcis, dulce
     if len(parts) == 2:  # noqa: PLR2004
@@ -224,17 +233,17 @@ def _fix_full_form_display(pre_full_form_display: str, _notes_foreign: str) -> s
             return f"{a}, {a}, {a[: -len(suf_a_sg)]}e"
 
     # Add case information to prepositions
-    if len(parts) == 1 and "(" not in pre_full_form_display:
+    if len(parts) == 1 and "(" not in normalized_full_form_display:
         if "Präp. m. Akk." in _notes_foreign:
-            return f"{pre_full_form_display.strip()} (m. Akk.)"
+            return f"{normalized_full_form_display.strip()} (m. Akk.)"
         if "Präp. m. Abl." in _notes_foreign:
-            return f"{pre_full_form_display.strip()} (m. Abl.)"
+            return f"{normalized_full_form_display.strip()} (m. Abl.)"
 
-    return pre_full_form_display.strip()
+    return normalized_full_form_display.strip()
 
 
 def _fix_notes_foreign(notes_foreign: str) -> str:
-    fixed_notes_foreign = notes_foreign.strip()
+    fixed_notes_foreign = _normalize_composed(notes_foreign)
     if (
         len(fixed_notes_foreign) > 2  # noqa: PLR2004
         and fixed_notes_foreign[0] == "("
@@ -419,7 +428,7 @@ def _expand_part_of_speech(full_form_display: str, notes_foreign: str, meanings:
         if regex.search(notes_foreign):
             return pos_name
 
-    full_form_normalized = _normalize_nfkd_strip(full_form_display)
+    full_form_normalized = _normalize_removed_diacritics(full_form_display)
     full_form_parts = [part.strip() for part in full_form_normalized.split(",")]
 
     if len(full_form_parts) == 2 and (  # noqa: PLR2004
@@ -505,7 +514,7 @@ def _transform_output(entry: dict[str, any], book: str) -> dict[str, any]:
         return value
 
     out = {key: _transform_field(key, value) for key, value in entry.items()}
-    out["FullFormNormalized"] = _normalize_nfkd_strip(out["FullFormDisplay"])
+    out["FullFormNormalized"] = _normalize_removed_diacritics(out["FullFormDisplay"])
     out["NumberOfMeanings"] = out["Meanings"].count(",") + out["Meanings"].count(";") + 1
     out["ReferenceBook"] = book
     return out
@@ -531,7 +540,7 @@ def _iter_entries_from_tree(tree: ElementTree):
         right = text[m.end() :].strip()
 
         pre_full_form_display = _extract_full_form_display(elem, text)
-        headword = _normalize_nfkd_strip(pre_full_form_display.split(",")[0])
+        headword = _normalize_removed_diacritics(pre_full_form_display.split(",")[0])
         extracted_notes_foreign = _fix_notes_foreign(left[len(pre_full_form_display) :])
         extracted_full_form_display = _fix_full_form_display(pre_full_form_display, extracted_notes_foreign)
 
@@ -542,8 +551,8 @@ def _iter_entries_from_tree(tree: ElementTree):
             }
             continue
 
-        extracted_meanings = m.group("mean").strip()
-        numbers_raw = m.group("numbers")
+        extracted_meanings = _normalize_composed(m.group("mean"))
+        numbers_raw = m.group("numbers").strip()
         refs = re.split(r"[.,]\s*", numbers_raw)
         extracted_reference_sections = {int(r.strip()) for r in refs if r.strip()}
 
@@ -590,23 +599,23 @@ def _iter_entries_from_csv(csv_reader: csv.DictReader):
         ref_raw = row.get("ReferenceSection", "")
         refs = {int(r.strip()) for r in ref_raw.split(";") if r.strip()}
         yield {
-            "Headword": row["Headword"].strip(),
-            "FullFormDisplay": row["FullFormDisplay"].strip(),
-            "PartOfSpeech": row.get("PartOfSpeech", "").strip(),
-            "NotesForeign": row.get("NotesForeign", "").strip(),
-            "Meanings": row["Meanings"].strip(),
-            "NotesNative": row.get("NotesNative", "").strip(),
-            "MnemonicHint": row.get("MnemonicHint", "").strip(),
-            "PronunciationText": row.get("PronunciationText", "").strip(),
-            "AudioUrl": row.get("AudioUrl", "").strip(),
+            "Headword": _normalize_composed(row["Headword"]),
+            "FullFormDisplay": _normalize_composed(row["FullFormDisplay"]),
+            "PartOfSpeech": _normalize_composed(row.get("PartOfSpeech", "")),
+            "NotesForeign": _normalize_composed(row.get("NotesForeign", "")),
+            "Meanings": _normalize_composed(row["Meanings"]),
+            "NotesNative": _normalize_composed(row.get("NotesNative", "")),
+            "MnemonicHint": _normalize_composed(row.get("MnemonicHint", "")),
+            "PronunciationText": _normalize_composed(row.get("PronunciationText", "")),
+            "AudioUrl": _normalize_composed(row.get("AudioUrl", "")),
             "ReferenceSection": refs,
-            "Exercise1Front": row.get("Exercise1Front", "").strip(),
-            "Exercise1Back": row.get("Exercise1Back", "").strip(),
-            "Exercise2Front": row.get("Exercise2Front", "").strip(),
-            "Exercise2Back": row.get("Exercise2Back", "").strip(),
-            "Exercise3Front": row.get("Exercise3Front", "").strip(),
-            "Exercise3Back": row.get("Exercise3Back", "").strip(),
-            "Tags": row.get("Tags", "").strip(),
+            "Exercise1Front": _normalize_composed(row.get("Exercise1Front", "")),
+            "Exercise1Back": _normalize_composed(row.get("Exercise1Back", "")),
+            "Exercise2Front": _normalize_composed(row.get("Exercise2Front", "")),
+            "Exercise2Back": _normalize_composed(row.get("Exercise2Back", "")),
+            "Exercise3Front": _normalize_composed(row.get("Exercise3Front", "")),
+            "Exercise3Back": _normalize_composed(row.get("Exercise3Back", "")),
+            "Tags": _normalize_composed(row.get("Tags", "")),
         }
 
 
