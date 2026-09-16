@@ -235,7 +235,7 @@ def test_non_matching_paragraph_logged():
 
     console = _run_conversion(body, "", "")
 
-    found = any(m.startswith("WARNING: Paragraph") for m in console.messages)
+    found = any(m.startswith("input 1: Failed parsing") for m in console.messages)
     assert found, f"Expected warning about non-matching paragraph, got: {console.messages}"
 
 

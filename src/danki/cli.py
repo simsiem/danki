@@ -16,7 +16,13 @@ app = App(help_format="restructuredtext")
 
 @app.command()
 def convert(
-    inputs: list[Path], /, output_file: Path, *, book: str | None = None, print_merge: bool = False
+    inputs: list[Path],
+    /,
+    output_file: Path,
+    *,
+    book: str | None = None,
+    print_merge: bool = False,
+    print_ignore: bool = False,
 ) -> None:
     """Convert a Campus C1 vocabulary list to a Danki CSV file.
 
@@ -28,6 +34,10 @@ def convert(
         Reference book indentifier
     output_file
         Output CSV path
+    print_merge
+        Print messages about merged entries
+    print_ignore
+        Print messages about ignored entries
     """
 
     _book = book if book is not None else inputs[0].stem
@@ -55,7 +65,14 @@ def convert(
                 return 1
 
         with output_file.open("w", encoding="utf-8", newline="") as output_file_fd:
-            converter.convert(readers, output_file_fd, _book, console, show_merge_messages=print_merge)
+            converter.convert(
+                readers,
+                output_file_fd,
+                _book,
+                console,
+                show_merge_messages=print_merge,
+                show_ignore_messages=print_ignore,
+            )
 
     except Exception as e:  # noqa: BLE001
         console.print(f"Error: {e}")

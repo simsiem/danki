@@ -193,7 +193,7 @@ def _extract_full_form_display(paragraph_element: Element, _plain_text: str) -> 
 def _snippet(text: str) -> str:
     if len(text) == 0:
         return ""
-    snippet_length = min(len(text), 60)
+    snippet_length = min(len(text), 100)
     return text[:snippet_length].replace("\n", " ")
 
 
@@ -529,12 +529,16 @@ def _iter_entries_from_tree(tree: ElementTree):
         if len(text) == 0 or text[0] == "#":
             continue
         if not vocabulary_paragraph_pattern.match(text):
-            yield {"__warning__": f"Paragraph {idx} not matched: {_snippet(text)}"}
+            yield {
+                "__skip_message__": f"Failed parsing of paragraph {idx} due to unexpected format: {_snippet(text)}"
+            }
             continue
 
         m = re.search(r"\s{3,}(?!.*\s{3,})", text)
         if not m:
-            yield {"__warning__": f"paragraph {idx} unexpected format, skipping: {_snippet(text)}"}
+            yield {
+                "__skip_message__": f"Failed parsing of paragraph {idx} due to unexpected format: {_snippet(text)}"
+            }
             continue
         left = text[: m.start()].strip()
         right = text[m.end() :].strip()
@@ -547,7 +551,7 @@ def _iter_entries_from_tree(tree: ElementTree):
         m = re.match(r"(?s)^(?P<mean>.*?)(?P<numbers>\d+(?:[.,]\s*\d+)*)\s*$", right)
         if not m:
             yield {
-                "__warning__": f"paragraph {idx} missing trailing numbers, dropping entry: {_snippet(text)}"
+                "__skip_message__": f"Failed parsing of paragraph {idx} due to missing trailing numbers: {_snippet(text)}"
             }
             continue
 
@@ -591,13 +595,13 @@ def _iter_entries_from_csv(csv_reader: csv.DictReader):
         # Mandatory fields: Headword, FullFormDisplay, Meanings
         # ReferenceSection stored as ';' joined string in CSV
         if "Headword" not in row:
-            yield {"__warning__": f"Row {i} missing Headword, skipping."}
+            yield {"__skip_message__": f"Row {i} missing Headword, skipping."}
             continue
         if "FullFormDisplay" not in row:
-            yield {"__warning__": f"Row {i} missing FullFormDisplay, skipping."}
+            yield {"__skip_message__": f"Row {i} missing FullFormDisplay, skipping."}
             continue
         if "Meanings" not in row:
-            yield {"__warning__": f"Row {i} missing Meanings, skipping."}
+            yield {"__skip_message__": f"Row {i} missing Meanings, skipping."}
             continue
         ref_raw = row.get("ReferenceSection", "")
         refs = {int(r.strip()) for r in ref_raw.split(";") if r.strip()}
@@ -629,6 +633,7 @@ def convert(
     console_obj,
     *,
     show_merge_messages: bool = False,
+    show_ignore_messages: bool = False,
 ) -> None:
     """Convert vocabulary from a single ElementTree or an iterable of readers and write CSV to out_file.
     Backwards compatible: if `readers` is an ElementTree the previous behaviour is preserved.
@@ -661,8 +666,11 @@ def convert(
 
         for extracted in entry_iter:
             # handle adapter warnings
-            if "__warning__" in extracted:
-                console_obj.print(f"WARNING: {extracted['__warning__']}")
+            if "__skip_message__" in extracted:
+                msg = extracted["__skip_message__"]
+                if msg.startswith("Ignore paragraph") and not show_ignore_messages:
+                    continue
+                deferred_messages.add(f"{source_name}: {extracted['__skip_message__']}")
                 continue
 
             headword = extracted["Headword"]
