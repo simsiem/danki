@@ -56,4 +56,4 @@ The repo uses the canonical five labels: `needs-triage`, `needs-info`, `ready-fo
 
 ### Domain docs
 
-This is a single-context repo with a root `CONTEXT.md` and `docs/adr/` for ADRs, plus the default consumer rules for domain docs. See `docs/agents/domain.md`.
+This is a single-context repo with a root CONTEXT file `CONTEXT.rst` and the primary ADR directory `docs/adr/` for ADRs, plus the default consumer rules for domain docs. See `docs/agents/domain.md`.
