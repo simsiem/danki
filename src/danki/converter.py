@@ -553,6 +553,9 @@ def _iter_entries_from_tree(tree: ElementTree):
 
         extracted_meanings = _normalize_composed(m.group("mean"))
         numbers_raw = m.group("numbers").strip()
+        if numbers_raw == "0":
+            yield {"__skip_message__": f"Ignore paragraph {idx} due to ReferenceSection 0: {_snippet(text)}"}
+            continue
         refs = re.split(r"[.,]\s*", numbers_raw)
         extracted_reference_sections = {int(r.strip()) for r in refs if r.strip()}
 
