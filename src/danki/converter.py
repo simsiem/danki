@@ -1,6 +1,7 @@
 import csv
 import re
 import unicodedata
+from collections.abc import Callable
 from typing import TextIO
 from xml.etree.ElementTree import Element, ElementTree
 
@@ -49,6 +50,12 @@ def _normalize_composed(s: str) -> str:
         return ""
     n = unicodedata.normalize("NFC", s)
     return re.sub(r"\s+", " ", n).strip()
+
+
+def _fmt_reference_section(refs: list[str]) -> str:
+    if all(re.fullmatch(r"\d+", v) for v in refs):
+        return ";".join(sorted(refs, key=lambda s: int(s)))
+    return ";".join(refs)
 
 
 def _text_pieces_from_node(node: Element) -> list[str]:
@@ -287,19 +294,33 @@ def _merge_exact_match(field, previous: str, later: str) -> tuple[str | None, st
     return msg, previous
 
 
-def _merge_sets(field, previous: set[int], later: set[int]) -> tuple[str | None, set[int]]:
+def _merge_lists(
+    field, previous: list[str], later: list[str], format_func: Callable[[list[str]], str]
+) -> tuple[str | None, list[str]]:
     if previous == later:
         return None, previous
 
-    if previous.issubset(later):
-        msg = _format_merge(field, f'previous = "{previous}", chosen = "{later}"')
-        return msg, later
-    if later.issubset(previous):
-        msg = _format_merge(field, f'later = "{later}", chosen = "{previous}"')
+    if len(later) > len(previous):
+        chosen = later
+        not_chosen = previous
+        chosen_msg = _format_merge(
+            field,
+            f'previous = "{format_func(previous)}", chosen = "{format_func(later)}"',
+        )
+    else:
+        chosen = previous
+        not_chosen = later
+        chosen_msg = _format_merge(
+            field, f'later = "{format_func(later)}", chosen = "{format_func(previous)}"'
+        )
+
+    # ensure all elements of the not-chosen list are present in the chosen list
+    not_in_chosen = [x for x in not_chosen if x not in chosen]
+    if not_in_chosen:
+        msg = _format_mismatch(field, f'previous = "{previous}", later = "{later}"')
         return msg, previous
 
-    msg = _format_mismatch(field, f'previous = "{previous}", later = "{later}"')
-    return msg, previous
+    return chosen_msg, chosen
 
 
 def _merge_full_form_display(previous, later) -> tuple[str | None, str]:
@@ -366,8 +387,8 @@ def _merge(headword, prev, extracted) -> tuple[list[str], dict[str, any]]:
     if msg:
         messages.append(msg)
 
-    msg, new["ReferenceSection"] = _merge_sets(
-        "ReferenceSection", prev["ReferenceSection"], extracted["ReferenceSection"]
+    msg, new["ReferenceSection"] = _merge_lists(
+        "ReferenceSection", prev["ReferenceSection"], extracted["ReferenceSection"], _fmt_reference_section
     )
     if msg:
         messages.append(msg)
@@ -510,7 +531,7 @@ def _expand(entry: dict[str, any]) -> dict[str, any]:
 def _transform_output(entry: dict[str, any], book: str) -> dict[str, any]:
     def _transform_field(key: str, value: any) -> any:
         if key == "ReferenceSection":
-            return ";".join(map(str, sorted(value)))
+            return _fmt_reference_section(value)
         return value
 
     out = {key: _transform_field(key, value) for key, value in entry.items()}
@@ -561,7 +582,7 @@ def _iter_entries_from_tree(tree: ElementTree):
             yield {"__skip_message__": f"Ignore paragraph {idx} due to ReferenceSection 0: {_snippet(text)}"}
             continue
         refs = re.split(r"[.,]\s*", numbers_raw)
-        extracted_reference_sections = {int(r.strip()) for r in refs if r.strip()}
+        extracted_reference_sections = [r.strip() for r in refs if r.strip()]
 
         extracted_tags = []
         if styler.is_top500(elem):
@@ -604,7 +625,7 @@ def _iter_entries_from_csv(csv_reader: csv.DictReader):
             yield {"__skip_message__": f"Row {i} missing Meanings, skipping."}
             continue
         ref_raw = row.get("ReferenceSection", "")
-        refs = {int(r.strip()) for r in ref_raw.split(";") if r.strip()}
+        refs = [r.strip() for r in ref_raw.split(";") if r.strip()]
         yield {
             "Headword": _normalize_composed(row["Headword"]),
             "FullFormDisplay": _normalize_composed(row["FullFormDisplay"]),

@@ -17,7 +17,7 @@ File parsing rules
 Field extraction rules
 ----------------------
 
-The following fields are part those directly written in the input file. Other fields are derived from them as
+The following fields are those directly written in the input file. Other fields are derived from them as
 specified in the next section.
 
 `FullFormDisplay`: 
@@ -45,7 +45,7 @@ specified in the next section.
     substring between the last run of 3+ spaces and next numeric token; store as-is.
 
 `ReferenceSection`:
-    trailing numeric tokens stored as `;`-separated list.
+    trailing tokens (numeric or Roman) stored as a `;`-separated list of identifiers (strings).
 
 `Tags`:
     *Top500* when color #0070c0 present in stylesheet or inline styles or ``<font color>``.

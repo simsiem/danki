@@ -250,7 +250,7 @@ def test_non_matching_paragraph_logged():
 """,
             True,
             """\
-second.html: acer: Merge ReferenceSection - previous = "{32}", chosen = "{32, 50}".
+second.html: acer: Merge ReferenceSection - previous = "32", chosen = "32;50".
 second.html: acer: Mismatch for Meanings - previous = "energisch", later = "anders".
 Converted 1 entries.
 """,

@@ -21,8 +21,12 @@ For two entries of the same headword, some fields can be merged.
     This field must match exactly in both entries. No further merging rules.
 
 `ReferenceSection`:
-    Consider the referenced sections as a set of integers. Take the larger set if the smaller set is a subset.
-    Otherwise report a mismatch.
+        Treated as an ordered list of string identifiers (for example: `32`, `21`, `IV`). Merge rules:
+
+        - Always choose the longer list.
+        - If both lists have the same length, prefer the `previous` (first-seen) list.
+        - To ensure consistency, all items in the not-chosen list must appear in the chosen list; if any are
+          missing, the merge is considered a mismatch and the `previous` value is retained.
 
 `Tags`:
     If this field is empty in one entry but not in the other one, choose the non-empty value.

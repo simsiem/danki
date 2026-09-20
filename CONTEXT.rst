@@ -108,7 +108,9 @@ ReferenceBook:
     School book title or identifier used for filtering and organizing homework decks.
 
 ReferenceSection:
-    Section, lesson or unit identifier within *ReferenceBook* used for finer-grained filtering.
+    A list of section, lesson or unit identifiers within *ReferenceBook* used for finer-grained filtering.
+    Each identifier is a string (for example numeric tokens like "32", a range marker, or Roman numerals). The
+    list is persisted as a `;`-separated string. The order of identifiers is preserved.
 
 Exercise1Front:
     First exercise slot: Holds the prompt shown to the student.
