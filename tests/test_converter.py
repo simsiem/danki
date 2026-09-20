@@ -77,6 +77,10 @@ def _run_conversion(
             'beatus,"beātus, a, um","beatus, a, um",Adjektiv,,"glücklich, reich",2,,,,,book1,36,,,,,,,',
         ),
         (
+            "<p><span>res publica</span>    der Staat41</p>",
+            'res publica,res publica,res publica,,,der Staat,1,,,,,book1,41,,,,,,,',
+        ),
+        (
             '<p class="paragraph-P5"><span class="text-T13">auxilium</span><span class="text-T14">    die Hilfe</span><span class="text-T15">15</span></p>',  # noqa: RUF001
             'auxilium,"auxilium, auxiliī","auxilium, auxilii",Nomen,,die Hilfe,1,,,,,book1,15,,,,,,,Top500',
         ),

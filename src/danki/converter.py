@@ -442,7 +442,7 @@ def _expand_part_of_speech(full_form_display: str, notes_foreign: str, meanings:
         re.compile(r"Adv\."): "Adverb",
         re.compile(r"Subj\."): "Subjunktion",
         re.compile(r"^[mfn]$"): "Nomen",
-        re.compile(r"[mfn]\s"): "Nomen",
+        re.compile(r"^[mfn]\s"): "Nomen",
         re.compile(r"m/f"): "Nomen",
     }
     for regex, pos_name in pos_regex_to_name.items():
@@ -452,10 +452,14 @@ def _expand_part_of_speech(full_form_display: str, notes_foreign: str, meanings:
     full_form_normalized = _normalize_removed_diacritics(full_form_display)
     full_form_parts = [part.strip() for part in full_form_normalized.split(",")]
 
-    if len(full_form_parts) == 2 and (  # noqa: PLR2004
-        (full_form_parts[0].endswith("us") and full_form_parts[1].endswith("i"))
-        or (full_form_parts[0].endswith("a") and full_form_parts[1].endswith("ae"))
-        or (full_form_parts[0].endswith("um") and full_form_parts[1].endswith("i"))
+    if (
+        len(full_form_parts) == 2  # noqa: PLR2004
+        and " " not in full_form_parts[0]
+        and (
+            (full_form_parts[0].endswith("us") and full_form_parts[1].endswith("i"))
+            or (full_form_parts[0].endswith("a") and full_form_parts[1].endswith("ae"))
+            or (full_form_parts[0].endswith("um") and full_form_parts[1].endswith("i"))
+        )
     ):
         return "Nomen"
 
@@ -473,10 +477,14 @@ def _expand_part_of_speech(full_form_display: str, notes_foreign: str, meanings:
         ):
             return "Verb"
 
-    if len(full_form_parts) == 1 and (
-        full_form_parts[0].endswith("us")
-        or full_form_parts[0].endswith("a")
-        or full_form_parts[0].endswith("um")
+    if (
+        len(full_form_parts) == 1
+        and " " not in full_form_parts[0]
+        and (
+            full_form_parts[0].endswith("us")
+            or full_form_parts[0].endswith("a")
+            or full_form_parts[0].endswith("um")
+        )
     ):
         articles = {"der", "die", "das"}
         alen = 3
