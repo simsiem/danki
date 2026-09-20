@@ -18,3 +18,16 @@ Items skipped during automatic conversion
 * Mārcellus, Mārcellī m    Marcellus (Sohn der Octavia, Neffe des Augustus)XXIII
 * Octāvia, Octāviae f    Octavia (Schwester des Augustus)XXIII
 * (P.) Vergilius (Marø)    Vergil (röm. Dichter zur Zeit des Augustus, 70–19 v. Chr.; Verfasser des rö
+
+Manual fixes
+
+–
+
+Further items to fix in converter
+
+* NotesForeign
+  - Clear "Präp. m. Akk." or "Präp. m. Abl." and check that PartOfSpeech is "Präposition"
+  - Clear "Adv." and check that PartOfSpeech is "Adverb"
+  - Expand "Nom." to "Nominativ" and other cases as well as "Sg." to "Singular"
+* If Meanings contains a parenthesis with at least three word, move it to NotesNative. Start it with a capital letter.
+* Remove special letter from Headword. Only alphabetic letters are allowed.
