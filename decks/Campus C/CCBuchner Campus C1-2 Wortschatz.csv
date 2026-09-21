@@ -71,7 +71,7 @@ aqua,"aqua, aquae","aqua, aquae",Nomen,f,das Wasser,1,,,,,Campus C,6,,,,,,,Top50
 ara,"āra, ārae","ara, arae",Nomen,f,der Altar,1,,,,,Campus C,43,,,,,,,
 arbor,"arbor, arboris","arbor, arboris",Nomen,f,der Baum,1,,,,,Campus C,39,,,,,,,
 arcessere,"arcessere, arcessō, arcessīvī, arcessītum","arcessere, arcesso, arcessivi, arcessitum",Verb,,"herbeirufen, holen",2,,,,,Campus C,35;47,,,,,,,
-arena,"arēna, arēnae","arena, arenae",Nomen,f,"der Sand, der Kampfplatz",2,,,,,Campus C,38,,,,,,,
+arena,"arēna, arēnae","arena, arenae",Nomen,f,"der Sand, der Kampfplatz",2,,Arena,,,Campus C,38,Von welchem lateinischen Nomen kommt die Fußballarena?,"arena, arenae",,,,,
 argentum,"argentum, argentī","argentum, argenti",Nomen,n,"das Geld, das Silber",2,,,,,Campus C,45,,,,,,,
 Aristoteles,"Aristotelēs, Aristotelis","Aristoteles, Aristotelis",Nomen,m,Aristoteles,1,Griech. Philosoph 384-322 v. Chr.,,,,Campus C,39,,,,,,,
 arma,"arma, armōrum","arma, armorum",Nomen,n Plural,"das Gerät, die Waffen",2,,Armee,,,Campus C,26,,,,,,,Top500
@@ -156,7 +156,7 @@ clamare,"clāmāre, clāmō, clāmāvī, clāmātum","clamare, clamo, clamavi, c
 clamor,"clāmor, clāmōris","clamor, clamoris",Nomen,m,"das Geschrei, der Lärm",2,,,,,Campus C,19,,,,,,,
 clarus,"clārus, a, um","clarus, a, um",Adjektiv,,"klar, hell, berühmt",3,,,,,Campus C,15,,,,,,,Top500
 classis,"classis, classis","classis, classis",Nomen,f,"die Abteilung, die Flotte",2,,,,,Campus C,42,,,,,,,Top500
-claudere,"claudere, claudō, clausī, clausum","claudere, claudo, clausi, clausum",Verb,,"schließen, abschließen, einschließen",3,,,,,Campus C,38,,,,,,,
+claudere,"claudere, claudō, clausī, clausum","claudere, claudo, clausi, clausum",Verb,,"schließen, abschließen, einschließen",3,,"Klausur, engl. to close; Klausi einschließen",,,Campus C,38,Von welchem lateinischen Verb kommt der Begriff Klausur?,"claudere, claudo",,,,,
 clementia,"clēmentia, clēmentiae","clementia, clementiae",Nomen,f,"die Milde, die Nachsicht",2,,,,,Campus C,9,,,,,,,
 Cleopatra,"Cleopatra, Cleopatrae","Cleopatra, Cleopatrae",Nomen,f,Kleopatra,1,Kleopatra VII. (letzte Königin Ägyptens von 51-30 v. Chr.,,,,Campus C,53,,,,,,,
 cogere,"cōgere, cōgō, coēgī","cogere, cogo, coegi",Verb,,(ver)sammeln; zwingen,2,,,,,Campus C,39,,,,,,,Top500
@@ -164,7 +164,7 @@ cogitare,"cōgitāre, cōgitō, cōgitāvī, cōgitātum","cogitare, cogito, cog
 cognoscere,"cognōscere, cognōscō, cognōvī, cognitum","cognoscere, cognosco, cognovi, cognitum",Verb,,"erkennen, kennenlernen; Perf. kennen, wissen",4,,,,,Campus C,39;63,,,,,,,Top500
 cohors,"cohors, cohortis","cohors, cohortis",Nomen,f,die Kohorte,1,Ca. 600 Mann,,,,Campus C,51,,,,,,,
 colere,"colere, colō, coluī, cultum","colere, colo, colui, cultum",Verb,,"bewirtschaften, pflegen; verehren",3,,,,,Campus C,64,,,,,,,Top500
-collocare,"collocāre, collocō, collocāvi, collocātum","collocare, colloco, collocavi, collocatum",Verb,,"aufstellen, unterbringen",2,,,,,Campus C,38,,,,,,,
+collocare,"collocāre, collocō, collocāvi, collocātum","collocare, colloco, collocavi, collocatum",Verb,,"aufstellen, unterbringen",2,,"locus: Ort, Platz, Stelle",,,Campus C,38,"Welches lateinische Verb heißt aufstellen, unterbringen und ist mit dem Nomen locus verwandt?","collocare, colloco",,,,,
 comes,"comes, comitis","comes, comitis",Nomen,m/f,"der Begleiter, die Begleiterin, der Gefährte, die Gefährtin",4,,,,,Campus C,32,,,,,,,
 commodum,"commodum, commodī","commodum, commodi",Nomen,n,"Bequemlichkeit, Vorteil",2,,,,,Campus C,66,,,,,,,
 commovere,"commovēre, commoveō, commōvī, commōtum","commovere, commoveo, commovi, commotum",Verb,,"bewegen, veranlassen",2,,,,,Campus C,57,,,,,,,
@@ -190,7 +190,7 @@ consilium,"cōnsilium, consiliī","consilium, consilii",Nomen,n,"die Beratung, d
 consilium capere,cōnsilium capere,consilium capere,,,einen Plan (Entschluss) fassen,1,,,,,Campus C,27,,,,,,,
 consistere,"cōnsistere, cōnsistō, cōnstitī","consistere, consisto, constiti",Verb,,"stehenbleiben, haltmachen, sich aufstellen",3,,,,,Campus C,17;29,,,,,,,Top500
 conspectus,"cōnspectus, cōnspectūs","conspectus, conspectus",Nomen,m,"der Anblick, das Blickfeld",2,,,,,Campus C,64,,,,,,,
-conspicere,"cōnspicere, cōnspiciō, cōnspexī, cōnspectum","conspicere, conspicio, conspexi, conspectum",Verb,,erblicken,1,,,,,Campus C,38,,,,,,,
+conspicere,"cōnspicere, cōnspiciō, cōnspexī, cōnspectum","conspicere, conspicio, conspexi, conspectum",Verb,,erblicken,1,,"a-spicere: erblicken, ansehen",,,Campus C,38,Welches lateinische Verb heißt erblicken und ist mit aspicere verwandt?,"conspicere, conspicio",,,,,
 constat,cōnstat,constat,Verb,,"es ist bekannt, es steht fest",2,,,,,Campus C,29,,,,,,,
 constituere,"cōnstituere, cōnstituō, cōnstituī, cōnstitūtum","constituere, constituo, constitui, constitutum",Verb,,"festsetzen, beschließen",2,,,,,Campus C,54,,,,,,,Top500
 consul,"cōnsul, cōnsulis","consul, consulis",Nomen,m,der Konsul,1,,,,,Campus C,42,,,,,,,Top500
@@ -200,7 +200,7 @@ contendere,"contendere, contendō, contendī","contendere, contendo, contendi",V
 contra,contrā (m. Akk.),contra (m. Akk.),Präposition,,gegen,1,,,,,Campus C,38,,,,,,,Top500
 convenire,"convenīre, conveniō, convēnī, conventum","convenire, convenio, conveni, conventum",Verb,,"zusammenkommen, zusammenpassen, besuchen",3,,,,,Campus C,30,,,,,,,Top500
 convertere,"convertere, convertō, convertī, conversum","convertere, converto, converti, conversum",Verb,,"verändern, (um)wenden",2,,,,,Campus C,59,,,,,,,
-convocare,"convocāre, convocō, convocāvī, convocātum","convocare, convoco, convocavi, convocatum",Verb,,"zusammenrufen, versammeln",2,,,,,Campus C,38,,,,,,,
+convocare,"convocāre, convocō, convocāvī, convocātum","convocare, convoco, convocavi, convocatum",Verb,,"zusammenrufen, versammeln",2,,"vocare: rufen, nennen, benennen",,,Campus C,38,"Welches lateinische Verb heißt zusammenrufen, versammeln und ist mit vocare verwandt?","convocare, convoco",,,,,
 copia,"cōpia, cōpiae","copia, copiae",Nomen,f,"die Menge, der Vorrat, die Möglichkeit; Pl. die Truppen",4,,,,,Campus C,6;35,,,,,,,Top500
 corpus,"corpus, corporis","corpus, corporis",Nomen,n,"der Körper, der Leichnam",2,,,,,Campus C,49,,,,,,,Top500
 corripere,"corripere, corripiō, corripuī, correptum","corripere, corripio, corripui, correptum",Verb,,"ergreifen, gewaltsam an sich reißen",2,,,,,Campus C,66,,,,,,,
@@ -335,7 +335,7 @@ falsus,"falsus, a, um","falsus, a, um",Adjektiv,,falsch,1,,,,,Campus C,60,,,,,,,
 fama,"fāma, fāmae","fama, famae",Nomen,f,"der (gute / schlechte) Ruf, das Gerücht",2,,,,,Campus C,60,,,,,,,Top500
 familia,"familia, familiae","familia, familiae",Nomen,f,die Familie,1,,,,,Campus C,1,,,,,,,
 Faustulus,"Faustulus, Faustulī","Faustulus, Faustuli",Nomen,m,Faustulus,1,"Hirte, der Romulus und Remus entdeckte",,,,Campus C,32,,,,,,,
-felix,"fēlīx, fēlīcis","felix, felicis",Adjektiv,m/f/n,"erfolgreich, glückbringend, glücklich",3,,,,,Campus C,38,,,,,,,
+felix,"fēlīx, fēlīcis","felix, felicis",Adjektiv,m/f/n,"erfolgreich, glückbringend, glücklich",3,,"Felix, Felicitas",,,Campus C,38,Von welchem lateinischen Adjektiv kommt der Name Felicitas?,"felix, felicis",,,,,
 femina,"fēmina, fēminae","femina, feminae",Nomen,f,die Frau,1,,,,,Campus C,62,,,,,,,
 ferre,"ferre, ferō, tulī, lātum","ferre, fero, tuli, latum",Verb,,"bringen, tragen; ertragen",3,,,,,Campus C,70,,,,,,,Top500
 ferrum,"ferrum, ferrī","ferrum, ferri",Nomen,n,das Eisen; die Waffe,2,,,,,Campus C,31,,,,,,,Top500
@@ -844,7 +844,7 @@ Romanus (Adj.),"Rōmānus, a, um","Romanus, a, um",Adjektiv,,römisch,1,,,,,Camp
 Romanus (Subst.),"Rōmānus, Rōmānī","Romanus, Romani",Nomen,m,"der Römer, der Einwohner Roms",2,,,,,Campus C,9,,,,,,,
 Romulus / Remus,Rōmulus / Remus,Romulus / Remus,Nomen,m,Romulus / Remus,1,Zwillingsbrüder und sagenhafte Gründer Roms,,,,Campus C,32,,,,,,,
 Rubico,"Rubico, Rubiconis","Rubico, Rubiconis",Nomen,m,Rubikon,1,Grenzfluss zwischen der Provinz Gallien und dem röm. Staatsgebiet; 49 v. Chr. überschritt Cäsar diese Grenze und löste damit den Bürgerkrieg aus.,,,,Campus C,52,,,,,,,
-ruere,"ruere, ruō, ruī","ruere, ruo, rui",Verb,,"stürzen, eilen, stürmen",3,,,,,Campus C,38,,,,,,,
+ruere,"ruere, ruō, ruī","ruere, ruo, rui",Verb,,"stürzen, eilen, stürmen",3,,"Ruine",,,Campus C,38,Von welchem lateinischen Verb kommt das Wort Ruine?,"ruere, ruo",,,,,
 rus,"rūs, rūris","rus, ruris",Nomen,n,"das Feld, das Land, das Landgut",3,das Land: im Gegensatz zu Stadt,,,,Campus C,64,,,,,,,
 sacer,"sacer, sacra, sacrum","sacer, sacra, sacrum",Adjektiv,m. Genitiv,"heilig, geweiht (jdm.)",2,,,,,Campus C,42,,,,,,,
 sacerdos,"sacerdōs, sacerdōtis","sacerdos, sacerdotis",Nomen,m/f,"der Priester, die Priesterin",2,,,,,Campus C,50,,,,,,,
@@ -1041,7 +1041,7 @@ vestigium,"vestīgium, vestīgiī","vestigium, vestigii",Nomen,n,"die Fußsohle,
 vestis,"vestis, vestis","vestis, vestis",Nomen,f (Genitiv Plural vestium),"die Kleidung, Pl. die Kleider",2,,,,,Campus C,41,,,,,,,
 Vesuvius,"Vesuvius, Vesuviī","Vesuvius, Vesuvii",Nomen,m,Vesuv,1,Vulkan in Kampanien,,,,Campus C,16,,,,,,,
 vetare,"vetāre, vetō, vetuī, vetitum","vetare, veto, vetui, vetitum",Verb,m. Akkusativ,verbieten,1,,,,,Campus C,57,,,,,,,
-vetus,"vetus, veteris","vetus, veteris",Adjektiv,m/f/n,alt,1,,,,,Campus C,38,,,,,,,Top500
+vetus,"vetus, veteris","vetus, veteris",Adjektiv,m/f/n,alt,1,,Veteran: altgedienter Soldat,,,Campus C,38,"Welches lateinische Adjektiv passt zum Wort Veteran, einem altgedienten Soldaten","vetus, veteris",,,,,Top500
 via,"via, viae","via, viae",Nomen,f,"der Weg, die Straße",2,,,,,Campus C,1,,,,,,,Top500
 victor,"victor, victōris","victor, victoris",Nomen,m,der Sieger,1,,,,,Campus C,22,,,,,,,Top500
 victoria,"victōria, victōriae","victoria, victoriae",Nomen,f,der Sieg,1,,,,,Campus C,45,,,,,,,Top500
