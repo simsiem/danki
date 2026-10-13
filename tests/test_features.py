@@ -8,8 +8,6 @@ import pytest
 from pytest_bdd import given, parsers, scenarios, then, when
 
 from danki import converter
-from tests.convert_helpers import FakeConsole, make_fodt, make_html
-
 
 FEATURES_DIRECTORY = Path(__file__).parents[1] / "docs" / "features"
 CANONICAL_FIELDS = [
@@ -39,6 +37,15 @@ CANONICAL_FIELDS = [
 scenarios(str(FEATURES_DIRECTORY))
 
 
+class FakeConsole:
+    def __init__(self):
+        self.messages = []
+
+    def print(self, *args, **_):
+        # simple join for ease of assertions
+        self.messages.append(" ".join(str(a) for a in args))
+
+
 @dataclass
 class ConversionResult:
     rows: list[str]
@@ -52,21 +59,55 @@ def conversion_context() -> dict[str, object]:
 
 
 def _html_reader(body: str, source_name: str | None = None):
-    tree = make_html(body)
+    xml = (
+        """\
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head><style>
+        .text-T13{ color:#0070c0; font-size:10.5pt; font-weight:bold; }
+    </style></head>
+    <body>
+"""
+        + body
+        + """
+    </body>
+</html>
+"""
+    )
+    tree = ET.ElementTree(ET.fromstring(xml))
     if source_name:
         tree.source_name = source_name
     return tree
 
 
 def _fodt_reader(body: str):
-    return make_fodt(body)
+    xml = (
+        """\
+<?xml version="1.0" encoding="UTF-8"?>
+<office:document xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" xmlns:loext="urn:org:documentfoundation:names:experimental:office:xmlns:loext:1.0" xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" xmlns:fo="urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0">
+ <office:automatic-styles>
+  <style:style style:name="T11" style:family="text">
+   <style:text-properties fo:color="#0070c0" loext:opacity="100%" fo:font-family="Calibri" style:font-family-generic="swiss" style:font-pitch="variable" fo:font-size="10.5pt" fo:font-weight="bold" style:font-family-asian="MercuryTextG1-Roman" style:font-family-generic-asian="system" style:font-pitch-asian="variable" style:font-size-asian="10.5pt" style:font-weight-asian="bold" style:font-family-complex="MercuryTextG1-Roman" style:font-family-generic-complex="system" style:font-pitch-complex="variable" style:font-size-complex="10.5pt"/>
+  </style:style>
+ </office:automatic-styles>
+ <office:body>
+  <office:text text:use-soft-page-breaks="true">
+"""
+        + body
+        + """
+  </office:text>
+ </office:body>
+</office:document>
+"""
+    )
+    return ET.ElementTree(ET.fromstring(xml))
 
 
 def _csv_reader(body: str):
     return csv.DictReader(io.StringIO(body))
 
 
-def _convert(readers, book: str, show_merge_messages: bool = False) -> ConversionResult:
+def _convert(readers, book: str, *, show_merge_messages: bool = False) -> ConversionResult:
     output = io.StringIO()
     console = FakeConsole()
     converter.convert(readers, output, book, console, show_merge_messages=show_merge_messages)
@@ -74,105 +115,46 @@ def _convert(readers, book: str, show_merge_messages: bool = False) -> Conversio
     return ConversionResult(output_lines[1:], output_lines[0].split(","), console.messages)
 
 
-@given("the HTML body:")
-def html_body(conversion_context, docstring):
-    html_reader = _html_reader(docstring)
-    conversion_context["html_reader"] = html_reader
-    if "readers" not in conversion_context:
-        conversion_context["readers"] = [html_reader]
+def _store_reader(conversion_context, reader):
+    conversion_context.setdefault("readers", []).append(reader)
+
+
+@given(parsers.re(r'the HTML body(?: with filename "(?P<name>[^"]+)")?:'))
+def html_body(conversion_context, docstring, name=None):
+    _store_reader(conversion_context, _html_reader(docstring, name))
 
 
 @given("the FODT body:")
 def fodt_body(conversion_context, docstring):
-    fodt_reader = _fodt_reader(docstring)
-    conversion_context["fodt_reader"] = fodt_reader
-    if "readers" not in conversion_context:
-        conversion_context["readers"] = [fodt_reader]
+    _store_reader(conversion_context, _fodt_reader(docstring))
 
 
 @given("the CSV input:")
 def csv_input(conversion_context, docstring):
-    conversion_context["readers"] = [_csv_reader(docstring)]
+    _store_reader(conversion_context, _csv_reader(docstring))
     conversion_context["expected_csv_rows"] = docstring.splitlines()[1:]
 
 
-@given(parsers.parse('the HTML input file "{name}" with body:'))
-def named_html_body(conversion_context, name, docstring):
-    conversion_context.setdefault("named_readers", {})[name] = _html_reader(docstring, name)
-
-
-@given("the HTML input file " + '"tests/test_book_C1.html"')
-def html_input_file(conversion_context):
-    conversion_context["readers"] = [ET.parse("tests/test_book_C1.html")]
-
-
-@given("the FODT input file " + '"tests/test_book_C2.fodt"')
-def fodt_input_file(conversion_context):
-    conversion_context["readers"] = [ET.parse("tests/test_book_C2.fodt")]
-
-
-@when(parsers.parse('Danki converts it with book "{book}"'), target_fixture="conversion_result")
-@when(parsers.parse('Danki converts the input with book "{book}"'), target_fixture="conversion_result")
-def convert_input(conversion_context, book):
-    return _convert(conversion_context["readers"], book)
-
-
-@when("Danki converts the input", target_fixture="conversion_result")
-def convert_input_without_book(conversion_context):
-    return _convert(conversion_context["readers"], "")
+@given(parsers.parse('the input file "{name}"'))
+def input_file(conversion_context, name):
+    _store_reader(conversion_context, ET.parse(name))
 
 
 @when(
-    parsers.parse('Danki converts it with book "{book}" showing merge messages'),
-    target_fixture="conversion_result",
-)
-def convert_with_merge_messages(conversion_context, book):
-    return _convert(conversion_context["readers"], book, show_merge_messages=True)
-
-
-@when(
-    parsers.parse(
-        'Danki converts the CSV input, then the FODT input, then the HTML input with book "{book}"'
+    parsers.re(
+        r'Danki converts the input(?: with book "(?P<book>[^"]*)")?'
+        r"(?: showing (?P<merge_mode>merge|no merge) messages)?$"
     ),
     target_fixture="conversion_result",
 )
-def convert_multiple_formats(conversion_context, book):
-    readers = [
-        conversion_context["readers"][0],
-        conversion_context["fodt_reader"],
-        conversion_context["html_reader"],
-    ]
-    return _convert(readers, book)
+def convert_input(conversion_context, book=None, merge_mode=None):
+    return _convert(conversion_context["readers"], book or "", show_merge_messages=merge_mode == "merge")
 
 
-@when(
-    parsers.parse('Danki converts "{first_name}", then "{second_name}" with book "{book}" showing merge messages'),
-    target_fixture="conversion_result",
-)
-def convert_named_files_with_merges(conversion_context, first_name, second_name, book):
-    named_readers = conversion_context["named_readers"]
-    return _convert([named_readers[first_name], named_readers[second_name]], book, show_merge_messages=True)
-
-
-@when(
-    parsers.parse(
-        'Danki converts "{first_name}", then "{second_name}" with book "{book}" showing no merge messages'
-    ),
-    target_fixture="conversion_result",
-)
-def convert_named_files_without_merges(conversion_context, first_name, second_name, book):
-    named_readers = conversion_context["named_readers"]
-    return _convert([named_readers[first_name], named_readers[second_name]], book)
-
-
-@then("it outputs the CSV body:")
-def csv_body(conversion_result, docstring):
-    assert conversion_result.rows == docstring.splitlines()
-
-
-@then("the output uses the canonical CSV fields")
-def canonical_csv_fields(conversion_result):
+@then("it outputs a Danki CSV file with the body:")
+def danki_csv_file(conversion_result, docstring):
     assert conversion_result.fieldnames == CANONICAL_FIELDS
+    assert conversion_result.rows == docstring.splitlines()
 
 
 @then("no mismatch warning is reported")

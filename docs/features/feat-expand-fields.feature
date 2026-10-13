@@ -12,8 +12,8 @@ Feature: Expand fields with auto-generated content
       """
       <input>
       """
-    When Danki converts it with book "book1"
-    Then it outputs the CSV body:
+    When Danki converts the input with book "book1"
+    Then it outputs a Danki CSV file with the body:
       """
       <output>
       """
@@ -60,8 +60,8 @@ Feature: Expand fields with auto-generated content
       """
       <input>
       """
-    When Danki converts it with book "book1"
-    Then it outputs the CSV body:
+    When Danki converts the input with book "book1"
+    Then it outputs a Danki CSV file with the body:
       """
       <output>
       """

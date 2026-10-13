@@ -22,8 +22,8 @@ Feature: Merge several input files into one Anki deck
       """
       <p><span>accipere, accipiō, accēpī, acceptum</span>    erhalten, erfahren, annehmen34</p>
       """
-    When Danki converts the CSV input, then the FODT input, then the HTML input with book "Campus C1"
-    Then it outputs the CSV body:
+    When Danki converts the input with book "Campus C1"
+    Then it outputs a Danki CSV file with the body:
       """
       a / ab,ā / ab (m. Abl.),a / ab (m. Abl.),Präposition,Präp. m. Abl.,"von, von ... her",2,,,,,Campus C1,16,,Ex1B,,,,,Top500
       abire,abire,abire,,,weggehen,1,,,,,Campus C1,37,,,,,,,
@@ -37,8 +37,8 @@ Feature: Merge several input files into one Anki deck
       <p><span>et</span>    und 5</p>
       <p><span>ācer</span>   anders 32</p>
       """
-    When Danki converts it with book "book1"
-    Then it outputs the CSV body:
+    When Danki converts the input with book "book1"
+    Then it outputs a Danki CSV file with the body:
       """
       acer,ācer,acer,,,energisch,1,,,,,book1,32,,,,,,,
       et,et,et,,,und,1,,,,,book1,5,,,,,,,
@@ -53,8 +53,8 @@ Feature: Merge several input files into one Anki deck
       <p><span>et</span>    und 5</p>
       <p><span>ācer</span>   energisch 3</p>
       """
-    When Danki converts it with book "book1"
-    Then it outputs the CSV body:
+    When Danki converts the input with book "book1"
+    Then it outputs a Danki CSV file with the body:
       """
       acer,ācer,acer,,,energisch,1,,,,,book1,32,,,,,,,
       et,et,et,,,und,1,,,,,book1,5,,,,,,,
@@ -68,8 +68,8 @@ Feature: Merge several input files into one Anki deck
       <p><span>audīre, audiō</span>    hören, lernen32</p>
       <p><span>audīre, audio, audīvī, audītum</span>    hören, lernen32</p>
       """
-    When Danki converts it with book "book1"
-    Then it outputs the CSV body:
+    When Danki converts the input with book "book1"
+    Then it outputs a Danki CSV file with the body:
       """
       audire,"audīre, audiō","audire, audio",Verb,,"hören, lernen",2,,,,,book1,32,,,,,,,
       """
@@ -82,8 +82,8 @@ Feature: Merge several input files into one Anki deck
       <p><span>audīre, audiō</span>    hören, lernen32</p>
       <p><span>audīre, audiō, audīvī, audītum</span>    hören32</p>
       """
-    When Danki converts it with book "book1"
-    Then it outputs the CSV body:
+    When Danki converts the input with book "book1"
+    Then it outputs a Danki CSV file with the body:
       """
       audire,"audīre, audiō, audīvī, audītum","audire, audio, audivi, auditum",Verb,,"hören, lernen",2,,,,,book1,32,,,,,,,
       """
@@ -95,8 +95,8 @@ Feature: Merge several input files into one Anki deck
       """
       <input>
       """
-    When Danki converts it with book "book1" showing merge messages
-    Then it outputs the CSV body:
+    When Danki converts the input with book "book1" showing merge messages
+    Then it outputs a Danki CSV file with the body:
       """
       <output>
       """
@@ -110,16 +110,16 @@ Feature: Merge several input files into one Anki deck
       | <p><span>Rōma, Rōmae</span>    die Stadt Rom32</p><p><span>Rōma, Rōmae</span>    die Stadt Rom32.21</p>                   | Roma,"Rōma, Rōmae","Roma, Romae",Nomen,,die Stadt Rom,1,,,,,book1,21;32,,,,,,,                                                   |
 
   Scenario: Report mismatches and merges across separate input files with a converted-entries summary
-    Given the HTML input file "first.html" with body:
+    Given the HTML body with filename "first.html":
       """
       <p><span>ācer</span>   energisch 32</p>
       """
-    And the HTML input file "second.html" with body:
+    And the HTML body with filename "second.html":
       """
       <p><span>ācer</span>   anders 32</p>
       <p><span>ācer</span>   anders 32,50</p>
       """
-    When Danki converts "first.html", then "second.html" with book "book1" showing merge messages
+    When Danki converts the input with book "book1" showing merge messages
     Then the console output is:
       """
       second.html: acer: Merge ReferenceSection - previous = "32", chosen = "32;50".
@@ -128,16 +128,16 @@ Feature: Merge several input files into one Anki deck
       """
 
   Scenario: Report mismatches but no merges across separate input files with a converted-entries summary
-    Given the HTML input file "first.html" with body:
+    Given the HTML body with filename "first.html":
       """
       <p><span>ācer</span>   energisch 32</p>
       """
-    And the HTML input file "second.html" with body:
+    And the HTML body with filename "second.html":
       """
       <p><span>ācer</span>   anders 32</p>
       <p><span>ācer</span>   anders 32,50</p>
       """
-    When Danki converts "first.html", then "second.html" with book "book1" showing no merge messages
+    When Danki converts the input with book "book1" showing no merge messages
     Then the console output is:
       """
       second.html: acer: Mismatch for Meanings - previous = "energisch", later = "anders".

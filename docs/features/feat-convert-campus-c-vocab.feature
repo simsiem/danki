@@ -28,12 +28,11 @@ Feature: Convert Campus C school-book entries
       """
       <input>
       """
-    When Danki converts it with book "book1"
-    Then it outputs the CSV body:
+    When Danki converts the input with book "book1"
+    Then it outputs a Danki CSV file with the body:
       """
       <output>
       """
-    And the output uses the canonical CSV fields
     And no mismatch warning is reported
 
     Examples:
@@ -48,7 +47,7 @@ Feature: Convert Campus C school-book entries
 
 
   Scenario: Convert a complete HTML vocabulary book
-    Given the HTML input file "tests/test_book_C1.html"
+    Given the input file "tests/test_book_C1.html"
     When Danki converts the input with book "example_school_book_input"
     Then the output contains 153 vocabulary entries
     And the output contains the canonical CSV field "Headword"
@@ -61,11 +60,10 @@ Feature: Convert Campus C school-book entries
       <input>
       """
     When Danki converts the input with book "book1"
-    Then it outputs the CSV body:
+    Then it outputs a Danki CSV file with the body:
       """
       <output>
       """
-    And the output uses the canonical CSV fields
     And no mismatch warning is reported
 
     Examples:
@@ -75,7 +73,7 @@ Feature: Convert Campus C school-book entries
 
 
   Scenario: Convert a complete FODT vocabulary book
-    Given the FODT input file "tests/test_book_C2.fodt"
+    Given the input file "tests/test_book_C2.fodt"
     When Danki converts the input with book "example_school_book_input"
     Then the output contains 30 vocabulary entries
     And the output contains the canonical CSV field "Headword"
