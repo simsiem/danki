@@ -1,0 +1,17 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^hatch test(?:\\s+\\S+)?$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^hatch check(?: --fix)?$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^hatch fmt$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "git rev-parse": true
+    }
+}
