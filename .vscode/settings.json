@@ -4,11 +4,7 @@
             "approve": true,
             "matchCommandLine": true
         },
-        "/^hatch check(?: --fix)?$/": {
-            "approve": true,
-            "matchCommandLine": true
-        },
-        "/^hatch fmt$/": {
+        "/^hatch check(?: (?:fmt|code|types))?(?: --fix)?$/": {
             "approve": true,
             "matchCommandLine": true
         },

@@ -8,15 +8,16 @@
 - **Linter/Formatter**: ruff with line length of 110
 - **Build/Test/Lint Manager**: hatch
 
-### Command for linting and code formatting
+### Commands for formatting and code checks
 
 ```bash
-hatch fmt
+hatch check fmt --fix
+hatch check code --fix
 ```
 
 ### Critical Rules
 
-- **Never call ruff directly**. Always use `hatch fmt` for formatting.
+- **Never call ruff directly**. Use `hatch check fmt --fix` for formatting and `hatch check code --fix` for code checks.
 
 
 ## Testing Requirements
