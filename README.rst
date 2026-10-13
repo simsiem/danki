@@ -21,6 +21,17 @@ pip install danki
 ```
 
 
+Anki Desktop add-on
+===================
+
+Build the standalone add-on into a directory under Anki's ``addons21`` directory for each Anki Desktop
+installation, then restart Anki:
+
+```console
+python scripts/build_anki_addon.py /path/to/addons21/danki_in_text_help
+```
+
+
 License
 =======
 

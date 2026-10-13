@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 import json
-from typing import NoReturn
+from typing import TYPE_CHECKING, NoReturn, cast
 
 from anki.collection import Collection
 from anki.dbproxy import DBProxy
@@ -9,9 +11,13 @@ from anki.notes import Note, NoteId
 
 from danki.textunit import TextUnit, _TextUnitCodec
 
+if TYPE_CHECKING:
+    from anki.cards import Card
+
 STORAGE_NOTE_TYPE_NAME = "Danki Text Unit"
 _FIELD_NAMES = ("TextIdentifier", "Text", "VocabularyEntries")
 _TEMPLATE_NAME = "Danki Text Unit Storage"
+_POSITION_CUSTOM_DATA_KEY = "danki"
 
 
 class AnkiTextUnitStorageError(RuntimeError):
@@ -34,11 +40,7 @@ class AnkiTextUnitStorage:
 
     def upsert_text_unit(self, deck_id: str, text_unit: TextUnit) -> None:
         anki_deck_id = DeckId(int(deck_id))
-        matches = []
-        for note_id in self._note_ids_in_deck(anki_deck_id):
-            note = self._collection.get_note(note_id)
-            if note["TextIdentifier"] == text_unit.text_identifier:
-                matches.append(note)
+        matches = self._matching_text_unit_notes(anki_deck_id, text_unit.text_identifier)
         if len(matches) > 1:
             _raise_storage_error("Duplicate text identifiers exist in the selected deck.")
 
@@ -53,6 +55,58 @@ class AnkiTextUnitStorage:
 
         card_ids = note.card_ids()
         self._collection.sched.suspend_cards(card_ids)
+
+    def get_sentence_position(self, deck_id: str, text_identifier: str) -> int:
+        card = self._storage_card(deck_id, text_identifier)
+        try:
+            custom_data = json.loads(card.custom_data or "{}")
+        except json.JSONDecodeError as error:
+            raise AnkiTextUnitStorageError("The storage card contains invalid custom data.") from error
+        if not isinstance(custom_data, dict):
+            raise AnkiTextUnitStorageError("The storage card custom data must be an object.")
+        position_data = custom_data.get(_POSITION_CUSTOM_DATA_KEY)
+        if position_data is None:
+            return 0
+        if (
+            not isinstance(position_data, dict)
+            or position_data.get("version") != 1
+            or type(position_data.get("sentenceIndex")) is not int
+            or position_data["sentenceIndex"] < 0
+        ):
+            raise AnkiTextUnitStorageError("The storage card contains an unsupported reading position.")
+        return cast("int", position_data["sentenceIndex"])
+
+    def set_sentence_position(self, deck_id: str, text_identifier: str, position: int) -> None:
+        if position < 0:
+            raise ValueError("A sentence position cannot be negative.")
+        card = self._storage_card(deck_id, text_identifier)
+        try:
+            custom_data = json.loads(card.custom_data or "{}")
+        except json.JSONDecodeError as error:
+            raise AnkiTextUnitStorageError("The storage card contains invalid custom data.") from error
+        if not isinstance(custom_data, dict):
+            raise AnkiTextUnitStorageError("The storage card custom data must be an object.")
+        custom_data[_POSITION_CUSTOM_DATA_KEY] = {"version": 1, "sentenceIndex": position}
+        card.custom_data = json.dumps(custom_data, ensure_ascii=False, separators=(",", ":"))
+        self._collection.update_card(card, skip_undo_entry=True)
+
+    def _storage_card(self, deck_id: str, text_identifier: str) -> Card:
+        anki_deck_id = DeckId(int(deck_id))
+        matches = self._matching_text_unit_notes(anki_deck_id, text_identifier)
+        if len(matches) != 1:
+            raise AnkiTextUnitStorageError("The text unit has no unique storage card in the selected deck.")
+        card_ids = matches[0].card_ids()
+        if len(card_ids) != 1:
+            raise AnkiTextUnitStorageError("The text unit does not have exactly one storage card.")
+        return self._collection.get_card(card_ids[0])
+
+    def _matching_text_unit_notes(self, deck_id: DeckId, text_identifier: str) -> list[Note]:
+        matches = []
+        for note_id in self._note_ids_in_deck(deck_id):
+            note = self._collection.get_note(note_id)
+            if note["TextIdentifier"] == text_identifier:
+                matches.append(note)
+        return matches
 
     def _ensure_note_type(self) -> NotetypeDict:
         note_type = self._collection.models.by_name(STORAGE_NOTE_TYPE_NAME)

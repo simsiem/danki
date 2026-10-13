@@ -73,5 +73,17 @@ def test_collection_storage_updates_text_units_and_suspends_storage_cards(tmp_pa
         assert note["Text"] == "Arma bona."
         assert note["VocabularyEntries"] == '[{"surfaceForm": "bona", "headwords": ["bonus"]}]'
         assert collection.get_card(note_rows[0][1]).queue == -1
+
+        storage.set_sentence_position(str(latin_deck_id), "lesson-1", 2)
+        assert storage.get_sentence_position(str(latin_deck_id), "lesson-1") == 2
+        reimported = TextUnit(
+            "lesson-1",
+            "Arma iterum.",
+            (VocabularyDescription("iterum", headwords=("iterum",)),),
+        )
+        storage.upsert_text_unit(str(latin_deck_id), reimported)
+        assert storage.get_sentence_position(str(latin_deck_id), "lesson-1") == 2
+        reloaded_storage = AnkiTextUnitStorage(collection)
+        assert reloaded_storage.get_sentence_position(str(latin_deck_id), "lesson-1") == 2
     finally:
         collection.close()

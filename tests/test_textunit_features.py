@@ -2,6 +2,7 @@ import ast
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any
 
 import pytest
 from pytest_bdd import given, parsers, scenarios, then, when
@@ -18,6 +19,7 @@ class TextUnitState:
     current_text_unit: TextUnit | None = None
     selected_deck_id: str | None = None
     import_results: list[tuple[TextUnit | None, str | None]] = field(default_factory=list)
+    reading_results: list[tuple[Any | None, str | None]] = field(default_factory=list)
 
 
 @dataclass
@@ -47,6 +49,7 @@ def text_unit_file_system() -> TextUnitFileSystem:
 class InMemoryTextUnitStorage:
     def __init__(self) -> None:
         self.text_units: dict[tuple[str, str], TextUnit] = {}
+        self.sentence_positions: dict[tuple[str, str], int] = {}
 
     def list_text_units(self, deck_id: str) -> tuple[TextUnit, ...]:
         return tuple(
@@ -56,15 +59,130 @@ class InMemoryTextUnitStorage:
     def upsert_text_unit(self, deck_id: str, text_unit: TextUnit) -> None:
         self.text_units[(deck_id, text_unit.text_identifier)] = text_unit
 
+    def get_sentence_position(self, deck_id: str, text_identifier: str) -> int:
+        return self.sentence_positions.get((deck_id, text_identifier), 0)
 
+    def set_sentence_position(self, deck_id: str, text_identifier: str, position: int) -> None:
+        self.sentence_positions[(deck_id, text_identifier)] = position
+
+
+@pytest.fixture
+def text_unit_storage() -> InMemoryTextUnitStorage:
+    return InMemoryTextUnitStorage()
 @given("a fresh text-learning service", target_fixture="text_learning")
-def fresh_text_learning() -> TextLearning:
-    return TextLearning(InMemoryTextUnitStorage())
+def fresh_text_learning(text_unit_storage: InMemoryTextUnitStorage) -> TextLearning:
+    return TextLearning(text_unit_storage, text_unit_storage)
 
 
 @given(parsers.parse('the pupil has selected deck "{deck_id}"'))
 def pupil_has_selected_deck(deck_id: str, text_unit_state: TextUnitState) -> None:
     text_unit_state.selected_deck_id = deck_id
+
+
+@given(parsers.parse("text unit {text_identifier} is stored with text:"))
+def text_unit_is_stored(
+    text_identifier: str,
+    docstring: str,
+    text_learning: TextLearning,
+    text_unit_state: TextUnitState,
+) -> None:
+    text_unit = TextUnit(text_identifier, docstring, ())
+    _store_text_unit(text_learning, _selected_deck_id(text_unit_state), text_unit)
+
+
+@given(parsers.parse("text unit {text_identifier} is stored with empty text"))
+def empty_text_unit_is_stored(
+    text_identifier: str,
+    text_learning: TextLearning,
+    text_unit_state: TextUnitState,
+) -> None:
+    text_unit = TextUnit(text_identifier, "", ())
+    _store_text_unit(text_learning, _selected_deck_id(text_unit_state), text_unit)
+
+
+@given(parsers.parse("the saved sentence position for {text_identifier} is {position:d}"))
+def saved_sentence_position(
+    text_identifier: str,
+    position: int,
+    text_learning: TextLearning,
+    text_unit_state: TextUnitState,
+) -> None:
+    deck_id = _selected_deck_id(text_unit_state)
+    reading, error = text_learning.open_text_unit(deck_id, text_identifier)
+    assert error is None and reading is not None
+    for _ in range(position):
+        reading, error = text_learning.next_sentence(deck_id, text_identifier)
+        assert error is None and reading is not None
+
+
+@when(parsers.parse("the pupil opens text unit {text_identifier}"))
+def pupil_opens_text_unit(
+    text_identifier: str,
+    text_learning: TextLearning,
+    text_unit_state: TextUnitState,
+) -> None:
+    result = text_learning.open_text_unit(_selected_deck_id(text_unit_state), text_identifier)
+    text_unit_state.reading_results.append(result)
+
+
+@when("the pupil moves to the next sentence")
+def pupil_moves_to_next_sentence(text_learning: TextLearning, text_unit_state: TextUnitState) -> None:
+    reading = _current_reading(text_unit_state)
+    result = text_learning.next_sentence(_selected_deck_id(text_unit_state), reading.text_identifier)
+    text_unit_state.reading_results.append(result)
+
+
+@when("the pupil moves to the previous sentence")
+def pupil_moves_to_previous_sentence(text_learning: TextLearning, text_unit_state: TextUnitState) -> None:
+    reading = _current_reading(text_unit_state)
+    result = text_learning.previous_sentence(_selected_deck_id(text_unit_state), reading.text_identifier)
+    text_unit_state.reading_results.append(result)
+
+
+@when("the pupil restarts the text")
+def pupil_restarts_text(text_learning: TextLearning, text_unit_state: TextUnitState) -> None:
+    reading = _current_reading(text_unit_state)
+    result = text_learning.restart_text(_selected_deck_id(text_unit_state), reading.text_identifier)
+    text_unit_state.reading_results.append(result)
+
+
+@when(parsers.parse("the pupil reopens text unit {text_identifier}"))
+def pupil_reopens_text_unit(
+    text_identifier: str,
+    text_learning: TextLearning,
+    text_unit_state: TextUnitState,
+) -> None:
+    result = text_learning.open_text_unit(_selected_deck_id(text_unit_state), text_identifier)
+    text_unit_state.reading_results.append(result)
+
+
+@when(parsers.parse("the pupil updates text unit {text_identifier} with text:"))
+def pupil_updates_text_unit(
+    text_identifier: str,
+    docstring: str,
+    text_learning: TextLearning,
+    text_unit_state: TextUnitState,
+) -> None:
+    current_units, error = text_learning.list_text_units(_selected_deck_id(text_unit_state))
+    assert error is None and current_units is not None
+    current = next(unit for unit in current_units if unit.text_identifier == text_identifier)
+    updated = TextUnit(current.text_identifier, docstring, current.vocabulary_entries)
+    _store_text_unit(text_learning, _selected_deck_id(text_unit_state), updated)
+
+
+@then(parsers.parse('the current sentence is "{sentence}"'))
+def current_sentence_is(sentence: str, text_unit_state: TextUnitState) -> None:
+    assert _current_reading(text_unit_state).current_sentence == sentence
+
+
+@then("the current sentence is empty")
+def current_sentence_is_empty(text_unit_state: TextUnitState) -> None:
+    assert _current_reading(text_unit_state).current_sentence == ""
+
+
+@then("the sentences are:")
+def sentences_are(datatable: list[list[str]], text_unit_state: TextUnitState) -> None:
+    assert _current_reading(text_unit_state).sentences == tuple(row[0] for row in datatable[1:])
 
 
 @given(parsers.parse("the text-unit JSON document {document_name}:"))
@@ -180,6 +298,18 @@ def _selected_deck_id(text_unit_state: TextUnitState) -> str:
     if text_unit_state.selected_deck_id is None:
         pytest.fail("The scenario must select a deck before a text-unit action.")
     return text_unit_state.selected_deck_id
+
+
+def _store_text_unit(text_learning: TextLearning, deck_id: str, text_unit: TextUnit) -> None:
+    _, error = text_learning.import_text_unit(deck_id, TextLearning.export_text_unit(text_unit))
+    assert error is None
+
+
+def _current_reading(text_unit_state: TextUnitState) -> Any:
+    reading, error = text_unit_state.reading_results[-1]
+    assert reading is not None
+    assert error is None
+    return reading
 
 
 def test_text_learning_core_does_not_import_anki_or_qt() -> None:
