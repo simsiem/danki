@@ -1,0 +1,1 @@
+"""Anki Desktop integration tests."""

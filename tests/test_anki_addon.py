@@ -25,7 +25,10 @@ def test_initialize_registers_the_in_text_help_menu_action(monkeypatch) -> None:
         def addAction(self, action) -> None:  # noqa: N802
             actions.append(action)
 
-    fake_aqt = SimpleNamespace(gui_hooks=SimpleNamespace(main_window_did_init=Hook()))
+    fake_aqt = SimpleNamespace(
+        gui_hooks=SimpleNamespace(main_window_did_init=Hook()),
+        mw=SimpleNamespace(form=SimpleNamespace(menuTools=Menu())),
+    )
     fake_qt = SimpleNamespace(QAction=Action)
     monkeypatch.setattr(
         anki_addon,
@@ -34,7 +37,7 @@ def test_initialize_registers_the_in_text_help_menu_action(monkeypatch) -> None:
     )
 
     anki_addon.initialize()
-    callbacks[0](SimpleNamespace(form=SimpleNamespace(menuTools=Menu())))
+    callbacks[0]()
 
     assert [action.label for action in actions] == ["In-text help"]
 

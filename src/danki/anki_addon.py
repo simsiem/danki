@@ -11,7 +11,7 @@ from danki.textunit import SentenceReading, TextLearning, TextUnit
 
 def initialize() -> None:
     aqt = import_module("aqt")
-    aqt.gui_hooks.main_window_did_init.append(_register_menu_action)
+    aqt.gui_hooks.main_window_did_init.append(lambda: _register_menu_action(aqt.mw))
 
 
 def _register_menu_action(main_window: Any) -> None:
