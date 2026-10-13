@@ -9,9 +9,7 @@ from pytest_bdd import given, parsers, scenarios, then, when
 
 from danki.textunit import TextLearning, TextUnit
 
-FEATURES_DIRECTORY = Path(__file__).parents[1] / "docs" / "features" / "textunit"
-
-scenarios(str(FEATURES_DIRECTORY))
+scenarios("../docs/features/textlearning/")
 
 
 @dataclass
@@ -69,6 +67,8 @@ class InMemoryTextUnitStorage:
 @pytest.fixture
 def text_unit_storage() -> InMemoryTextUnitStorage:
     return InMemoryTextUnitStorage()
+
+
 @given("a fresh text-learning service", target_fixture="text_learning")
 def fresh_text_learning(text_unit_storage: InMemoryTextUnitStorage) -> TextLearning:
     return TextLearning(text_unit_storage, text_unit_storage)
@@ -109,10 +109,12 @@ def saved_sentence_position(
 ) -> None:
     deck_id = _selected_deck_id(text_unit_state)
     reading, error = text_learning.open_text_unit(deck_id, text_identifier)
-    assert error is None and reading is not None
+    assert error is None
+    assert reading is not None
     for _ in range(position):
         reading, error = text_learning.next_sentence(deck_id, text_identifier)
-        assert error is None and reading is not None
+        assert error is None
+        assert reading is not None
 
 
 @when(parsers.parse("the pupil opens text unit {text_identifier}"))
@@ -164,7 +166,8 @@ def pupil_updates_text_unit(
     text_unit_state: TextUnitState,
 ) -> None:
     current_units, error = text_learning.list_text_units(_selected_deck_id(text_unit_state))
-    assert error is None and current_units is not None
+    assert error is None
+    assert current_units is not None
     current = next(unit for unit in current_units if unit.text_identifier == text_identifier)
     updated = TextUnit(current.text_identifier, docstring, current.vocabulary_entries)
     _store_text_unit(text_learning, _selected_deck_id(text_unit_state), updated)

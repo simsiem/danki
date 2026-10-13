@@ -23,7 +23,7 @@ def convert(
     book: str | None = None,
     print_merge: bool = False,
     print_ignore: bool = False,
-) -> None:
+) -> int:
     """Convert a Campus C1 vocabulary list to a Danki CSV file.
 
     Parameters
@@ -43,7 +43,7 @@ def convert(
     _book = book if book is not None else inputs[0].stem
 
     csv_files: list[TextIOWrapper] = []
-    readers: list[converter.Reader] = []
+    readers: list[converter.SourceReader] = []
     try:
         for input_file in inputs:
             if not input_file.exists():
@@ -54,12 +54,10 @@ def convert(
                 f = input_file.open("r", encoding="utf-8", newline="")
                 csv_files.append(f)
                 reader = csv.DictReader(f)
-                reader.source_name = input_file.name
-                readers.append(reader)
+                readers.append(converter.SourceReader(input_file.name, reader))
             elif ext in (".fodt", ".html", ".xhtml"):
                 tree = ET.parse(input_file)  # noqa: S314
-                tree.source_name = input_file.name
-                readers.append(tree)
+                readers.append(converter.SourceReader(input_file.name, tree))
             else:
                 console.print(f"Error: unsupported input file type: {input_file}")
                 return 1
@@ -73,6 +71,8 @@ def convert(
                 show_merge_messages=print_merge,
                 show_ignore_messages=print_ignore,
             )
+
+            return 0
 
     except Exception as e:  # noqa: BLE001
         console.print(f"Error: {e}")

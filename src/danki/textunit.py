@@ -83,9 +83,7 @@ class TextLearning:
     def export_text_unit(text_unit: TextUnit) -> str:
         return _TextUnitCodec.dumps(text_unit)
 
-    def open_text_unit(
-        self, deck_id: str, text_identifier: str
-    ) -> tuple[SentenceReading | None, str | None]:
+    def open_text_unit(self, deck_id: str, text_identifier: str) -> tuple[SentenceReading | None, str | None]:
         if not deck_id:
             return None, "A deck must be selected."
         text_units, error = self.list_text_units(deck_id)
@@ -104,9 +102,7 @@ class TextLearning:
             self._positions.set_sentence_position(deck_id, text_identifier, sentence_index)
         return SentenceReading(text_identifier, sentences, sentence_index), None
 
-    def next_sentence(
-        self, deck_id: str, text_identifier: str
-    ) -> tuple[SentenceReading | None, str | None]:
+    def next_sentence(self, deck_id: str, text_identifier: str) -> tuple[SentenceReading | None, str | None]:
         return self._move_to_sentence(deck_id, text_identifier, step=1)
 
     def previous_sentence(
@@ -114,9 +110,7 @@ class TextLearning:
     ) -> tuple[SentenceReading | None, str | None]:
         return self._move_to_sentence(deck_id, text_identifier, step=-1)
 
-    def restart_text(
-        self, deck_id: str, text_identifier: str
-    ) -> tuple[SentenceReading | None, str | None]:
+    def restart_text(self, deck_id: str, text_identifier: str) -> tuple[SentenceReading | None, str | None]:
         return self._move_to_sentence(deck_id, text_identifier, step=None)
 
     def _move_to_sentence(
@@ -126,10 +120,7 @@ class TextLearning:
         if error is not None or reading is None:
             return None, error
         final_index = max(len(reading.sentences) - 1, 0)
-        if step is None:
-            sentence_index = 0
-        else:
-            sentence_index = min(max(reading.sentence_index + step, 0), final_index)
+        sentence_index = 0 if step is None else min(max(reading.sentence_index + step, 0), final_index)
         self._positions.set_sentence_position(deck_id, text_identifier, sentence_index)
         return SentenceReading(text_identifier, reading.sentences, sentence_index), None
 
@@ -141,7 +132,7 @@ def _split_sentences(text: str) -> tuple[str, ...]:
 
     sentences: list[str] = []
     fragment_start = 0
-    ending = re.compile(r"[.!?。！？؟｡։।…]+[\"'’”»›)\]}）】」』]*")
+    ending = re.compile(r"[.!?。！？؟｡։।…]+[\"'’”»›)\]}）】」』]*")  # noqa: RUF001
     for match in ending.finditer(normalized_text):
         fragment_end = match.end()
         if fragment_end == len(normalized_text) or normalized_text[fragment_end].isspace():

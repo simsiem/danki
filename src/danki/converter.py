@@ -1,11 +1,22 @@
+from __future__ import annotations
+
 import csv
 import re
 import unicodedata
-from collections.abc import Callable
-from typing import TextIO
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Any, TextIO
 from xml.etree.ElementTree import Element, ElementTree
 
-type Reader = ElementTree | csv.DictReader
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable, Iterator
+
+type Reader = ElementTree[Element[str]] | csv.DictReader[str]
+
+
+@dataclass(frozen=True, slots=True)
+class SourceReader:
+    source_name: str
+    reader: Reader
 
 
 _FIELDNAMES = [
@@ -58,14 +69,14 @@ def _fmt_reference_section(refs: list[str]) -> str:
     return ";".join(refs)
 
 
-def _text_pieces_from_node(node: Element) -> list[str]:
+def _text_pieces_from_node(node: Element[str]) -> list[str]:
     tag_s_full_name = "{urn:oasis:names:tc:opendocument:xmlns:text:1.0}s"
     attrib_c_full_name = "{urn:oasis:names:tc:opendocument:xmlns:text:1.0}c"
     if node.tag == tag_s_full_name:
         count = int(node.get(attrib_c_full_name) or "1")
         # include tail text of the <s> element (e.g. following text in the same span)
         tail = node.tail or ""
-        return " " * count + tail
+        return [" " * count + tail]
 
     pieces = []
     if node.text:
@@ -78,13 +89,15 @@ def _text_pieces_from_node(node: Element) -> list[str]:
     return pieces
 
 
-def _text_from_node(node: Element) -> str:
+def _text_from_node(node: Element[str]) -> str:
     return "".join(_text_pieces_from_node(node))
 
 
 class _ElementTreeParagraphExtractor:
-    def paragraphs(self, tree: ElementTree):
+    def paragraphs(self, tree: ElementTree[Element[str]]) -> Iterator[tuple[int, str, Element[str]]]:
         root = tree.getroot()
+        if root is None:
+            return
         idx = 0
         for elem in root.iter():
             if _local_name(elem.tag).lower() == "p":
@@ -94,9 +107,13 @@ class _ElementTreeParagraphExtractor:
 
 
 class _StyleInspector:
-    def __init__(self, tree: ElementTree):
-        self.blue_classes = set()
-        root_tag = tree.getroot().tag
+    def __init__(self, tree: ElementTree[Element[str]]):
+        self.blue_classes: set[str] = set()
+        root = tree.getroot()
+        if root is None:
+            msg = "XML document has no root element."
+            raise ValueError(msg)
+        root_tag = root.tag
         if root_tag == "{http://www.w3.org/1999/xhtml}html":
             self._scan_styles_element = self._scan_styles_element_html
             self._is_top500 = self._is_top500_html
@@ -108,11 +125,14 @@ class _StyleInspector:
             raise RuntimeError(msg)
         self._scan_styles(tree)
 
-    def _scan_styles(self, tree: ElementTree) -> None:
-        for elem in tree.getroot().iter():
+    def _scan_styles(self, tree: ElementTree[Element[str]]) -> None:
+        root = tree.getroot()
+        if root is None:
+            return
+        for elem in root.iter():
             self._scan_styles_element(elem)
 
-    def _scan_styles_element_html(self, elem: Element) -> None:
+    def _scan_styles_element_html(self, elem: Element[str]) -> None:
         # collect inline CSS from HTML <style> elements
         if _local_name(elem.tag).lower() == "style" and elem.text:
             for m in re.finditer(
@@ -120,7 +140,7 @@ class _StyleInspector:
             ):
                 self.blue_classes.add(m.group(1))
 
-    def _scan_styles_element_odt(self, elem: Element) -> None:
+    def _scan_styles_element_odt(self, elem: Element[str]) -> None:
         # For OpenDocument style:style elements, inspect nested text-properties
         if _local_name(elem.tag).lower() == "style":
             # try to find a style name attribute (style:name)
@@ -141,10 +161,10 @@ class _StyleInspector:
                     if found:
                         break
 
-    def is_top500(self, para_elem: Element) -> bool:
+    def is_top500(self, para_elem: Element[str]) -> bool:
         return self._is_top500(para_elem)
 
-    def _is_top500_odt(self, para_elem: Element) -> bool:
+    def _is_top500_odt(self, para_elem: Element[str]) -> bool:
         # check any attribute values (e.g., class names, style-name) against known blue style names
         for e in para_elem.iter():
             # check direct attribute values for a matching style-name or color
@@ -159,7 +179,7 @@ class _StyleInspector:
                     return True
         return False
 
-    def _is_top500_html(self, para_elem: Element) -> bool:
+    def _is_top500_html(self, para_elem: Element[str]) -> bool:
         # check class attribute on paragraph
         cls = para_elem.get("class") or ""
         for c in cls.split():
@@ -274,7 +294,7 @@ def _format_merge(field: str, info: str) -> str:
     return f"Merge {field} - {info}."
 
 
-def _merge_non_empty(field, previous, later) -> tuple[str | None, str]:
+def _merge_non_empty(field: str, previous: str, later: str) -> tuple[str | None, str]:
     if previous == later:
         return None, previous
     if previous == "":
@@ -287,7 +307,7 @@ def _merge_non_empty(field, previous, later) -> tuple[str | None, str]:
     return msg, previous
 
 
-def _merge_exact_match(field, previous: str, later: str) -> tuple[str | None, str]:
+def _merge_exact_match(field: str, previous: str, later: str) -> tuple[str | None, str]:
     if previous == later:
         return None, previous
     msg = _format_mismatch(field, f'previous = "{previous}", later = "{later}"')
@@ -295,7 +315,7 @@ def _merge_exact_match(field, previous: str, later: str) -> tuple[str | None, st
 
 
 def _merge_lists(
-    field, previous: list[str], later: list[str], format_func: Callable[[list[str]], str]
+    field: str, previous: list[str], later: list[str], format_func: Callable[[list[str]], str]
 ) -> tuple[str | None, list[str]]:
     if previous == later:
         return None, previous
@@ -323,7 +343,7 @@ def _merge_lists(
     return chosen_msg, chosen
 
 
-def _merge_full_form_display(previous, later) -> tuple[str | None, str]:
+def _merge_full_form_display(previous: str, later: str) -> tuple[str | None, str]:
     if previous == later:
         return None, previous
 
@@ -341,9 +361,11 @@ def _merge_full_form_display(previous, later) -> tuple[str | None, str]:
     return msg, previous
 
 
-def _merge(headword, prev, extracted) -> tuple[list[str], dict[str, any]]:
-    new = {"Headword": headword}
-    messages = []
+def _merge(
+    headword: str, prev: dict[str, Any], extracted: dict[str, Any]
+) -> tuple[list[str], dict[str, Any]]:
+    new: dict[str, Any] = {"Headword": headword}
+    messages: list[str] = []
 
     msg, new["FullFormDisplay"] = _merge_full_form_display(
         prev["FullFormDisplay"], extracted["FullFormDisplay"]
@@ -514,7 +536,7 @@ def _expand_full_form_display(full_form_display: str, part_of_speech: str) -> st
     return full_form_display
 
 
-def _expand(entry: dict[str, any]) -> dict[str, any]:
+def _expand(entry: dict[str, Any]) -> dict[str, Any]:
     # **Late fixing**
     # Only after merge, I know whether I must fix `PartOfSpeech`. This cannot be determined during
     # extraction from a file.
@@ -526,7 +548,7 @@ def _expand(entry: dict[str, any]) -> dict[str, any]:
         expanded_part_of_speech = entry["PartOfSpeech"]
     expanded_full_form_display = _expand_full_form_display(entry["FullFormDisplay"], expanded_part_of_speech)
 
-    def _expand_field(key: str, value: any) -> any:
+    def _expand_field(key: str, value: Any) -> Any:
         if key == "PartOfSpeech":
             return expanded_part_of_speech
         if key == "FullFormDisplay":
@@ -536,8 +558,8 @@ def _expand(entry: dict[str, any]) -> dict[str, any]:
     return {key: _expand_field(key, value) for key, value in entry.items()}
 
 
-def _transform_output(entry: dict[str, any], book: str) -> dict[str, any]:
-    def _transform_field(key: str, value: any) -> any:
+def _transform_output(entry: dict[str, Any], book: str) -> dict[str, Any]:
+    def _transform_field(key: str, value: Any) -> Any:
         if key == "ReferenceSection":
             return _fmt_reference_section(value)
         return value
@@ -549,7 +571,7 @@ def _transform_output(entry: dict[str, any], book: str) -> dict[str, any]:
     return out
 
 
-def _iter_entries_from_tree(tree: ElementTree):
+def _iter_entries_from_tree(tree: ElementTree[Element[str]]) -> Iterator[dict[str, Any]]:
     extractor = _ElementTreeParagraphExtractor()
     styler = _StyleInspector(tree)
     vocabulary_paragraph_pattern = re.compile(r"^[\S].*\s{3,}.*\d+\s*$", re.UNICODE)
@@ -617,7 +639,7 @@ def _iter_entries_from_tree(tree: ElementTree):
         }
 
 
-def _iter_entries_from_csv(csv_reader: csv.DictReader):
+def _iter_entries_from_csv(csv_reader: csv.DictReader[str]) -> Iterator[dict[str, Any]]:
     for i, row in enumerate(csv_reader, start=1):
         # Expect keys matching _FIELDNAMES;
         # Optional missing keys handled by get
@@ -656,17 +678,15 @@ def _iter_entries_from_csv(csv_reader: csv.DictReader):
 
 
 def convert(
-    readers,
+    readers: Iterable[SourceReader],
     out_file: TextIO,
     book: str,
-    console_obj,
+    console_obj: Any,
     *,
     show_merge_messages: bool = False,
     show_ignore_messages: bool = False,
 ) -> None:
-    """Convert vocabulary from a single ElementTree or an iterable of readers and write CSV to out_file.
-    Backwards compatible: if `readers` is an ElementTree the previous behaviour is preserved.
-    """
+    """Convert named readers and write CSV to out_file."""
 
     writer = csv.DictWriter(
         out_file,
@@ -677,14 +697,12 @@ def convert(
     )
     writer.writeheader()
 
-    vocabulary_list = {}
+    vocabulary_list: dict[str, dict[str, Any]] = {}
     deferred_messages: set[str] = set()
 
-    # Normalize readers input: if single ElementTree passed, wrap into iterable
-    reader_iterable = [readers] if isinstance(readers, ElementTree) else list(readers)
-
-    for src_idx, reader in enumerate(reader_iterable, start=1):
-        source_name = getattr(reader, "source_name", None) or f"input {src_idx}"
+    for src_idx, source_reader in enumerate(readers, start=1):
+        source_name = source_reader.source_name or f"input {src_idx}"
+        reader = source_reader.reader
         if isinstance(reader, ElementTree):
             entry_iter = _iter_entries_from_tree(reader)
         elif isinstance(reader, csv.DictReader):

@@ -58,7 +58,7 @@ def conversion_context() -> dict[str, object]:
     return {}
 
 
-def _html_reader(body: str, source_name: str | None = None):
+def _html_reader(body: str):
     xml = (
         """\
 <?xml version="1.0" encoding="UTF-8"?>
@@ -74,10 +74,7 @@ def _html_reader(body: str, source_name: str | None = None):
 </html>
 """
     )
-    tree = ET.ElementTree(ET.fromstring(xml))
-    if source_name:
-        tree.source_name = source_name
-    return tree
+    return ET.ElementTree(ET.fromstring(xml))
 
 
 def _fodt_reader(body: str):
@@ -110,18 +107,20 @@ def _csv_reader(body: str):
 def _convert(readers, book: str, *, show_merge_messages: bool = False) -> ConversionResult:
     output = io.StringIO()
     console = FakeConsole()
-    converter.convert(readers, output, book, console, show_merge_messages=show_merge_messages)
+    converter.convert(iter(readers), output, book, console, show_merge_messages=show_merge_messages)
     output_lines = output.getvalue().splitlines()
     return ConversionResult(output_lines[1:], output_lines[0].split(","), console.messages)
 
 
-def _store_reader(conversion_context, reader):
-    conversion_context.setdefault("readers", []).append(reader)
+def _store_reader(conversion_context, reader, source_name=None):
+    readers = conversion_context.setdefault("readers", [])
+    name = source_name or f"input {len(readers) + 1}"
+    readers.append(converter.SourceReader(name, reader))
 
 
 @given(parsers.re(r'the HTML body(?: with filename "(?P<name>[^"]+)")?:'))
 def html_body(conversion_context, docstring, name=None):
-    _store_reader(conversion_context, _html_reader(docstring, name))
+    _store_reader(conversion_context, _html_reader(docstring), name)
 
 
 @given("the FODT body:")
@@ -137,7 +136,7 @@ def csv_input(conversion_context, docstring):
 
 @given(parsers.parse('the input file "{name}"'))
 def input_file(conversion_context, name):
-    _store_reader(conversion_context, ET.parse(name))
+    _store_reader(conversion_context, ET.parse(name), name)
 
 
 @when(
