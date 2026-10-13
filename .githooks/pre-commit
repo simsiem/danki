@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if ! command -v hatch >/dev/null 2>&1; then
+    printf '%s\n' "Danki pre-commit hook: 'hatch' was not found on PATH." >&2
+    printf '%s\n' 'Install Hatch, then retry the commit.' >&2
+    exit 1
+fi
+
+if hatch check; then
+    exit 0
+fi
+
+printf '%s\n' 'Danki pre-commit hook: hatch check failed; commit blocked.' >&2
+printf '%s\n' 'Run "hatch check --fix" for automatic fixes, then retry.' >&2
+exit 1

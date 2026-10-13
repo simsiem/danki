@@ -21,6 +21,37 @@ pip install danki
 ```
 
 
+Development
+===========
+
+Changeset verification
+----------------------
+
+Run
+
+```bash
+hatch check --fix
+hatch test
+```
+
+to verify your changes follow coding guidelines and avoid regressions.
+
+Pre-commit hook
+---------------
+
+The pre-commit hook runs ``hatch check`` and blocks commits unless it passes. To activate the repository's
+hook for this clone, run:
+
+```console
+git config --local core.hooksPath .githooks
+```
+
+This is a one-time setup for each clone. Hatch must be installed and available on ``PATH``. If the check
+fails, run ``hatch check --fix`` to apply automatic fixes, then commit again.
+
+For an emergency commit only, Git's ``--no-verify`` option bypasses the hook. Run ``hatch check`` afterward.
+
+
 Anki Desktop add-on
 ===================
 
