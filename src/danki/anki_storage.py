@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from typing import TYPE_CHECKING, NoReturn, cast
+from typing import TYPE_CHECKING, NoReturn
 
 from anki.collection import Collection  # noqa: TC002
 from anki.decks import DeckId
@@ -79,7 +79,7 @@ class AnkiTextUnitStorage:
             or position_data["sentenceIndex"] < 0
         ):
             raise AnkiTextUnitStorageError(AnkiTextUnitStorageError.UNSUPPORTED_READING_POSITION)
-        return cast("int", position_data["sentenceIndex"])
+        return position_data["sentenceIndex"]
 
     def set_sentence_position(self, deck_id: str, text_identifier: str, position: int) -> None:
         if position < 0:

@@ -5,19 +5,29 @@
 ### Language & Tooling
 
 - **Language**: Python
-- **Linter/Formatter**: ruff with line length of 110
-- **Build/Test/Lint Manager**: hatch
+- **Format / lint / type check / build / test**: hatch
+- **Line length**: 110
 
 ### Commands for formatting and code checks
+
+Always format and check the code (including type checks)! Use the following command:
+
+```bash
+hatch check --fix
+```
+
+This implicitely calls subcommands
 
 ```bash
 hatch check fmt --fix
 hatch check code --fix
+hatch check types
 ```
 
 ### Critical Rules
 
 - **Never call ruff directly**. Use `hatch check fmt --fix` for formatting and `hatch check code --fix` for code checks.
+- **Never call pyrefly directly**. Use `hatch check types`.
 
 
 ## Testing Requirements
@@ -44,6 +54,13 @@ hatch test tests/test_confmgmt.py
 ### Critical Rules
 
 - **Never call pytest directly**. Always use `hatch test` for testing.
+
+## Python env for development
+
+The hatch environment *dev* offers all dependencies and tools for debugging during development.
+If missing, you can add important common tools as extra dependencies.
+
+Enter the environment with `hatch --env dev shell`.
 
 ## Agent skills
 

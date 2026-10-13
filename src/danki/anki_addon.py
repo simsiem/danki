@@ -105,7 +105,7 @@ def _show_text_units(main_window: Any, learning: TextLearning, deck_id: str) -> 
     import_button.clicked.connect(import_text_unit)
     open_button.clicked.connect(open_text_unit)
     close_button.clicked.connect(dialog.reject)
-    text_list.itemDoubleClicked.connect(lambda _item: open_text_unit())
+    text_list.itemDoubleClicked.connect(open_text_unit)
     refresh_text_units()
     dialog.exec()
 

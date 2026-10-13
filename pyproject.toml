@@ -43,17 +43,15 @@ source = "versioningit"
 [tool.hatch.envs.dev]
 extra-dependencies = [
   "anki==26.9.3",
-  "mypy>=1.0.0",
+  "pyrefly",
   "pytest<9",
   "pytest-bdd",
 ]
 
-[tool.hatch.envs.dev.scripts]
-check-src = "mypy --install-types --non-interactive --cache-dir src/.mypy_cache --strict {args:src}"
-check-tests = "mypy --install-types --non-interactive --cache-dir tests/.mypy_cache {args:tests}"
-check = [
-  "check-src",
-  "check-tests",
+[tool.hatch.envs.hatch-check-types]
+extra-dependencies = [
+  "anki==26.9.3",
+  "pytest-bdd",
 ]
 
 [tool.hatch.envs.hatch-test]
@@ -84,3 +82,15 @@ exclude_lines = [
 
 [tool.ruff]
 line-length = 110
+
+[tool.pyrefly]
+preset = "strict"
+# Default search path: pyrefly infers `src`.
+# In addition, use "." so tests can reference the scripts directory
+search-path = ["src", "."]
+
+[[tool.pyrefly.sub-config]]
+matches = "tests/**"
+
+[tool.pyrefly.sub-config.errors]
+implicit-any = false
