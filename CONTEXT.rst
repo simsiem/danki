@@ -48,6 +48,10 @@ text identifier:
 sentence:
     A language-level unit within a *text unit* that is presented to the student as one step of *in-text help*.
 
+sentence position:
+    The sentence within a *text unit* at which a student stopped working on the text unit and continues reading
+    when opening the text unit again.
+
 representative card:
     The card whose scheduling state represents the student's learning progress for an entire *vocabulary
     entry*. Successful review ratings advance only the representative card. An *Again* rating is applied to
