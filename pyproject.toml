@@ -43,7 +43,8 @@ source = "versioningit"
 [tool.hatch.envs.dev]
 extra-dependencies = [
   "mypy>=1.0.0",
-  "pytest",
+  "pytest<9",
+  "pytest-bdd",
 ]
 
 [tool.hatch.envs.dev.scripts]
@@ -52,6 +53,12 @@ check-tests = "mypy --install-types --non-interactive --cache-dir tests/.mypy_ca
 check = [
   "check-src",
   "check-tests",
+]
+
+[tool.hatch.envs.hatch-test]
+dependencies = [
+  "pytest<9",
+  "pytest-bdd",
 ]
 
 [tool.coverage.run]
