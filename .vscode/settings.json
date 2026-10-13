@@ -1,6 +1,6 @@
 {
     "chat.tools.terminal.autoApprove": {
-        "/^hatch test(?:\\s+\\S+)?$/": {
+        "/^hatch test(?:\\s+tests\\/(?:[A-Za-z0-9_-]+\\/)*[A-Za-z0-9_-]+\\.py)*$/": {
             "approve": true,
             "matchCommandLine": true
         },
@@ -12,6 +12,10 @@
             "approve": true,
             "matchCommandLine": true
         },
-        "git rev-parse": true
+        "git rev-parse": true,
+        "/^hatch run dev:check$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
     }
 }
