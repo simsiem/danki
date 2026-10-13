@@ -9,7 +9,7 @@ from pytest_bdd import given, parsers, scenarios, then, when
 
 from danki import converter
 
-FEATURES_DIRECTORY = Path(__file__).parents[1] / "docs" / "features"
+FEATURES_DIRECTORY = Path(__file__).parents[1] / "docs" / "features" / "converter"
 CANONICAL_FIELDS = [
     "Headword",
     "FullFormDisplay",
