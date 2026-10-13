@@ -12,7 +12,7 @@ An ADR file contains all architectural decisions in form of a simple sequence of
 
 ### Mandatory elements
 
-```md
+```reStructuredText
 ******************************
 Architectural Decision Records
 ******************************

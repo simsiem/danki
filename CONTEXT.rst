@@ -34,22 +34,35 @@ surface form:
 
 headword:
     The canonical dictionary entry used for indexing and lookups (for example, an infinitive for verbs or
-    singular nominative for nouns). The *headword* acts as the canonical key for a *vocabulary entry*.
+    singular nominative for nouns). The *headword* acts as the canonical key for a *vocabulary entry* and is
+    unique within an individual Anki deck.
+
+text unit:
+    A learning object consisting of a complete source text and the descriptions of its *surface forms*. A
+    text unit can have equivalent representations between which no information is lost.
+
+text identifier:
+    The stable key that identifies a *text unit* uniquely within an Anki deck. The same text identifier may
+    identify separate text units in different Anki decks.
+
+sentence:
+    A language-level unit within a *text unit* that is presented to the student as one step of *in-text help*.
+
+representative card:
+    The card whose scheduling state represents the student's learning progress for an entire *vocabulary
+    entry*. Successful review ratings advance only the representative card. An *Again* rating is applied to
+    every card belonging to the vocabulary entry.
+
+review-ahead availability:
+    The state in which a *representative card* may receive a successful review rating before its due date
+    because a configurable amount of its current review interval have elapsed. New and learning cards have
+    review-ahead availability without waiting for this fraction to elapse. An *Again* rating does not require
+    review-ahead availability.
 
 in-text help:
     A student-facing feature that presents a source text sentence-by-sentence and allows the student to
     request assistance for specific words or phrases while working the text. The feature speeds up text work
     by revealing translations, pronunciations, or hints on demand.
-
-auto-review from in-text help:
-    A user-facing feature label for the automatic workflow that converts documented *help events* (words for
-    which the student requested help) into review candidates. In context, the short form *auto-review* is
-    allowed.
-
-help event:
-    A domain event recorded when a student requests assistance for a specific *surface form* while using
-    *in-text help*. A *help event* includes *vocabulary entry*, the specific *surface form*, and a review
-    rating (*Again*, *Hard*, *Good*)
 
 
 Fields of a vocabulary entry
