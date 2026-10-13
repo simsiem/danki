@@ -9,6 +9,8 @@ TDD is the red → green loop. This skill is the reference that makes that loop 
 
 When exploring the codebase, read the CONTEXT file (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.
 
+Follow a behavior-driven approach: describe the behavior you expect before writing the test, and ensure that each test corresponds to a specific behavior slice. Define the behavior in a feature file. You should already have received the information about the location and format of the file. Define the test cases as scenarios within that feature file. Use Scenario Outlines where appropriate to keep the file concise and logical. Implement the scenario execution in a corresponding test file. As a result, requirements and tests are understood together. They are specified along a clear seam.
+
 ## What a good test is
 
 Tests verify behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't. A good test reads like a specification — "user can checkout with valid cart" tells you exactly what capability exists — and survives refactors because it doesn't care about internal structure.
@@ -33,6 +35,14 @@ When the shape of that interface is itself in question — how deep the module i
 
 ## Rules of the loop
 
-- **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
+- **Red before green.** Add or extend the scenarios in the relevant feature file as failing tests first. Implement the scenario in a test runner. Then only enough code to pass it. Don't anticipate future tests or add speculative features. Create a new feature file when no existing file is the right home.
 - **One slice at a time.** One seam, one test, one minimal implementation per cycle.
 - **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.
+- **Keep permanent docs in sync with the behavior.** Follow the project's documentation rules. Ensure that implementation changes are reflected in the relevant documentation (behavior and scenario descriptions), and that the documentation accurately describes the current behavior.
+
+# Rules for behavior description
+
+When defining the language for and the structure of scenarios, keep the following in mind:
+
+- Walk along real user journeys, describing behavior from the user's perspective. Avoid: API testing style.
+- Focus on reusable small steps. Each Given/When/Then statement should capture a distinct piece of behavior that can be composed with others to describe complex scenarios.
