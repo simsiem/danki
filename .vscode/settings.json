@@ -4,6 +4,10 @@
             "approve": true,
             "matchCommandLine": true
         },
+        "/^hatch run ankiint:test(?:\\s+tests\\/(?:[A-Za-z0-9_-]+\\/)*[A-Za-z0-9_-]+\\.py)*$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
         "/^hatch check(?: (?:fmt|code))?(?: --fix)?$/": {
             "approve": true,
             "matchCommandLine": true
@@ -13,5 +17,27 @@
             "matchCommandLine": true
         },
         "git rev-parse": true,
-    }
+        "/^hatch --help$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^hatch env show$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^hatch env find$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^hatch env find ankiint$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+    },
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
 }
