@@ -10,16 +10,16 @@ Danki needs an Anki Desktop add-on that presents imported texts sentence by sent
 
 ## Solution
 
-Add an Anki Desktop workflow called *in-text help*. The pupil first selects an Anki deck and then a text unit stored directly in that deck. The add-on resumes at the pupil's synchronized reading position and presents one sentence at a time.
+Add an Anki Desktop workflow called *in-text help*. From Anki's default screen, the pupil opens it through the Tools menu; the main window keeps Anki's top bar and shows a fresh, collapsed deck list. Expanding a deck shows its stored text units in the same view. Choosing a text opens the sentence-and-card view at the pupil's synchronized reading position.
 
-Only surface forms described by the text unit are selectable. Selecting one either shows supplied notes for material that has no vocabulary entry or lists all possible headwords. Selecting a headword reveals its vocabulary card and permits ratings according to the representative card's Anki scheduling state.
+Only surface forms described by the text unit are selectable. Selecting one either shows supplied notes for material that has no vocabulary entry or lists all possible headwords. The single card area shows one candidate's vocabulary card at a time; all candidates of an ambiguous form remain available there, with availability shown separately.
 
-The add-on uses its own text and review view but delegates card rendering and scheduling changes to Anki. Text units, reading positions, and deck configuration synchronize through AnkiWeb using supported collection data. The add-on itself must be installed separately on each Anki Desktop installation.
+The add-on embeds its own text and review views in Anki's main content area below the top bar, with the sentence and sentence navigation above one card area. The card area follows the look and feel of Anki's standard card review UI; Anki renders card content and handles scheduling changes. A Back action returns to the current deck's expanded text list. Navigating to Anki's Decks screen closes in-text help, and opening it again starts with a fresh, collapsed deck list. Text units, reading positions, and deck configuration synchronize through AnkiWeb using supported collection data. The add-on itself must be installed separately on each Anki Desktop installation.
 
 ## User Stories
 
-1. As a pupil, I want to select an Anki deck before selecting a text, so that text work uses the correct subject vocabulary.
-2. As a pupil, I want to see the text units stored directly in the selected deck, so that I can choose my assigned text.
+1. As a pupil, I want to select an Anki deck from the in-text help view, so that text work uses the correct subject vocabulary.
+2. As a pupil, I want to expand a deck to see its stored text units in the same view and choose my assigned text, so that I can begin sentence work without leaving the workflow.
 3. As a pupil, I want an empty text list when a deck has no text units, so that deck selection remains simple and predictable.
 4. As a pupil, I want to import a text-unit JSON file into the selected deck, so that I can add teacher-assigned material.
 5. As a pupil, I want re-importing the same text identifier into the same deck to update its note, so that corrected source material does not create duplicates.
@@ -29,7 +29,7 @@ The add-on uses its own text and review view but delegates card rendering and sc
 9. As a pupil, I want my reading position to synchronize through AnkiWeb, so that I can continue on another computer.
 10. As a pupil, I want re-importing a text unit to preserve my reading position, so that content corrections do not reset my work.
 11. As a pupil, I want an updated text with fewer sentences to resume at a valid sentence, so that stale progress cannot break the workflow.
-12. As a pupil, I want to navigate to the next and previous sentence, so that I control my progress through the text.
+12. As a pupil, I want to navigate to the next and previous sentence even when rateable cards remain, so that I control sentence progress independently of card ratings.
 13. As a pupil, I want to restart a text from its first sentence, so that I can work through it again.
 14. As a pupil, I want line wrapping in imported material treated as whitespace, so that printed-page formatting does not create false sentences.
 15. As a pupil, I want punctuation to determine sentence boundaries, so that the displayed units follow ordinary language structure.
@@ -42,7 +42,7 @@ The add-on uses its own text and review view but delegates card rendering and sc
 22. As a pupil, I want a surface form with supplied notes to show that help directly, so that I can understand material I have not learned as a vocabulary entry.
 23. As a pupil, I want supplied notes to remain unrateable, so that unlearned material does not alter my Anki schedule.
 24. As a pupil, I want an ambiguous surface form to show every possible headword, so that I must decide which analysis fits the context.
-25. As a pupil, I want to select any candidate headword and rate my recognition of it, so that choosing a contextually wrong candidate does not invalidate an honest vocabulary review.
+25. As a pupil, I want to choose any candidate headword in the single card area and rate my recognition of it, so that choosing a contextually wrong candidate does not invalidate an honest vocabulary review.
 26. As a pupil, I want a clear message when a headword has no matching vocabulary note, so that broken source data is visible.
 27. As a pupil, I want a clear message when representative-card configuration is missing or does not identify a generated card, so that the add-on never rates an arbitrary card.
 28. As a pupil, I want headword lookup to start in the text unit's deck and walk upward through parent decks, so that nearer subject vocabulary overrides shared parent vocabulary.
@@ -67,7 +67,7 @@ The add-on uses its own text and review view but delegates card rendering and sc
 47. As a pupil, I want failures on sibling-card updates ignored after being logged, so that a secondary problem does not interrupt text work.
 48. As a maintainer, I want diagnostic logging to exclude vocabulary and source-text content, so that logs do not disclose pupils' learning material unnecessarily.
 49. As a maintainer, I want a bounded diagnostic log available from the add-on menu, so that failures can be investigated without unbounded local storage.
-50. As a pupil, I want the plugin-owned review view to use Anki's rendered card content, so that my card templates remain effective.
+50. As a pupil, I want the plugin-owned review view below Anki's top bar to use Anki's rendered card content and familiar review presentation, so that my card templates remain effective in a recognizable review flow.
 51. As a pupil, I want ratings submitted through Anki's scheduler, so that intervals, review history, and FSRS behavior remain correct.
 52. As a pupil, I want expected problems displayed as clear messages, so that I can correct imports or deck configuration.
 53. As a maintainer, I want the business workflow testable without Anki or Qt, so that most behavior can be verified quickly and deterministically.
@@ -102,7 +102,7 @@ The add-on uses its own text and review view but delegates card rendering and sc
 - Generate one storage card for each text-unit note and keep it suspended. Anki does not provide a durable synchronized cardless-note model.
 - Store the synchronized current sentence index as small versioned custom data on the storage card, separate from text-unit content.
 - Re-import does not alter reading position. If the stored index exceeds the updated sentence range, clamp it to the final sentence.
-- The initial workflow selects a deck and then lists text units stored directly in that deck. Do not pre-scan decks for text units.
+- The in-text help view starts with a fresh, collapsed deck list; expanding a deck lists text units stored directly in that deck in the same view. Do not pre-scan decks for text units. Choosing a text switches to the sentence-and-card view; Back returns to that deck's expanded text list.
 - Place the import action and representative-card configuration action on the selected deck's text-list screen.
 - Resolve a headword by searching the text unit's exact deck, then each parent deck in order, stopping at the first deck containing a match.
 - Multiple exact headword matches within one individual deck are invalid and produce an explicit error.
@@ -113,7 +113,8 @@ The add-on uses its own text and review view but delegates card rendering and sc
 - `Again` does not require review-ahead availability. Successful ratings do.
 - A suspended representative card is unrateable. A buried representative card is rateable under the normal availability rules.
 - Re-read scheduling state immediately before accepting a rating so stale UI state cannot bypass the policy.
-- Use a plugin-owned review view. Render question and answer content through Anki and submit answers through its supported scheduler operation; do not calculate or mutate intervals directly.
+- Use a plugin-owned review view embedded below Anki's top bar, with the sentence and sentence navigation above a single card area styled like Anki's standard review UI. Show one candidate card at a time, render question and answer content through Anki, and submit answers through its supported scheduler operation; do not calculate or mutate intervals directly.
+- On opening a sentence, show its first rateable surface form in the card area, if any. After a rating, continue through rateable candidates in surface-form sentence order and candidate order; when reaching the end, wrap to the first candidate that is currently rateable, regardless of whether it was rated earlier. A candidate rated `Again` may therefore be presented again. Stop automatic traversal only when no candidate remains rateable or the pupil navigates to another sentence; sentence navigation is never gated by card ratings. Manual surface-form selection may show unrateable cards, but rating remains disabled unless the candidate is currently rateable.
 - On `Hard`, `Good`, or `Easy`, answer only the representative card.
 - On `Again`, answer the representative card first. Stop and return an error if that update fails. Then attempt `Again` independently on every non-suspended sibling card, retaining successful updates and ignoring sibling failures.
 - Write ignored sibling failures to a size-limited rotating file in the add-on's preserved local data directory. Log technical identifiers and exception details only. Provide an add-on action to open the log.
@@ -123,12 +124,12 @@ The add-on uses its own text and review view but delegates card rendering and sc
 ## Testing Decisions
 
 - The highest and primary test seam is the public `TextLearning` interface. Tests use in-memory adapters and assert externally visible values, errors, stored state, and requested side effects rather than internal helper calls.
-- Level-1 tests cover deck and text selection, import create/update behavior, identifier scope, synchronized-position semantics, navigation, index clamping, sentence segmentation, case-insensitive matching, longest-match selection, notes-only help, ambiguous headwords, nearest-deck lookup, same-deck duplicate errors, configuration inheritance, unresolved candidates, availability highlighting, all card states, the two-thirds boundary, suspension and burial, successful ratings, representative-card failure, sibling propagation, and ignored sibling failures.
+- Level-1 tests cover deck and text selection, import create/update behavior, identifier scope, synchronized-position semantics, navigation, index clamping, sentence segmentation, case-insensitive matching, longest-match selection, notes-only help, ambiguous headwords, nearest-deck lookup, same-deck duplicate errors, configuration inheritance, unresolved candidates, availability highlighting, sentence-local card traversal order and wraparound, repeat presentation after `Again`, navigation without completion gating, all card states, the two-thirds boundary, suspension and burial, successful ratings, representative-card failure, sibling propagation, and ignored sibling failures.
 - Give the JSON codec focused tests for strict version handling, required and unknown fields, mutual exclusivity of `headwords` and `notes`, duplicate normalized surface forms, unused descriptions, case-sensitive headwords, and lossless round trips.
 - Give the sentence parser focused multilingual punctuation, quotation, line-break, empty-text, and final-fragment tests.
 - Add an architecture test proving core modules do not import Anki, AQT, or Qt.
 - Level-2 integration tests remain small and use a real temporary Anki collection on disk. They verify the managed note type, suspended storage cards, field mapping, custom-data position persistence, deck/config synchronization surfaces, nearest-deck queries, rendered card retrieval, and scheduler submissions including multi-card `Again`.
-- Level-3 integration tests remain small and run Qt offscreen. They verify add-on loading, menu actions, the deck/text picker, one sentence interaction, card reveal, rating dispatch, and user-facing error display.
+- Level-3 integration tests remain small and run Qt offscreen. They verify add-on loading, menu actions, the embedded deck/text picker and sentence/card view, one sentence interaction, card reveal, rating dispatch, Back navigation, a fresh deck list after leaving through Anki's Decks screen, and user-facing error display.
 - Use `hatch test` for all repository tests. Do not invoke pytest directly.
 - Existing tests establish pytest and subprocess-based fixture patterns; the new level-1 tests should remain ordinary package tests and avoid requiring Anki imports.
 - Run level-2 tests against pinned `anki` packages compatible with the targeted desktop release. Run level-3 tests separately with matching `aqt`, Qt, and required native Linux libraries.

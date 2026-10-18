@@ -4,21 +4,18 @@ import sys
 from collections.abc import Iterator
 from importlib import import_module
 from pathlib import Path
-from time import monotonic
 
 import pytest
 from aqt.main import AnkiQt  # pyrefly: ignore[missing-import]
 from aqt.qt import (  # pyrefly: ignore[missing-import]
     QApplication,
-    QComboBox,
     QDialog,
-    QDialogButtonBox,
     QEvent,
     QLabel,
-    QListWidget,
     QPushButton,
     Qt,
-    QTimer,
+    QTreeWidget,
+    QWidget,
 )
 from pytest_anki._plugin import patch  # pyrefly: ignore[missing-import]
 from pytest_anki._plugin.launch import anki_running  # pyrefly: ignore[missing-import]
@@ -80,20 +77,32 @@ def desktop(tmp_path, monkeypatch, qtbot) -> Iterator:
             assert not base.exists(), "The isolated Anki base directory was not removed."
 
 
-def _dialog() -> QDialog:
-    dialog = QApplication.activeModalWidget()
-    assert isinstance(dialog, QDialog), "Expected an active Qt dialog."
-    assert dialog.windowTitle() == "In-text help", dialog.windowTitle()
-    return dialog
-
-
-def _button(dialog: QDialog, text: str) -> QPushButton:
-    matches = [button for button in dialog.findChildren(QPushButton) if button.text() == text]
+def _button(parent: QWidget, text: str) -> QPushButton:
+    matches = [button for button in parent.findChildren(QPushButton) if button.text() == text]
     assert len(matches) == 1, f"Expected one {text!r} button."
     return matches[0]
 
 
-@given("the standalone add-on is installed in an isolated Anki Desktop profile")
+def _visible_view(main_window, child_name: str) -> QWidget | None:
+    return next(
+        (
+            page
+            for page in main_window.findChildren(QWidget, "dankiInTextHelpView")
+            if page.isVisible() and page.findChild(QWidget, child_name) is not None
+        ),
+        None,
+    )
+
+
+def _text_tree(main_window) -> QTreeWidget:
+    view = _visible_view(main_window, "dankiDeckTextTree")
+    assert view is not None, "The in-text help decks view is not visible."
+    tree = view.findChild(QTreeWidget, "dankiDeckTextTree")
+    assert tree is not None
+    return tree
+
+
+@given("the Danki add-on is installed in an isolated Anki Desktop profile")
 def installed_addon(desktop) -> None:
     assert desktop.collection is not None
 
@@ -112,109 +121,78 @@ def seed_text(desktop, deck: str, identifier: str, text: str) -> None:
     assert imported == unit
 
 
-def _read_text(desktop, qtbot, identifier: str, deck: str, *, advance: bool) -> list[str]:
+@when("the pupil activates in-text help")
+def activate_in_text_help(desktop) -> None:
     action = next(a for a in desktop.mw.form.menuTools.actions() if a.text() == "In-text help")
-    sentences: list[str] = []
-    errors: list[AssertionError] = []
-    stage = 0
-    deadline = monotonic() + TIMEOUT_MS / 1000
-    timer = QTimer()
-    timer.setInterval(10)
-
-    def cancel() -> None:
-        for widget in QApplication.topLevelWidgets():
-            if isinstance(widget, QDialog) and widget.isVisible():
-                widget.reject()
-
-    def drive() -> None:
-        nonlocal stage
-        try:
-            assert monotonic() < deadline, f"Timed out at UI stage {stage}."
-            if QApplication.activeModalWidget() is None:
-                return
-            dialog = _dialog()
-            if stage == 0:
-                combo = dialog.findChild(QComboBox)
-                assert combo is not None, "Expected the deck picker."
-                index = combo.findText(deck)
-                assert index >= 0
-                combo.setFocus()
-                qtbot.keyClick(combo, Qt.Key.Key_Home)
-                for _ in range(index):
-                    qtbot.keyClick(combo, Qt.Key.Key_Down)
-                assert combo.currentText() == deck
-                buttons = dialog.findChild(QDialogButtonBox)
-                assert buttons is not None
-                ok = buttons.button(QDialogButtonBox.StandardButton.Ok)
-                assert ok is not None
-                stage = 1
-                qtbot.mouseClick(ok, Qt.MouseButton.LeftButton)
-            elif stage == 1:
-                texts = dialog.findChild(QListWidget)
-                assert texts is not None, "Expected the text-unit list."
-                assert texts.count() == 1
-                assert texts.item(0).text() == identifier
-                texts.setFocus()
-                qtbot.keyClick(texts, Qt.Key.Key_Home)
-                assert texts.currentRow() == 0
-                stage = 2
-                qtbot.mouseClick(_button(dialog, "Open"), Qt.MouseButton.LeftButton)
-            else:
-                labels = [label for label in dialog.findChildren(QLabel) if label.isVisible()]
-                assert len(labels) == 1
-                sentences.append(labels[0].text())
-                if stage == 2 and advance:
-                    next_button = _button(dialog, "Next")
-                    assert next_button.isEnabled()
-                    stage = 3
-                    qtbot.mouseClick(next_button, Qt.MouseButton.LeftButton)
-                else:
-                    stage = 4
-                    timer.stop()
-                    qtbot.mouseClick(_button(dialog, "Close"), Qt.MouseButton.LeftButton)
-        except AssertionError as error:
-            # Assertions in timer callbacks must unwind modal loops and fail the test.
-            errors.append(error)
-            timer.stop()
-            cancel()
-
-    timer.timeout.connect(drive)
-    timer.start()
-    try:
-        action.trigger()
-    finally:
-        timer.stop()
-        cancel()
-    if errors:
-        raise errors[0]
-    assert stage == 4, f"The menu workflow returned before reading finished (stage {stage})."
-    qtbot.waitUntil(lambda: QApplication.activeModalWidget() is None, timeout=TIMEOUT_MS)
-    return sentences
+    action.trigger()
 
 
-@when(
-    parsers.parse(
-        'the pupil opens "{identifier}" in deck "{deck}", advances a sentence, closes it, and reopens it'
-    ),
-    target_fixture="observed_sentences",
-)
-def read_and_reopen(desktop, qtbot, identifier: str, deck: str) -> list[str]:
-    first_visit = _read_text(desktop, qtbot, identifier, deck, advance=True)
-    second_visit = _read_text(desktop, qtbot, identifier, deck, advance=False)
-    return first_visit + second_visit
+@then("Anki shows the in-text help decks view")
+def decks_view_is_visible(desktop, qtbot) -> None:
+    qtbot.waitUntil(
+        lambda: _visible_view(desktop.mw, "dankiDeckTextTree") is not None,
+        timeout=TIMEOUT_MS,
+    )
 
 
-@then(parsers.parse('the initial reading dialog displayed "{sentence}"'))
-def initial_sentence(observed_sentences: list[str], sentence: str) -> None:
-    assert len(observed_sentences) == 3
-    assert observed_sentences[0] == sentence
+@when(parsers.parse('the pupil expands deck "{deck}"'))
+def expand_deck(desktop, qtbot, deck: str) -> None:
+    tree = _text_tree(desktop.mw)
+    deck_item = next(
+        tree.topLevelItem(index)
+        for index in range(tree.topLevelItemCount())
+        if tree.topLevelItem(index).text(0) == deck
+    )
+    deck_item.setExpanded(True)
+    qtbot.waitUntil(lambda: deck_item.childCount() == 1, timeout=TIMEOUT_MS)
 
 
-@then(parsers.parse('navigation displayed "{sentence}"'))
-def navigated_sentence(observed_sentences: list[str], sentence: str) -> None:
-    assert observed_sentences[1] == sentence
+@then(parsers.parse('Anki shows text unit "{identifier}" in deck "{deck}"'))
+def text_unit_is_shown(desktop, identifier: str, deck: str) -> None:
+    tree = _text_tree(desktop.mw)
+    deck_item = next(
+        tree.topLevelItem(index)
+        for index in range(tree.topLevelItemCount())
+        if tree.topLevelItem(index).text(0) == deck
+    )
+    assert deck_item.isExpanded()
+    assert any(deck_item.child(index).text(0) == identifier for index in range(deck_item.childCount()))
 
 
-@then(parsers.parse('the reopened reading dialog displayed "{sentence}"'))
-def reopened_sentence(observed_sentences: list[str], sentence: str) -> None:
-    assert observed_sentences[2] == sentence
+@when(parsers.parse('the pupil opens text unit "{identifier}" in deck "{deck}"'))
+def open_text_unit(desktop, qtbot, identifier: str, deck: str) -> None:
+    tree = _text_tree(desktop.mw)
+    deck_item = next(
+        tree.topLevelItem(index)
+        for index in range(tree.topLevelItemCount())
+        if tree.topLevelItem(index).text(0) == deck
+    )
+    text_item = next(
+        deck_item.child(index)
+        for index in range(deck_item.childCount())
+        if deck_item.child(index).text(0) == identifier
+    )
+    tree.setCurrentItem(text_item)
+    view = _visible_view(desktop.mw, "dankiDeckTextTree")
+    assert view is not None
+    qtbot.mouseClick(_button(view, "Open"), Qt.MouseButton.LeftButton)
+
+
+@then(parsers.parse('Anki shows the sentence view with the sentence "{sentence}"'))
+def sentence_view_shows_sentence(desktop, qtbot, sentence: str) -> None:
+    qtbot.waitUntil(
+        lambda: _visible_view(desktop.mw, "dankiCurrentSentence") is not None,
+        timeout=TIMEOUT_MS,
+    )
+    sentence_view = _visible_view(desktop.mw, "dankiCurrentSentence")
+    assert sentence_view is not None
+    sentence_label = sentence_view.findChild(QLabel, "dankiCurrentSentence")
+    assert sentence_label is not None
+    assert sentence_label.text() == sentence
+
+
+@when(parsers.parse('the pupil clicks the "{label}" button'))
+def click_button(desktop, qtbot, label: str) -> None:
+    view = _visible_view(desktop.mw, "dankiCurrentSentence")
+    assert view is not None, "The sentence view is not visible."
+    qtbot.mouseClick(_button(view, label), Qt.MouseButton.LeftButton)

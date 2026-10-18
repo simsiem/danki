@@ -1,12 +1,12 @@
 # 06 — Reveal, rate, and propagate Again
 
-**What to build:** A pupil can reveal Anki-rendered vocabulary card content and rate it from the text workflow, with failed recall reflected across the vocabulary entry's active cards.
+**What to build:** A pupil can reveal Anki-rendered vocabulary card content in the single card area below the current sentence and rate it from the embedded text workflow, with failed recall reflected across the vocabulary entry's active cards. The view follows Anki's standard card review look and feel while the plugin owns the review flow.
 
 **Blocked by:** 05 — Show review-ahead availability.
 
 **Status:** ready-for-agent
 
-- [ ] Selecting a candidate opens the plugin-owned review view, which displays question and answer content rendered by Anki and submits ratings through Anki's scheduler.
+- [ ] Selecting a candidate displays one card at a time in the sentence view's card area, using Anki-rendered question and answer content, the familiar question/reveal/rating sequence, and Anki's scheduler for rating submissions.
 - [ ] Scheduling state is re-read before the UI accepts a rating; `Hard`, `Good`, and `Easy` update only the representative card.
 - [ ] `Again` updates the representative card first; failure is shown to the pupil and stops further updates.
 - [ ] After representative-card success, `Again` is attempted on every non-suspended sibling card; sibling failures are logged and do not interrupt text work.

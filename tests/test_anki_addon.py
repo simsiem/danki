@@ -26,7 +26,7 @@ def test_initialize_registers_the_in_text_help_menu_action(monkeypatch) -> None:
             actions.append(action)
 
     fake_aqt = SimpleNamespace(
-        gui_hooks=SimpleNamespace(main_window_did_init=Hook()),
+        gui_hooks=SimpleNamespace(main_window_did_init=Hook(), state_will_change=Hook()),
         mw=SimpleNamespace(form=SimpleNamespace(menuTools=Menu())),
     )
     fake_qt = SimpleNamespace(QAction=Action)
