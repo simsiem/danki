@@ -7,7 +7,7 @@ from anki.collection import Collection  # noqa: TC002
 from anki.decks import DeckId
 from anki.models import NotetypeDict, NotetypeId
 
-from danki.textunit import TextUnit, _TextUnitCodec
+from danki.textunit import ResolvedVocabularyEntry, TextUnit, _TextUnitCodec
 
 if TYPE_CHECKING:
     from anki.cards import Card
@@ -95,6 +95,40 @@ class AnkiTextUnitStorage:
         custom_data[_POSITION_CUSTOM_DATA_KEY] = {"version": 1, "sentenceIndex": position}
         card.custom_data = json.dumps(custom_data, ensure_ascii=False, separators=(",", ":"))
         self._collection.update_card(card, skip_undo_entry=True)
+
+    def parent_deck_ids(self, deck_id: str) -> tuple[str, ...]:
+        parents = self._collection.decks.parents(DeckId(int(deck_id)))
+        return tuple(str(parent["id"]) for parent in reversed(parents))
+
+    def deck_name(self, deck_id: str) -> str:
+        return self._collection.decks.name(DeckId(int(deck_id)))
+
+    def find_vocabulary_entries(self, deck_id: str, headword: str) -> tuple[ResolvedVocabularyEntry, ...]:
+        anki_deck_id = DeckId(int(deck_id))
+        note_ids = self._database().list(
+            """
+            select distinct notes.id
+            from notes join cards on cards.nid = notes.id
+            where cards.did = ? and notes.mid != ?
+            order by notes.id
+            """,
+            anki_deck_id,
+            self._note_type["id"],
+        )
+        matches: list[ResolvedVocabularyEntry] = []
+        for note_id in note_ids:
+            note = self._collection.get_note(note_id)
+            if "Headword" not in note or note["Headword"] != headword:
+                continue
+            note_type = self._collection.models.get(NotetypeId(note.mid))
+            if note_type is None:
+                _raise_storage_error("Anki could not load a vocabulary note type.")
+            fields = tuple(
+                (field_name, note[field_name])
+                for field_name in self._collection.models.field_names(note_type)
+            )
+            matches.append(ResolvedVocabularyEntry(str(anki_deck_id), headword, fields))
+        return tuple(matches)
 
     def _storage_card(self, deck_id: str, text_identifier: str) -> Card:
         anki_deck_id = DeckId(int(deck_id))

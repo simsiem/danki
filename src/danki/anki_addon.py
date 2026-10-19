@@ -1,9 +1,11 @@
 """Anki Desktop entry and thin Qt workflow for in-text help."""
 
 from collections.abc import Callable
+from html import escape
 from importlib import import_module
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote, unquote
 
 from danki.anki_storage import AnkiTextUnitStorage, AnkiTextUnitStorageError
 from danki.textunit import SentenceReading, TextLearning, TextUnit
@@ -47,7 +49,7 @@ def _install_plugin_view(main_window: Any, page: Any) -> None:
 
 def _start_workflow(main_window: Any) -> None:
     storage = AnkiTextUnitStorage(main_window.col)
-    learning = TextLearning(storage, storage)
+    learning = TextLearning(storage, storage, storage)
     _show_text_units(main_window, learning)
 
 
@@ -189,9 +191,11 @@ def _show_sentence(
     page.setObjectName("dankiInTextHelpView")
     layout = qt.QVBoxLayout(page)
     back_button = qt.QPushButton("Back to decks", page)
-    sentence_label = qt.QLabel(page)
-    sentence_label.setObjectName("dankiCurrentSentence")
-    sentence_label.setWordWrap(True)
+    sentence_view = qt.QTextBrowser(page)
+    sentence_view.setObjectName("dankiCurrentSentence")
+    sentence_view.setOpenLinks(False)
+    sentence_view.setOpenExternalLinks(False)
+    sentence_view.setMaximumHeight(140)
     restart_button = qt.QPushButton("Restart", page)
     previous_button = qt.QPushButton("Previous", page)
     next_button = qt.QPushButton("Next", page)
@@ -207,19 +211,83 @@ def _show_sentence(
     card_area.setObjectName("dankiVocabularyCardArea")
     card_area.setFrameShape(qt.QFrame.Shape.StyledPanel)
     card_layout = qt.QVBoxLayout(card_area)
-    card_placeholder = qt.QLabel(
-        "Select a surface form in the sentence to view its vocabulary card.", card_area
-    )
-    card_placeholder.setAlignment(qt.Qt.AlignmentFlag.AlignCenter)
-    card_layout.addWidget(card_placeholder)
-    layout.addWidget(sentence_label)
+    card_content = qt.QLabel("", card_area)
+    card_content.setObjectName("dankiCardContent")
+    card_content.setWordWrap(True)
+    card_layout.addWidget(card_content)
+    layout.addWidget(sentence_view)
     layout.addLayout(buttons)
     layout.addWidget(card_area, 1)
 
     current_reading = reading
 
+    def clear_card_area() -> None:
+        for index in reversed(range(card_layout.count())):
+            item = card_layout.itemAt(index)
+            widget = item.widget()
+            if widget is not None and widget is not card_content:
+                card_layout.removeWidget(widget)
+                widget.deleteLater()
+        card_content.clear()
+
+    def show_message(message: str) -> None:
+        clear_card_area()
+        card_content.setText(message)
+
+    def select_surface_form(surface_form: str) -> None:
+        help_description, error = learning.select_surface_form(
+            deck_id, current_reading.text_identifier, current_reading.sentence_index, surface_form
+        )
+        if error is not None or help_description is None:
+            show_message(error or "The selected surface form could not be opened.")
+            return
+        clear_card_area()
+        if help_description.notes is not None:
+            card_content.setText(help_description.notes)
+            return
+        if help_description.headwords is None:
+            show_message("No help is available for this surface form.")
+            return
+        for headword in help_description.headwords:
+            candidate_button = qt.QPushButton(headword, card_area)
+            candidate_button.clicked.connect(lambda _checked=False, word=headword: show_candidate(word))
+            card_layout.addWidget(candidate_button)
+
+    def show_candidate(headword: str) -> None:
+        vocabulary_entry, error = learning.resolve_headword(deck_id, headword)
+        if error is not None or vocabulary_entry is None:
+            show_message(error or f"No vocabulary note for headword '{headword}' was found.")
+            return
+        clear_card_area()
+        field_lines = [headword]
+        field_lines.extend(
+            f"{field_name}: {value}"
+            for field_name, value in vocabulary_entry.fields
+            if field_name != "Headword" and value
+        )
+        card_content.setText("\n".join(field_lines))
+
+    def render_sentence() -> None:
+        occurrences, error = learning.surface_forms_for_sentence(
+            deck_id, current_reading.text_identifier, current_reading.sentence_index
+        )
+        if error is not None or occurrences is None:
+            sentence_view.setPlainText(current_reading.current_sentence)
+            show_message(error or "Surface forms could not be loaded.")
+            return
+        sentence = current_reading.current_sentence
+        links: list[str] = []
+        cursor = 0
+        for occurrence in occurrences:
+            links.append(escape(sentence[cursor : occurrence.start]))
+            surface_form = quote(occurrence.surface_form, safe="")
+            links.append(f'<a href="{surface_form}"><b>{escape(occurrence.matched_text)}</b></a>')
+            cursor = occurrence.end
+        links.append(escape(sentence[cursor:]))
+        sentence_view.setHtml("".join(links))
+
     def display_reading() -> None:
-        sentence_label.setText(current_reading.current_sentence)
+        render_sentence()
         previous_button.setEnabled(current_reading.sentence_index > 0)
         next_button.setEnabled(current_reading.sentence_index + 1 < len(current_reading.sentences))
 
@@ -236,5 +304,6 @@ def _show_sentence(
     restart_button.clicked.connect(lambda: apply_navigation(learning.restart_text))
     next_button.clicked.connect(lambda: apply_navigation(learning.next_sentence))
     back_button.clicked.connect(lambda: _show_text_units(main_window, learning, deck_id))
+    sentence_view.anchorClicked.connect(lambda url: select_surface_form(unquote(url.toString())))
     _install_plugin_view(main_window, page)
     display_reading()

@@ -12,8 +12,10 @@ from aqt.qt import (  # pyrefly: ignore[missing-import]
     QDialog,
     QEvent,
     QLabel,
+    QPoint,
     QPushButton,
     Qt,
+    QTextBrowser,
     QTreeWidget,
     QWidget,
 )
@@ -121,6 +123,52 @@ def seed_text(desktop, deck: str, identifier: str, text: str) -> None:
     assert imported == unit
 
 
+@given(parsers.parse('deck "{deck}" contains text unit "{identifier}" with described forms'))
+def seed_described_text(desktop, deck: str, identifier: str, datatable: list[list[str]]) -> None:
+    storage_module = import_module("danki.anki_storage")
+    core = import_module("danki.textunit")
+    deck_id = desktop.collection.decks.id(deck)
+    assert deck_id is not None
+    descriptions = tuple(
+        core.VocabularyDescription(
+            row[0],
+            headwords=tuple(value.strip() for value in row[1].split(",")) if row[1] else None,
+            notes=row[2] or None,
+        )
+        for row in datatable[1:]
+    )
+    storage = storage_module.AnkiTextUnitStorage(desktop.collection)
+    learning = core.TextLearning(storage, storage, storage)
+    unit = core.TextUnit(identifier, " ".join(row[0] for row in datatable[1:]) + ".", descriptions)
+    imported, error = learning.import_text_unit(str(deck_id), learning.export_text_unit(unit))
+    assert error is None, error
+    assert imported == unit
+
+
+@given(parsers.parse('vocabulary note "{headword}" exists in deck "{deck}" with meaning "{meaning}"'))
+def seed_vocabulary_note(desktop, deck: str, headword: str, meaning: str) -> None:
+    collection = desktop.collection
+    deck_id = collection.decks.id(deck)
+    assert deck_id is not None
+    note_type = collection.models.by_name("Danki Ticket 03 Vocabulary")
+    if note_type is None:
+        note_type = collection.models.new("Danki Ticket 03 Vocabulary")
+        collection.models.add_field(note_type, collection.models.new_field("Headword"))
+        collection.models.add_field(note_type, collection.models.new_field("Meaning"))
+        template = collection.models.new_template("Vocabulary")
+        template["qfmt"] = "{{Headword}}"
+        template["afmt"] = "{{FrontSide}}<hr>{{Meaning}}"
+        collection.models.add_template(note_type, template)
+        note_type["sortf"] = 0
+        collection.models.add_dict(note_type)
+        note_type = collection.models.by_name("Danki Ticket 03 Vocabulary")
+    assert note_type is not None
+    note = collection.new_note(note_type)
+    note["Headword"] = headword
+    note["Meaning"] = meaning
+    collection.add_note(note, deck_id)
+
+
 @when("the pupil activates in-text help")
 def activate_in_text_help(desktop) -> None:
     action = next(a for a in desktop.mw.form.menuTools.actions() if a.text() == "In-text help")
@@ -186,9 +234,75 @@ def sentence_view_shows_sentence(desktop, qtbot, sentence: str) -> None:
     )
     sentence_view = _visible_view(desktop.mw, "dankiCurrentSentence")
     assert sentence_view is not None
-    sentence_label = sentence_view.findChild(QLabel, "dankiCurrentSentence")
-    assert sentence_label is not None
-    assert sentence_label.text() == sentence
+    sentence_browser = sentence_view.findChild(QTextBrowser, "dankiCurrentSentence")
+    assert sentence_browser is not None
+    assert sentence_browser.toPlainText() == sentence
+
+
+@when(parsers.parse('the pupil clicks the described form "{surface_form}"'))
+def click_described_form(desktop, qtbot, surface_form: str) -> None:
+    view = _visible_view(desktop.mw, "dankiCurrentSentence")
+    assert view is not None
+    browser = view.findChild(QTextBrowser, "dankiCurrentSentence")
+    assert browser is not None
+    cursor = browser.document().find(surface_form)
+    assert not cursor.isNull(), f"The described form {surface_form!r} is not rendered."
+    expected_href = surface_form.casefold()
+    position = next(
+        (
+            QPoint(x, y)
+            for y in range(0, browser.viewport().height(), 2)
+            for x in range(0, browser.viewport().width(), 2)
+            if browser.anchorAt(QPoint(x, y)) == expected_href
+        ),
+        None,
+    )
+    assert position is not None, f"The described form {surface_form!r} has no clickable anchor."
+    qtbot.mouseClick(browser.viewport(), Qt.MouseButton.LeftButton, pos=position)
+
+
+@then(parsers.parse('Anki shows notes "{notes}"'))
+def notes_are_visible(desktop, notes: str) -> None:
+    view = _visible_view(desktop.mw, "dankiVocabularyCardArea")
+    assert view is not None
+    content = view.findChild(QLabel, "dankiCardContent")
+    assert content is not None
+    assert content.text() == notes
+
+
+@then(parsers.parse('Anki shows candidate headwords "{headwords}"'))
+def candidate_headwords_are_visible(desktop, headwords: str) -> None:
+    view = _visible_view(desktop.mw, "dankiVocabularyCardArea")
+    assert view is not None
+    area = view.findChild(QWidget, "dankiVocabularyCardArea")
+    assert area is not None
+    actual = [button.text() for button in area.findChildren(QPushButton)]
+    assert actual == [value.strip() for value in headwords.split(",")]
+
+
+@when(parsers.parse('the pupil chooses candidate "{headword}"'))
+def choose_candidate(desktop, qtbot, headword: str) -> None:
+    view = _visible_view(desktop.mw, "dankiVocabularyCardArea")
+    assert view is not None
+    qtbot.mouseClick(_button(view, headword), Qt.MouseButton.LeftButton)
+
+
+@then(parsers.parse('Anki shows the vocabulary entry for "{headword}" with meaning "{meaning}"'))
+def vocabulary_entry_is_visible(desktop, headword: str, meaning: str) -> None:
+    view = _visible_view(desktop.mw, "dankiVocabularyCardArea")
+    assert view is not None
+    content = view.findChild(QLabel, "dankiCardContent")
+    assert content is not None
+    assert content.text() == f"{headword}\nMeaning: {meaning}"
+
+
+@then(parsers.parse('Anki shows the lookup error "{message}"'))
+def lookup_error_is_visible(desktop, message: str) -> None:
+    view = _visible_view(desktop.mw, "dankiVocabularyCardArea")
+    assert view is not None
+    content = view.findChild(QLabel, "dankiCardContent")
+    assert content is not None
+    assert content.text() == message
 
 
 @when(parsers.parse('the pupil clicks the "{label}" button'))

@@ -6,9 +6,11 @@
 
 **Status:** ready-for-agent
 
-- [ ] Only described surface forms are interactive in the sentence view; the pupil can select them manually, matching is case-insensitive, and overlapping matches prefer the longest form.
+- [x] Only described surface forms are interactive in the sentence view; the pupil can select them manually, matching is case-insensitive, and overlapping matches prefer the longest form.
 - [ ] Selecting notes-only help displays its notes in the plugin UI without rating controls; selecting an ambiguous form displays every candidate headword in the single card area for the pupil to choose, including candidates whose cards are viewable but currently unrateable.
-- [ ] Choosing a candidate resolves its vocabulary entry through the `TextLearning` interface, searching the text unit's deck and then parent decks from nearest to farthest.
-- [ ] Headword lookup remains case-sensitive. Duplicate exact matches in a deck and missing vocabulary notes appear as clear user-facing errors in the text workflow.
-- [ ] Core tests cover matching, notes, ambiguity, nearest-deck lookup, duplicate matches, and unresolved candidates.
+- [x] Choosing a candidate resolves its vocabulary entry through the `TextLearning` interface, searching the text unit's deck and then parent decks from nearest to farthest.
+- [x] Headword lookup remains case-sensitive. Duplicate exact matches in a deck and missing vocabulary notes appear as clear user-facing errors in the text workflow.
+- [x] Core tests cover matching, notes, ambiguity, nearest-deck lookup, duplicate matches, and unresolved candidates.
 - [ ] Headless Qt integration exercises the rendered sentence, clicks described forms, checks notes-only and ambiguous-candidate views including a viewable but unrateable candidate, chooses a candidate, and verifies user-facing lookup errors.
+
+Notes-only help, candidate listing/selection, and lookup errors are implemented and covered by headless Qt tests. The viewable-but-unrateable candidate card presentation remains incomplete: tickets 04–06 introduce representative-card configuration, availability, and Anki-rendered card content. Candidate choice currently displays resolved note fields in the single card area; it does not render or rate Anki cards.

@@ -3,7 +3,7 @@ from anki.collection import Collection
 from anki.notes import NoteId
 
 from danki.anki_storage import STORAGE_NOTE_TYPE_NAME, AnkiTextUnitStorage
-from danki.textunit import TextUnit, VocabularyDescription
+from danki.textunit import TextLearning, TextUnit, VocabularyDescription
 
 
 def test_collection_storage_updates_text_units_and_suspends_storage_cards(tmp_path) -> None:
@@ -85,5 +85,57 @@ def test_collection_storage_updates_text_units_and_suspends_storage_cards(tmp_pa
         assert storage.get_sentence_position(str(latin_deck_id), "lesson-1") == 2
         reloaded_storage = AnkiTextUnitStorage(collection)
         assert reloaded_storage.get_sentence_position(str(latin_deck_id), "lesson-1") == 2
+    finally:
+        collection.close()
+
+
+def test_vocabulary_lookup_is_exact_and_prefers_nearest_deck(tmp_path) -> None:
+    collection = Collection(str(tmp_path / "collection.anki2"))
+    try:
+        storage = AnkiTextUnitStorage(collection)
+        parent_id = collection.decks.id("Latin")
+        child_id = collection.decks.id("Latin::Class")
+        assert parent_id is not None
+        assert child_id is not None
+
+        note_type = collection.models.new("Danki Lookup Vocabulary")
+        collection.models.add_field(note_type, collection.models.new_field("Headword"))
+        collection.models.add_field(note_type, collection.models.new_field("Meaning"))
+        template = collection.models.new_template("Card")
+        template["qfmt"] = "{{Headword}}"
+        template["afmt"] = "{{FrontSide}}<hr>{{Meaning}}"
+        collection.models.add_template(note_type, template)
+        note_type["sortf"] = 0
+        collection.models.add_dict(note_type)
+        note_type = collection.models.by_name("Danki Lookup Vocabulary")
+        assert note_type is not None
+
+        def add_entry(deck_id: int, headword: str, meaning: str) -> None:
+            note = collection.new_note(note_type)
+            note["Headword"] = headword
+            note["Meaning"] = meaning
+            collection.add_note(note, deck_id)
+
+        add_entry(parent_id, "amo", "parent meaning")
+        add_entry(child_id, "amo", "nearest meaning")
+        add_entry(child_id, "Sol", "the sun")
+
+        learning = TextLearning(storage, storage, storage)
+        resolved, error = learning.resolve_headword(str(child_id), "amo")
+        assert error is None
+        assert resolved is not None
+        assert resolved.deck_id == str(child_id)
+        assert dict(resolved.fields)["Meaning"] == "nearest meaning"
+
+        unresolved, error = learning.resolve_headword(str(child_id), "sol")
+        assert unresolved is None
+        assert error == "No vocabulary note for headword 'sol' was found in this deck or its parent decks."
+
+        add_entry(child_id, "amo", "duplicate meaning")
+        duplicate, error = learning.resolve_headword(str(child_id), "amo")
+        assert duplicate is None
+        assert error == (
+            f"Headword 'amo' matches multiple vocabulary notes in deck '{collection.decks.name(child_id)}'."
+        )
     finally:
         collection.close()

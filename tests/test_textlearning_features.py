@@ -7,9 +7,14 @@ from typing import Any
 import pytest
 from pytest_bdd import given, parsers, scenarios, then, when
 
-from danki.textunit import TextLearning, TextUnit
+from danki.textunit import ResolvedVocabularyEntry, TextLearning, TextUnit, VocabularyDescription
 
-scenarios("../docs/features/textlearning/")
+scenarios(
+    "../docs/features/textlearning/feat-import-and-browse-text-units.feature",
+    "../docs/features/textlearning/feat-reading-position.feature",
+    "../docs/features/textlearning/feat-select-surface-forms.feature",
+    "../docs/features/textlearning/feat-versioned-text-unit-json.feature",
+)
 
 
 @dataclass
@@ -18,6 +23,10 @@ class TextUnitState:
     selected_deck_id: str | None = None
     import_results: list[tuple[TextUnit | None, str | None]] = field(default_factory=list)
     reading_results: list[tuple[Any | None, str | None]] = field(default_factory=list)
+    selected_help: VocabularyDescription | None = None
+    selection_error: str | None = None
+    surface_form_occurrences: tuple[Any, ...] = ()
+    vocabulary_result: tuple[ResolvedVocabularyEntry | None, str | None] | None = None
 
 
 @dataclass
@@ -48,6 +57,8 @@ class InMemoryTextUnitStorage:
     def __init__(self) -> None:
         self.text_units: dict[tuple[str, str], TextUnit] = {}
         self.sentence_positions: dict[tuple[str, str], int] = {}
+        self.deck_parents: dict[str, tuple[str, ...]] = {}
+        self.vocabulary_entries: dict[str, list[ResolvedVocabularyEntry]] = {}
 
     def list_text_units(self, deck_id: str) -> tuple[TextUnit, ...]:
         return tuple(
@@ -63,6 +74,17 @@ class InMemoryTextUnitStorage:
     def set_sentence_position(self, deck_id: str, text_identifier: str, position: int) -> None:
         self.sentence_positions[(deck_id, text_identifier)] = position
 
+    def parent_deck_ids(self, deck_id: str) -> tuple[str, ...]:
+        return self.deck_parents.get(deck_id, ())
+
+    def deck_name(self, deck_id: str) -> str:
+        return deck_id
+
+    def find_vocabulary_entries(self, deck_id: str, headword: str) -> tuple[ResolvedVocabularyEntry, ...]:
+        return tuple(
+            entry for entry in self.vocabulary_entries.get(deck_id, ()) if entry.headword == headword
+        )
+
 
 @pytest.fixture
 def text_unit_storage() -> InMemoryTextUnitStorage:
@@ -71,7 +93,7 @@ def text_unit_storage() -> InMemoryTextUnitStorage:
 
 @given("a fresh text-learning service", target_fixture="text_learning")
 def fresh_text_learning(text_unit_storage: InMemoryTextUnitStorage) -> TextLearning:
-    return TextLearning(text_unit_storage, text_unit_storage)
+    return TextLearning(text_unit_storage, text_unit_storage, text_unit_storage)
 
 
 @given(parsers.parse('the pupil has selected deck "{deck_id}"'))
@@ -295,6 +317,127 @@ def last_import_returns_error(text_unit_state: TextUnitState) -> None:
     imported_text_unit, error = text_unit_state.import_results[-1]
     assert imported_text_unit is None
     assert error is not None
+
+
+@given(
+    parsers.parse(
+        'text unit "{text_identifier}" in deck "{deck_id}" has sentence "{sentence}" and descriptions:'
+    )
+)
+def selection_text_unit_is_stored(
+    text_identifier: str,
+    deck_id: str,
+    sentence: str,
+    datatable: list[list[str]],
+    text_learning: TextLearning,
+    text_unit_state: TextUnitState,
+) -> None:
+    text_unit_state.selected_deck_id = deck_id
+    descriptions = tuple(
+        VocabularyDescription(
+            row[0],
+            headwords=tuple(value.strip() for value in row[1].split(",")) if row[1] else None,
+            notes=row[2] or None,
+        )
+        for row in datatable[1:]
+    )
+    _store_text_unit(text_learning, deck_id, TextUnit(text_identifier, sentence, descriptions))
+
+
+@given(parsers.parse('deck "{deck_id}" has parent deck "{parent_id}"'))
+def selection_deck_has_parent(
+    deck_id: str, parent_id: str, text_unit_storage: InMemoryTextUnitStorage
+) -> None:
+    text_unit_storage.deck_parents[deck_id] = (*text_unit_storage.deck_parents.get(deck_id, ()), parent_id)
+
+
+@given(parsers.parse('vocabulary note "{headword}" exists in deck "{deck_id}" with meaning "{meaning}"'))
+def vocabulary_note_exists(
+    headword: str, deck_id: str, meaning: str, text_unit_storage: InMemoryTextUnitStorage
+) -> None:
+    text_unit_storage.vocabulary_entries.setdefault(deck_id, []).append(
+        ResolvedVocabularyEntry(deck_id, headword, (("Headword", headword), ("Meaning", meaning)))
+    )
+
+
+@when(parsers.parse('the pupil views selectable forms in sentence {sentence_index:d} of "{text_identifier}"'))
+def pupil_views_selectable_forms(
+    sentence_index: int, text_identifier: str, text_learning: TextLearning, text_unit_state: TextUnitState
+) -> None:
+    occurrences, error = text_learning.surface_forms_for_sentence(
+        _selected_deck_id(text_unit_state), text_identifier, sentence_index
+    )
+    assert error is None
+    assert occurrences is not None
+    text_unit_state.surface_form_occurrences = occurrences
+
+
+@when(
+    parsers.parse('the pupil selects "{surface_form}" in sentence {sentence_index:d} of "{text_identifier}"')
+)
+def pupil_selects_surface_form(
+    surface_form: str,
+    sentence_index: int,
+    text_identifier: str,
+    text_learning: TextLearning,
+    text_unit_state: TextUnitState,
+) -> None:
+    selected_help, error = text_learning.select_surface_form(
+        _selected_deck_id(text_unit_state), text_identifier, sentence_index, surface_form
+    )
+    text_unit_state.selected_help = selected_help
+    text_unit_state.selection_error = error
+
+
+@when(parsers.parse('the pupil resolves headword "{headword}" from deck "{deck_id}"'))
+def pupil_resolves_headword(
+    headword: str, deck_id: str, text_learning: TextLearning, text_unit_state: TextUnitState
+) -> None:
+    text_unit_state.vocabulary_result = text_learning.resolve_headword(deck_id, headword)
+
+
+@then("the selectable occurrences are:")
+def selectable_occurrences_are(datatable: list[list[str]], text_unit_state: TextUnitState) -> None:
+    expected = [(row[0], row[1]) for row in datatable[1:]]
+    assert [
+        (occurrence.surface_form, occurrence.matched_text)
+        for occurrence in text_unit_state.surface_form_occurrences
+    ] == expected
+
+
+@then(parsers.parse('the selected help contains notes "{notes}"'))
+def selected_help_contains_notes(notes: str, text_unit_state: TextUnitState) -> None:
+    assert text_unit_state.selection_error is None
+    assert text_unit_state.selected_help is not None
+    assert text_unit_state.selected_help.notes == notes
+
+
+@then(parsers.parse('the selected help offers headwords "{headwords}"'))
+def selected_help_offers_headwords(headwords: str, text_unit_state: TextUnitState) -> None:
+    assert text_unit_state.selection_error is None
+    assert text_unit_state.selected_help is not None
+    assert text_unit_state.selected_help.headwords == tuple(value.strip() for value in headwords.split(","))
+
+
+@then(parsers.parse('surface-form selection fails with "{message}"'))
+def surface_form_selection_fails(message: str, text_unit_state: TextUnitState) -> None:
+    assert text_unit_state.selected_help is None
+    assert text_unit_state.selection_error == message
+
+
+@then(parsers.parse('the resolved vocabulary entry is in deck "{deck_id}" with meaning "{meaning}"'))
+def resolved_entry_is(deck_id: str, meaning: str, text_unit_state: TextUnitState) -> None:
+    assert text_unit_state.vocabulary_result is not None
+    entry, error = text_unit_state.vocabulary_result
+    assert error is None
+    assert entry is not None
+    assert entry.deck_id == deck_id
+    assert dict(entry.fields)["Meaning"] == meaning
+
+
+@then(parsers.parse('headword resolution fails with "{message}"'))
+def headword_resolution_fails(message: str, text_unit_state: TextUnitState) -> None:
+    assert text_unit_state.vocabulary_result == (None, message)
 
 
 def _selected_deck_id(text_unit_state: TextUnitState) -> str:
